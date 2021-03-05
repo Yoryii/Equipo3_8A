@@ -5,7 +5,7 @@ use Compras
 go
 
 create table Laboratorios (
-	idLaboratorio int not null,
+	idLaboratorio int identity not null,
 	nombre varchar(50) not null,
 	origen varchar(30) not null,
 	estatus char not null,
@@ -14,7 +14,7 @@ create table Laboratorios (
 go
 
 create table Categorias (
-	idCategoria int not null,
+	idCategoria int identity not null,
 	nombre varchar(30) not null,
 	estatus char not null,
 	constraint pk_categorias primary key (idCategoria)
@@ -22,7 +22,7 @@ create table Categorias (
 go
 
 create table UnidadesMedida (
-	idUnidad int not null,
+	idUnidad int identity not null,
 	nombre varchar(80) not null,
 	siglas varchar(20) not null,
 	estatus char not null,
@@ -31,7 +31,7 @@ create table UnidadesMedida (
 go
 
 create table Empaques (
-	idEmpaque int not null,
+	idEmpaque int identity not null,
 	nombre varchar(80) not null,
 	capacidad float not null,
 	estatus char not null,
