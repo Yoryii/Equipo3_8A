@@ -198,24 +198,27 @@ public class Categorias extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
- 
-        String nombre = txtNombre.getText();
-       
-        try {
-            
-            Connection con = Conexion.getConexion();
-            PreparedStatement ps = con.prepareStatement("INSERT INTO Categorias (nombre, estatus) VALUES (?,?)");
-            ps.setString(1, nombre);
-            ps.setString(2, "A");
-            ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Registro guardado con exito");
-            Limpiar();
-            cargarTabla();
-            
-       } catch (SQLException e) {
-           
-           JOptionPane.showMessageDialog(null, e.toString());
-           
+        if (txtNombre.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
+        } else {
+            String nombre = txtNombre.getText();
+
+            try {
+
+                Connection con = Conexion.getConexion();
+                PreparedStatement ps = con.prepareStatement("INSERT INTO Categorias (nombre, estatus) VALUES (?,?)");
+                ps.setString(1, nombre);
+                ps.setString(2, "A");
+                ps.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Registro guardado con exito");
+                Limpiar();
+                cargarTabla();
+
+           } catch (SQLException e) {
+
+               JOptionPane.showMessageDialog(null, e.toString());
+
+            }
         }
         
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -245,26 +248,30 @@ public class Categorias extends javax.swing.JFrame {
     }//GEN-LAST:event_tblCategoriasMouseClicked
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        int id = Integer.parseInt(txtId.getText());
-        String nombre = txtNombre.getText();
-        String estatus = txtEstatus.getText();
-        
-        try {
-            
-            Connection con = Conexion.getConexion();
-            PreparedStatement ps = con.prepareStatement("UPDATE Categorias SET nombre=?, estatus=? WHERE idCategoria=?");
-            ps.setString(1, nombre);
-            ps.setString(2, estatus);
-            ps.setInt(3, id);
-            ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Registro modificado con exito");
-            Limpiar();
-            cargarTabla();
-            
-       } catch (SQLException e) {
-           
-           JOptionPane.showMessageDialog(null, e.toString());
-           
+        if (txtNombre.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
+        } else {
+            int id = Integer.parseInt(txtId.getText());
+            String nombre = txtNombre.getText();
+            String estatus = txtEstatus.getText();
+
+            try {
+
+                Connection con = Conexion.getConexion();
+                PreparedStatement ps = con.prepareStatement("UPDATE Categorias SET nombre=?, estatus=? WHERE idCategoria=?");
+                ps.setString(1, nombre);
+                ps.setString(2, estatus);
+                ps.setInt(3, id);
+                ps.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Registro modificado con exito");
+                Limpiar();
+                cargarTabla();
+
+           } catch (SQLException e) {
+
+               JOptionPane.showMessageDialog(null, e.toString());
+
+            }
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
