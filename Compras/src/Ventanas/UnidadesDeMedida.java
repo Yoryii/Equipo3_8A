@@ -217,15 +217,14 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
         String nombre = txfNombre.getText();
         String siglas = txfSiglas.getText();
         String estatus = txfEstatus.getText();
-        
 
         try {
             Connection con = Conexion.getConexion();
-            PreparedStatement ps = con.prepareStatement("INSERT INTO UnidadesMedida (nombre, siglas, estatus) VALUES (?,?,?)");
+            PreparedStatement ps = con.prepareStatement("INSERT INTO UnidadesMedida (nombre, siglas, estatus) VALUES (?,?,'A')");
 
             ps.setString(1, nombre);
             ps.setString(2, siglas);
-            ps.setString(3, estatus);
+            //ps.setString(3, estatus);
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Registro guardado.");
             limpiar();
@@ -237,21 +236,20 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-       
+
         int id = Integer.parseInt(txfId.getText());
         String nombre = txfNombre.getText();
         String siglas = txfSiglas.getText();
-        String estatus = txfEstatus.getText();
-        
+        //String estatus = txfEstatus.getText();
 
         try {
             Connection con = Conexion.getConexion();
-            PreparedStatement ps = con.prepareStatement("UPDATE UnidadesMedida SET nombre=?, siglas=?, estatus=? WHERE idUnidad=?");
+            PreparedStatement ps = con.prepareStatement("UPDATE UnidadesMedida SET nombre=?, siglas=? WHERE idUnidad=?");
 
             ps.setString(1, nombre);
             ps.setString(2, siglas);
-            ps.setString(3, estatus);
-            ps.setInt(4, id);
+            // ps.setString(3, estatus);
+            ps.setInt(3, id);
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Registro modificado.");
             limpiar();
@@ -269,15 +267,15 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
             ResultSet rs;
             Connection con = Conexion.getConexion();
 
-            ps = con.prepareStatement("SELECT nombre, siglas, estatus FROM UnidadesMedida WHERE idUnidad=?");
+            ps = con.prepareStatement("SELECT nombre, siglas FROM UnidadesMedida WHERE idUnidad=?");
             ps.setInt(1, id);
             rs = ps.executeQuery();
-            
-            while(rs.next()){
+
+            while (rs.next()) {
                 txfId.setText(String.valueOf(id));
                 txfNombre.setText(rs.getString("nombre"));
                 txfSiglas.setText(rs.getString("siglas"));
-                txfEstatus.setText(rs.getString("estatus"));
+                //txfEstatus.setText(rs.getString("estatus"));
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.toString());
@@ -286,11 +284,10 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         int id = Integer.parseInt(txfId.getText());
-        
 
         try {
             Connection con = Conexion.getConexion();
-            PreparedStatement ps = con.prepareStatement("UPDATE UnidadesMedida SET estatus=I WHERE idUnidad=?");
+            PreparedStatement ps = con.prepareStatement("UPDATE UnidadesMedida SET estatus='I' WHERE idUnidad=?");
 
             ps.setInt(1, id);
             ps.executeUpdate();
@@ -315,7 +312,7 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
     private void cargarTabla() {
 
         DefaultTableModel modeloTabla = (DefaultTableModel) tblUnidades.getModel();
-    modeloTabla.setRowCount(0);
+        modeloTabla.setRowCount(0);
 
         PreparedStatement ps;
         ResultSet rs;

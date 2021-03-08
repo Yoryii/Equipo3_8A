@@ -255,6 +255,9 @@ public class Empaques extends javax.swing.JFrame {
         }
     }                                            
 
+    
+    //PUEDE SER AQUI EL ERROR
+    
     private void tblUnidadesMouseClicked(java.awt.event.MouseEvent evt) {                                         
         try {
             int fila = tblEmpaques.getSelectedRow();
