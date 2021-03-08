@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Ventanas;
 
-/**
- *
- * @author jmadr
- */
+
 public class UnidadesDeMedida extends javax.swing.JFrame {
 
     /**
@@ -86,6 +79,11 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
         });
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnModificar.setText("Modificar");
 
@@ -183,6 +181,10 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
     private void txfNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txfNombreActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+       
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
      * @param args the command line arguments
