@@ -14,10 +14,10 @@ public class Conexion {
         //String url = "jdbc:sqlserver://localhost:1433;" + "database=ERP;" + "user=sa;" + "password=sa;";
         
         //LAPTOP JO
-        String url ="jdbc:sqlserver://LAPTOP-JGEMDCST\\MSSQLSERVER:1433;databaseName=ERP;user=sa;password=sa;";
+        //String url ="jdbc:sqlserver://LAPTOP-JGEMDCST\\MSSQLSERVER:1433;databaseName=ERP;user=sa;password=sa;";
         
         //LAPTOP JORGE
-       //String url ="jdbc:sqlserver://LAPTOP-TC4H4NLT\\MSSQLSERVER:1433;databaseName=ERP;user=sa;password=sa;";
+       String url = "jdbc:sqlserver://localhost:1433;" + "database=ERP;" + "user=sa;" + "password=sa;";
         //\\
         try {
             Connection con = DriverManager.getConnection(url);

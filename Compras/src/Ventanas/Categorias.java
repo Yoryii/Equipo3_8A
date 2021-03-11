@@ -33,7 +33,7 @@ public class Categorias extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
-        btnEditar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         txtEstatus = new javax.swing.JTextField();
@@ -94,11 +94,11 @@ public class Categorias extends javax.swing.JFrame {
             }
         });
 
-        btnEditar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnEditar.setText("Cambiar");
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
+                btnCancelarActionPerformed(evt);
             }
         });
 
@@ -137,13 +137,13 @@ public class Categorias extends javax.swing.JFrame {
                             .addComponent(txtEstatus, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnGuardar)
-                                .addGap(12, 12, 12)
-                                .addComponent(btnEditar)
-                                .addGap(12, 12, 12)
+                                .addGap(17, 17, 17)
                                 .addComponent(btnEliminar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnLimpiar)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnLimpiar)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCancelar)))
+                        .addGap(0, 6, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,9 +162,9 @@ public class Categorias extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
-                    .addComponent(btnEditar)
-                    .addComponent(btnEliminar)
-                    .addComponent(btnLimpiar))
+                    .addComponent(btnCancelar)
+                    .addComponent(btnLimpiar)
+                    .addComponent(btnEliminar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -180,7 +180,7 @@ public class Categorias extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,34 +196,63 @@ public class Categorias extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+boolean editando = false;
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if (txtNombre.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
-        } else {
-            String nombre = txtNombre.getText();
+        if (editando) {//editar
+                if (txtNombre.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
+            } else {
+                int id = Integer.parseInt(txtId.getText());
+                String nombre = txtNombre.getText();
+                String estatus = txtEstatus.getText();
 
-            try {
+                try {
 
-                Connection con = Conexion.getConexion();
-                PreparedStatement ps = con.prepareStatement("INSERT INTO Categorias (nombre, estatus) VALUES (?,?)");
-                ps.setString(1, nombre);
-                ps.setString(2, "A");
-                ps.executeUpdate();
-                JOptionPane.showMessageDialog(null, "Registro guardado con exito");
-                Limpiar();
-                cargarTabla();
+                    Connection con = Conexion.getConexion();
+                    PreparedStatement ps = con.prepareStatement("UPDATE Categorias SET nombre=?, estatus=? WHERE idCategoria=?");
+                    ps.setString(1, nombre);
+                    ps.setString(2, estatus);
+                    ps.setInt(3, id);
+                    ps.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Registro modificado con exito");
+                    Limpiar();
+                    cargarTabla();
 
-           } catch (SQLException e) {
+               } catch (SQLException e) {
 
-               JOptionPane.showMessageDialog(null, e.toString());
+                   JOptionPane.showMessageDialog(null, e.toString());
 
+                }
+            }
+        } else {//guardar
+            if (txtNombre.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
+            } else {
+                String nombre = txtNombre.getText();
+
+                try {
+
+                    Connection con = Conexion.getConexion();
+                    PreparedStatement ps = con.prepareStatement("INSERT INTO Categorias (nombre, estatus) VALUES (?,?)");
+                    ps.setString(1, nombre);
+                    ps.setString(2, "A");
+                    ps.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Registro guardado con exito");
+                    Limpiar();
+                    cargarTabla();
+
+               } catch (SQLException e) {
+
+                   JOptionPane.showMessageDialog(null, e.toString());
+
+                }
             }
         }
+        
         
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -236,6 +265,7 @@ public class Categorias extends javax.swing.JFrame {
             ResultSet rs;
             
             Connection con = Conexion.getConexion();
+            editando = true;
             ps = con.prepareStatement("SELECT nombre, estatus FROM Categorias WHERE idCategoria=?");
             ps.setInt(1, id);
             rs = ps.executeQuery();
@@ -251,33 +281,11 @@ public class Categorias extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tblCategoriasMouseClicked
 
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if (txtNombre.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
-        } else {
-            int id = Integer.parseInt(txtId.getText());
-            String nombre = txtNombre.getText();
-            String estatus = txtEstatus.getText();
-
-            try {
-
-                Connection con = Conexion.getConexion();
-                PreparedStatement ps = con.prepareStatement("UPDATE Categorias SET nombre=?, estatus=? WHERE idCategoria=?");
-                ps.setString(1, nombre);
-                ps.setString(2, estatus);
-                ps.setInt(3, id);
-                ps.executeUpdate();
-                JOptionPane.showMessageDialog(null, "Registro modificado con exito");
-                Limpiar();
-                cargarTabla();
-
-           } catch (SQLException e) {
-
-               JOptionPane.showMessageDialog(null, e.toString());
-
-            }
-        }
-    }//GEN-LAST:event_btnEditarActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        editando=false;
+        Limpiar();
+        cargarTabla();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         int id = Integer.parseInt(txtId.getText());
@@ -384,7 +392,7 @@ public class Categorias extends javax.swing.JFrame {
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;
