@@ -339,34 +339,59 @@ public class Laboratorio extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tblLaboratoriosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblLaboratoriosMouseClicked
+    private void txfOrigenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfOrigenActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfOrigenActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        Limpiar();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        int idLaboratorio = Integer.parseInt(txfidLaboratorio.getText());
+
         try {
 
-            int fila = tblLaboratorios.getSelectedRow();
-            int id = Integer.parseInt(tblLaboratorios.getValueAt(fila, 0).toString());
-            PreparedStatement ps;
-            ResultSet rs;
-
             Connection con = Conexion.getConexion();
-            ps = con.prepareStatement("SELECT * FROM Laboratorio WHERE idLaboratorio=?");
-            ps.setInt(1, id);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                txfidLaboratorio.setText(String.valueOf(id));
-                txtNombreLaboratorio.setText(rs.getString("nombre"));
-                txtEstatus.setText(rs.getString("estatus"));
-                txfOrigen.setText(rs.getString("origen"));
-
-            }
+            PreparedStatement ps = con.prepareStatement("DELETE FROM Laboratorios WHERE idLaboratorio=?");
+            ps.setInt(1, idLaboratorio);
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Registro eliminado con exito");
+            Limpiar();
+            cargarTabla();
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.toString());
-        }
-    }//GEN-LAST:event_tblLaboratoriosMouseClicked
 
-    private void txtNombreLaboratorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreLaboratorioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreLaboratorioActionPerformed
+            JOptionPane.showMessageDialog(null, e.toString());
+
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        int idLaboratorio = Integer.parseInt(txfidLaboratorio.getText());
+        String nombre = txtNombreLaboratorio.getText();
+        String estatus = txtEstatus.getText();
+        String origen = txfOrigen.getText();
+
+        try {
+
+            Connection con = Conexion.getConexion();
+            PreparedStatement ps = con.prepareStatement("UPDATE Laboratorios SET nombre=?, origen=?, estatus=? WHERE idLaboratorio=?");
+            ps.setString(1, nombre);
+            ps.setString(2, origen);
+            ps.setString(3, estatus);
+            ps.setInt(4, idLaboratorio);
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Registro modificado con exito");
+            Limpiar();
+            cargarTabla();
+
+        } catch (SQLException e) {
+
+            JOptionPane.showMessageDialog(null, e.toString());
+
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
@@ -391,63 +416,36 @@ public class Laboratorio extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e.toString());
 
         }
-
     }//GEN-LAST:event_btnGuardarActionPerformed
 
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        int idLaboratorio = Integer.parseInt(txfidLaboratorio.getText());
-        String nombre = txtNombreLaboratorio.getText();
-        String estatus = txtEstatus.getText();
-        String origen = txfOrigen.getText();
-        
-
-        try {
-
-            Connection con = Conexion.getConexion();
-            PreparedStatement ps = con.prepareStatement("UPDATE Laboratorios SET nombre=?, origen=?, estatus=? WHERE idLaboratorio=?");
-            ps.setString(1, nombre);
-            ps.setString(2, origen);
-            ps.setString(3, estatus);
-            ps.setInt(4, idLaboratorio);
-            ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Registro modificado con exito");
-            Limpiar();
-            cargarTabla();
-
-        } catch (SQLException e) {
-
-            JOptionPane.showMessageDialog(null, e.toString());
-
-        }
-    }//GEN-LAST:event_btnEditarActionPerformed
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        int idLaboratorio = Integer.parseInt(txfidLaboratorio.getText());
-
-        try {
-
-            Connection con = Conexion.getConexion();
-            PreparedStatement ps = con.prepareStatement("DELETE FROM Laboratorios WHERE idLaboratorio=?");
-            ps.setInt(1, idLaboratorio);
-            ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Registro eliminado con exito");
-            Limpiar();
-            cargarTabla();
-
-        } catch (SQLException e) {
-
-            JOptionPane.showMessageDialog(null, e.toString());
-
-        }
-    }//GEN-LAST:event_btnEliminarActionPerformed
-
-    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        Limpiar();
-    }//GEN-LAST:event_btnLimpiarActionPerformed
-
-    private void txfOrigenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfOrigenActionPerformed
+    private void txtNombreLaboratorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreLaboratorioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txfOrigenActionPerformed
+    }//GEN-LAST:event_txtNombreLaboratorioActionPerformed
+
+    private void tblLaboratoriosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblLaboratoriosMouseClicked
+        try {
+
+            int fila = tblLaboratorios.getSelectedRow();
+            int id = Integer.parseInt(tblLaboratorios.getValueAt(fila, 0).toString());
+            PreparedStatement ps;
+            ResultSet rs;
+
+            Connection con = Conexion.getConexion();
+            ps = con.prepareStatement("SELECT * FROM Laboratorio WHERE idLaboratorio=?");
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                txfidLaboratorio.setText(String.valueOf(id));
+                txtNombreLaboratorio.setText(rs.getString("nombre"));
+                txtEstatus.setText(rs.getString("estatus"));
+                txfOrigen.setText(rs.getString("origen"));
+
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+    }//GEN-LAST:event_tblLaboratoriosMouseClicked
      private void Limpiar(){
         txfidLaboratorio.setText("");
         txtNombreLaboratorio.setText("");
