@@ -218,7 +218,7 @@ public class Empaques extends javax.swing.JFrame {
 
         try {
             Connection con = Conexion.getConexion();
-            PreparedStatement ps = con.prepareStatement("INSERT INTO Empaques (nombre, siglas, estatus) VALUES (?,?,A)");
+            PreparedStatement ps = con.prepareStatement("INSERT INTO Empaques (nombre, siglas, estatus) VALUES (?,?,'A')");
 
             ps.setString(1, nombre);
             ps.setString(2, capacidad);
@@ -237,7 +237,7 @@ public class Empaques extends javax.swing.JFrame {
         String nombre = txfNombre.getText();
         String capacidad = txfCapacidad.getText();
         
-        
+        //-----------------------------------------------AQUI!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-------------------Modificar 
 
         try {
             Connection con = Conexion.getConexion();
@@ -253,32 +253,12 @@ public class Empaques extends javax.swing.JFrame {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.toString());
         }
-    }                                            
+                                                
 
     
     //PUEDE SER AQUI EL ERROR
     
-    private void tblUnidadesMouseClicked(java.awt.event.MouseEvent evt) {                                         
-        try {
-            int fila = tblEmpaques.getSelectedRow();
-            int id = Integer.parseInt(tblEmpaques.getValueAt(fila, 0).toString());
-            PreparedStatement ps;
-            ResultSet rs;
-            Connection con = Conexion.getConexion();
-
-            ps = con.prepareStatement("SELECT nombre, capacidad, estatus FROM Empaques WHERE idEmpaque=?");
-            ps.setInt(1, id);
-            rs = ps.executeQuery();
-            
-            while(rs.next()){
-                txfId.setText(String.valueOf(id));
-                txfNombre.setText(rs.getString("nombre"));
-                txfCapacidad.setText(rs.getString("siglas"));
-                
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.toString());
-        }
+    
     }//GEN-LAST:event_btnCambiarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -296,6 +276,7 @@ public class Empaques extends javax.swing.JFrame {
             cargarTabla();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.toString());
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void tblEmpaquesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEmpaquesMouseClicked
