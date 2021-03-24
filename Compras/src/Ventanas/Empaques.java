@@ -218,7 +218,7 @@ public class Empaques extends javax.swing.JFrame {
 
         try {
             Connection con = Conexion.getConexion();
-            PreparedStatement ps = con.prepareStatement("INSERT INTO Empaques (nombre, siglas, estatus) VALUES (?,?,'A')");
+            PreparedStatement ps = con.prepareStatement("INSERT INTO Empaques (nombre, capacidad, estatus) VALUES (?,?,'A')");
 
             ps.setString(1, nombre);
             ps.setString(2, capacidad);
@@ -245,7 +245,7 @@ public class Empaques extends javax.swing.JFrame {
 
             ps.setString(1, nombre);
             ps.setString(2, capacidad);
-            ps.setInt(3, id);
+            ps.setInt(4, id);
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Registro modificado.");
             limpiar();

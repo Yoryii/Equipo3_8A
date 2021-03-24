@@ -75,6 +75,11 @@ public class Principal extends javax.swing.JFrame {
         jLabel3.setText("Categorias");
 
         btnEmpaques.setBorder(null);
+        btnEmpaques.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEmpaquesActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Empaques");
 
@@ -166,6 +171,11 @@ public class Principal extends javax.swing.JFrame {
       Laboratorio lab = new Laboratorio();
       lab.setVisible(true);
     }//GEN-LAST:event_btnLabActionPerformed
+
+    private void btnEmpaquesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpaquesActionPerformed
+      Empaques emp = new Empaques();
+      emp.setVisible(true);
+    }//GEN-LAST:event_btnEmpaquesActionPerformed
 
     /**
      * @param args the command line arguments
