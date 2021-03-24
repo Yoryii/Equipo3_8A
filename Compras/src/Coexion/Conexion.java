@@ -18,7 +18,7 @@ public class Conexion {
         
         //LAPTOP JORGE
 //Updated upstream
-       //String url = "jdbc:sqlserver://localhost:1433;" + "database=ERP;" + "user=sa;" + "password=sa;";
+       String url = "jdbc:sqlserver://localhost:1433;" + "database=ERP;" + "user=sa;" + "password=sa;";
 
         //String url ="jdbc:sqlserver://LAPTOP-TC4H4NLT\\MSSQLSERVER:1433;databaseName=ERP;user=sa;password=sa;";Stashed changes
         //\\
