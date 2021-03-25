@@ -13,14 +13,14 @@ import java.util.List;
  */
 public interface DAO<T, K> {
     
-    void insertar(T u);
+    void insertar(T u) throws DAOException;
     
-    void modificar(T u);
+    void modificar(T u) throws DAOException;
     
-    void eliminar(T u);
+    void eliminar(T u) throws DAOException;
     
-    List<T> obtenerTodos();
+    List<T> obtenerTodos() throws DAOException;
     
-    T obtener(K id);
+    T obtener(K id) throws DAOException;
     
 }

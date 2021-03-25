@@ -303,6 +303,10 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
         limpiar();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
+    public String getNombre(){
+        String nombre = txfNombre.getText();
+        return nombre;
+    }
     private void limpiar() {
         txfId.setText("");
         txfNombre.setText("");

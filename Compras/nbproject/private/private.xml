@@ -5,8 +5,9 @@
         <group>
             <file>file:/C:/Users/jmadr/OneDrive/Documentos/GitHub/Equipo3_8A/Compras/src/Ventanas/Principal.java</file>
             <file>file:/C:/Users/jmadr/OneDrive/Documentos/GitHub/Equipo3_8A/Compras/src/Ventanas/Empaques.java</file>
-            <file>file:/C:/Users/jmadr/OneDrive/Documentos/GitHub/Equipo3_8A/Compras/src/Coexion/Conexion.java</file>
+            <file>file:/C:/Users/jmadr/OneDrive/Documentos/GitHub/Equipo3_8A/Compras/src/DAO/SQLServer/UnidadesSQLServerDAO.java</file>
             <file>file:/C:/Users/jmadr/OneDrive/Documentos/GitHub/Equipo3_8A/Compras/src/Ventanas/UnidadesDeMedida.java</file>
+            <file>file:/C:/Users/jmadr/OneDrive/Documentos/GitHub/Equipo3_8A/Compras/src/DAO/SQLServer/EmpaquesSQLServerDAO.java</file>
         </group>
     </open-files>
 </project-private>
