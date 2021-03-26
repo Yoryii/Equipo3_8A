@@ -41,6 +41,7 @@ public class Empaques extends javax.swing.JFrame {
         
         txfCapacidad.setEditable(false);
         btnGuardar.setEnabled(false);
+        btnEliminar.setEnabled(false);
     }
 
     boolean editando = false;
@@ -61,7 +62,6 @@ public class Empaques extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JButton();
-        btnLimpiar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         txfNombre = new javax.swing.JTextField();
@@ -115,13 +115,6 @@ public class Empaques extends javax.swing.JFrame {
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
-            }
-        });
-
-        btnLimpiar.setText("Limpiar");
-        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimpiarActionPerformed(evt);
             }
         });
 
@@ -179,9 +172,7 @@ public class Empaques extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(27, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -204,12 +195,11 @@ public class Empaques extends javax.swing.JFrame {
                         .addComponent(txfCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(19, 19, 19)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+                    .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -260,7 +250,8 @@ public class Empaques extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-
+        btnGuardar.setEnabled(false);
+        btnEliminar.setEnabled(false);
         if (editando) {
             if (txfNombre.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Llene todos los campos!");
@@ -272,7 +263,7 @@ public class Empaques extends javax.swing.JFrame {
 
                 try {
                     Connection con = Conexion.getConexion();
-                    PreparedStatement ps = con.prepareStatement("UPDATE Empaques SET nombre=?, capacidad=?, estatus='I' WHERE idEmpaque=?");
+                    PreparedStatement ps = con.prepareStatement("UPDATE Empaques SET nombre=?, capacidad=? WHERE idEmpaque=?");
 
                     ps.setString(1, nombre);
                     ps.setString(2, capacidad);
@@ -315,11 +306,9 @@ public class Empaques extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnGuardarActionPerformed
 
-    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        limpiar();
-    }//GEN-LAST:event_btnLimpiarActionPerformed
-
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        btnGuardar.setEnabled(false);
+        btnEliminar.setEnabled(false);
         int id = Integer.parseInt(txfId.getText());
 
         try {
@@ -337,6 +326,8 @@ public class Empaques extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void tblEmpaquesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEmpaquesMouseClicked
+        btnGuardar.setEnabled(true);
+        btnEliminar.setEnabled(true);
         try {
             int fila = tblEmpaques.getSelectedRow();
             int id = Integer.parseInt(tblEmpaques.getValueAt(fila, 0).toString());
@@ -360,6 +351,8 @@ public class Empaques extends javax.swing.JFrame {
     }//GEN-LAST:event_tblEmpaquesMouseClicked
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        btnGuardar.setEnabled(false);
+        btnEliminar.setEnabled(false);
         editando = false;
         limpiar();
         cargarTabla();
@@ -467,7 +460,6 @@ public class Empaques extends javax.swing.JFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

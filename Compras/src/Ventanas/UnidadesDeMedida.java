@@ -26,21 +26,19 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
         this.setResizable(false);
         txfEstatus.setVisible(false);
         txfId.setVisible(false);
-        
+
         cargarTabla();
         botonImagen();
-        
-       
- 
+
         //Notas en botones
         btnGuardar.setToolTipText("(?) Pulsa para guardar registro.");
         btnEliminar.setToolTipText("(?) Pulsa para eliminar registro.");
         btnCancelar.setToolTipText("(?) Cancelar modificación de registro.");
-        
+
         //Desactivados
         txfSiglas.setEditable(false);
         btnGuardar.setEnabled(false);
-        
+        btnEliminar.setEnabled(false);
 
     }
 
@@ -61,7 +59,6 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        btnLimpiar = new javax.swing.JButton();
         txfId = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
@@ -142,13 +139,6 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
             }
         });
 
-        btnLimpiar.setText("Limpiar");
-        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimpiarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -164,9 +154,7 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,13 +184,14 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
                 .addComponent(txfEstatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(btnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(20, 20, 20))
         );
 
@@ -250,11 +239,12 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txfNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfNombreActionPerformed
-      
+
     }//GEN-LAST:event_txfNombreActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-
+        btnGuardar.setEnabled(false);
+        btnEliminar.setEnabled(false);
         if (editando) {
             if (txfNombre.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Llene todos los campos!");
@@ -311,12 +301,16 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        btnEliminar.setEnabled(false);
+        btnGuardar.setEnabled(false);
         editando = false;
         limpiar();
         cargarTabla();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void tblUnidadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUnidadesMouseClicked
+        btnGuardar.setEnabled(true);
+        btnEliminar.setEnabled(true);
         try {
             int fila = tblUnidades.getSelectedRow();
             int id = Integer.parseInt(tblUnidades.getValueAt(fila, 0).toString());
@@ -341,6 +335,9 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
     }//GEN-LAST:event_tblUnidadesMouseClicked
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        btnGuardar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+
         int id = Integer.parseInt(txfId.getText());
 
         try {
@@ -356,10 +353,6 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e.toString());
         }    }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        limpiar();
-    }//GEN-LAST:event_btnLimpiarActionPerformed
-
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         dispose();
         Principal pr = new Principal();
@@ -367,9 +360,9 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void txfNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfNombreKeyReleased
-       
+
         txfSiglas.setEditable(txfNombre.getText().length() != 0);
-        
+
     }//GEN-LAST:event_txfNombreKeyReleased
 
     private void txfSiglasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfSiglasKeyReleased
@@ -472,7 +465,6 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
