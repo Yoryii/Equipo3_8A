@@ -24,6 +24,11 @@ public class Categorias extends javax.swing.JFrame {
         cargarTabla();
         txtEstatus.setVisible(false);
         botonImagen();
+        
+        //Notas en botones
+        btnGuardar.setToolTipText("(?) Pulsa para guardar registro.");
+        btnEliminar.setToolTipText("(?) Pulsa para eliminar registro.");
+        btnCancelar.setToolTipText("(?) Cancelar modificación de registro.");
     }
 
     @SuppressWarnings("unchecked")

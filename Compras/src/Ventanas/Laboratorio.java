@@ -31,6 +31,11 @@ public class Laboratorio extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         this.setResizable(false);
         botonImagen();
+        
+        //Notas en botones
+        btnGuardar.setToolTipText("(?) Pulsa para guardar registro.");
+        btnEliminar.setToolTipText("(?) Pulsa para eliminar registro.");
+        
     }
 
     /**

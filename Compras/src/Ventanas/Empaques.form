@@ -249,8 +249,14 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txfNombre">
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txfNombreKeyReleased"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txfCapacidad">
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txfCapacidadKeyReleased"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txfId">
         </Component>

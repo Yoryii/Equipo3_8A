@@ -33,6 +33,14 @@ public class Empaques extends javax.swing.JFrame {
         txfId.setVisible(false);
         cargarTabla();
         botonImagen();
+
+        //Notas en botones
+        btnGuardar.setToolTipText("(?) Pulsa para guardar registro.");
+        btnEliminar.setToolTipText("(?) Pulsa para eliminar registro.");
+        btnCancelar.setToolTipText("(?) Cancelar modificación de registro.");
+        
+        txfCapacidad.setEditable(false);
+        btnGuardar.setEnabled(false);
     }
 
     boolean editando = false;
@@ -127,6 +135,18 @@ public class Empaques extends javax.swing.JFrame {
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
+            }
+        });
+
+        txfNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txfNombreKeyReleased(evt);
+            }
+        });
+
+        txfCapacidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txfCapacidadKeyReleased(evt);
             }
         });
 
@@ -346,10 +366,20 @@ public class Empaques extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-       dispose();
-       Principal pr = new Principal();
-       pr.setVisible(true);
+        dispose();
+        Principal pr = new Principal();
+        pr.setVisible(true);
     }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void txfNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfNombreKeyReleased
+
+        txfCapacidad.setEditable(txfNombre.getText().length() != 0);
+
+    }//GEN-LAST:event_txfNombreKeyReleased
+
+    private void txfCapacidadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfCapacidadKeyReleased
+        btnGuardar.setEnabled(txfCapacidad.getText().length() != 0);
+    }//GEN-LAST:event_txfCapacidadKeyReleased
 
     private void limpiar() {
         txfId.setText("");
@@ -388,13 +418,14 @@ public class Empaques extends javax.swing.JFrame {
         }
 
     }
-     private void botonImagen() {
+
+    private void botonImagen() {
         ImageIcon guardar = new ImageIcon("src/Img/saveIcon.png");
         btnGuardar.setIcon(new ImageIcon(guardar.getImage().getScaledInstance(btnGuardar.getWidth(), btnGuardar.getHeight(), Image.SCALE_SMOOTH)));
 
         ImageIcon eliminar = new ImageIcon("src/Img/deleteIcon.png");
         btnEliminar.setIcon(new ImageIcon(eliminar.getImage().getScaledInstance(btnEliminar.getWidth(), btnEliminar.getHeight(), Image.SCALE_SMOOTH)));
-        
+
         ImageIcon regresar = new ImageIcon("src/Img/arrow.png");
         btnRegresar.setIcon(new ImageIcon(regresar.getImage().getScaledInstance(btnRegresar.getWidth(), btnRegresar.getHeight(), Image.SCALE_SMOOTH)));
 

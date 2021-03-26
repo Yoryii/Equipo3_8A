@@ -15,6 +15,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import DAO.SQLServer.UnidadesSQLServerDAO;
 
+import javax.swing.JFrame;
+
 public class UnidadesDeMedida extends javax.swing.JFrame {
 
     public UnidadesDeMedida() {
@@ -24,8 +26,21 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
         this.setResizable(false);
         txfEstatus.setVisible(false);
         txfId.setVisible(false);
+        
         cargarTabla();
         botonImagen();
+        
+       
+ 
+        //Notas en botones
+        btnGuardar.setToolTipText("(?) Pulsa para guardar registro.");
+        btnEliminar.setToolTipText("(?) Pulsa para eliminar registro.");
+        btnCancelar.setToolTipText("(?) Cancelar modificación de registro.");
+        
+        //Desactivados
+        txfSiglas.setEditable(false);
+        btnGuardar.setEnabled(false);
+        
 
     }
 
@@ -94,6 +109,17 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
         txfNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txfNombreActionPerformed(evt);
+            }
+        });
+        txfNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txfNombreKeyReleased(evt);
+            }
+        });
+
+        txfSiglas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txfSiglasKeyReleased(evt);
             }
         });
 
@@ -224,7 +250,7 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txfNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfNombreActionPerformed
-        // TODO adur handling code here:
+      
     }//GEN-LAST:event_txfNombreActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
@@ -240,7 +266,7 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
 
                 try {
                     Connection con = Conexion.getConexion();
-                    PreparedStatement ps = con.prepareStatement("UPDATE UnidadesMedida SET nombre=?, siglas=?, estatus='I' WHERE IdUnidad=?");
+                    PreparedStatement ps = con.prepareStatement("UPDATE UnidadesMedida SET nombre=?, siglas=?, estatus='A' WHERE IdUnidad=?");
 
                     ps.setString(1, nombre);
                     ps.setString(2, siglas);
@@ -281,7 +307,7 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
             }
         }
 
-       
+
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -335,10 +361,20 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-       dispose();
-       Principal pr = new Principal();
-       pr.setVisible(true);
+        dispose();
+        Principal pr = new Principal();
+        pr.setVisible(true);
     }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void txfNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfNombreKeyReleased
+       
+        txfSiglas.setEditable(txfNombre.getText().length() != 0);
+        
+    }//GEN-LAST:event_txfNombreKeyReleased
+
+    private void txfSiglasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfSiglasKeyReleased
+        btnGuardar.setEnabled(txfSiglas.getText().length() != 0);
+    }//GEN-LAST:event_txfSiglasKeyReleased
 
     public String getNombre() {
         String nombre = txfNombre.getText();
@@ -426,7 +462,7 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
 
         ImageIcon eliminar = new ImageIcon("src/Img/deleteIcon.png");
         btnEliminar.setIcon(new ImageIcon(eliminar.getImage().getScaledInstance(btnEliminar.getWidth(), btnEliminar.getHeight(), Image.SCALE_SMOOTH)));
-        
+
         ImageIcon regresar = new ImageIcon("src/Img/arrow.png");
         btnRegresar.setIcon(new ImageIcon(regresar.getImage().getScaledInstance(btnRegresar.getWidth(), btnRegresar.getHeight(), Image.SCALE_SMOOTH)));
 
