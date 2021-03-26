@@ -19,6 +19,9 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
 
     public UnidadesDeMedida() {
         initComponents();
+        setDefaultCloseOperation(0);
+        setLocationRelativeTo(null);
+        this.setResizable(false);
         txfEstatus.setVisible(false);
         txfId.setVisible(false);
         cargarTabla();
@@ -333,6 +336,8 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
        dispose();
+       Principal pr = new Principal();
+       pr.setVisible(true);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     public String getNombre() {

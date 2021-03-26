@@ -27,6 +27,9 @@ public class Empaques extends javax.swing.JFrame {
      */
     public Empaques() {
         initComponents();
+        setDefaultCloseOperation(0);
+        setLocationRelativeTo(null);
+        this.setResizable(false);
         txfId.setVisible(false);
         cargarTabla();
         botonImagen();
@@ -344,6 +347,8 @@ public class Empaques extends javax.swing.JFrame {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
        dispose();
+       Principal pr = new Principal();
+       pr.setVisible(true);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void limpiar() {
