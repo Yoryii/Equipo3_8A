@@ -17,14 +17,11 @@ import javax.swing.JButton;
  */
 public class Principal extends javax.swing.JFrame {
 
-  
-    
-    
     public Principal() {
         initComponents();
-        
+
         botonImagen();
-   
+
     }
 
     /**
@@ -157,24 +154,28 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriasActionPerformed
-      Categorias cat = new Categorias();
-      cat.setVisible(true);
-     
+        Categorias cat = new Categorias();
+        cat.setVisible(true);
+
     }//GEN-LAST:event_btnCategoriasActionPerformed
 
     private void btnUnidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnidadesActionPerformed
-      UnidadesDeMedida unidades = new UnidadesDeMedida();
-      unidades.setVisible(true);
+        
+        
+
+        UnidadesDeMedida unidades = new UnidadesDeMedida();
+        unidades.setVisible(true);
+
     }//GEN-LAST:event_btnUnidadesActionPerformed
 
     private void btnLabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLabActionPerformed
-      Laboratorio lab = new Laboratorio();
-      lab.setVisible(true);
+        Laboratorio lab = new Laboratorio();
+        lab.setVisible(true);
     }//GEN-LAST:event_btnLabActionPerformed
 
     private void btnEmpaquesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpaquesActionPerformed
-      Empaques emp = new Empaques();
-      emp.setVisible(true);
+        Empaques emp = new Empaques();
+        emp.setVisible(true);
     }//GEN-LAST:event_btnEmpaquesActionPerformed
 
     /**
@@ -211,22 +212,22 @@ public class Principal extends javax.swing.JFrame {
             }
         });
     }
-    
-    private void botonImagen(){
+
+    private void botonImagen() {
         ImageIcon categoria = new ImageIcon("src/Img/catIcon.png");
         btnCategorias.setIcon(new ImageIcon(categoria.getImage().getScaledInstance(btnCategorias.getWidth(), btnCategorias.getHeight(), Image.SCALE_SMOOTH)));
-        
+
         ImageIcon laboratorio = new ImageIcon("src/Img/labIcon.png");
         btnLab.setIcon(new ImageIcon(laboratorio.getImage().getScaledInstance(btnLab.getWidth(), btnLab.getHeight(), Image.SCALE_SMOOTH)));
-        
+
         ImageIcon unidades = new ImageIcon("src/Img/uniIcon.png");
         btnUnidades.setIcon(new ImageIcon(unidades.getImage().getScaledInstance(btnUnidades.getWidth(), btnUnidades.getHeight(), Image.SCALE_SMOOTH)));
-        
+
         ImageIcon empaques = new ImageIcon("src/Img/empIcon.png");
         btnEmpaques.setIcon(new ImageIcon(empaques.getImage().getScaledInstance(btnEmpaques.getWidth(), btnEmpaques.getHeight(), Image.SCALE_SMOOTH)));
     }
-    
-  
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCategorias;
     private javax.swing.JButton btnEmpaques;

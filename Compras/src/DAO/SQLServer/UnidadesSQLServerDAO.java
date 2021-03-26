@@ -14,7 +14,7 @@ import java.util.List;
 
 public class UnidadesSQLServerDAO implements UnidadesDAO{
     
-    final String INSERT = "INSERT INTO UnidadesMedida (nombre, siglas, estatus) VALUES (?,?,?,'A')";
+    final String INSERT = "INSERT INTO UnidadesMedida (nombre, siglas, estatus) VALUES (?,?,'A')";
     final String UPDATE = "UPDATE UnidadesMedida SET nombre=?, siglas=? WHERE idUnidad=?";
     final String DELETE = "UPDATE UnidadesMedida SET estatus='I' WHERE idUnidad=?";
     final String GETALL = "SELECT idUnidad, nombre, siglas, estatus FROM UnidadesMedida"; 
@@ -24,6 +24,32 @@ public class UnidadesSQLServerDAO implements UnidadesDAO{
     
     public UnidadesSQLServerDAO(Connection conn){
         this.conn = conn;
+    }
+    
+    public void insert() throws DAOException{
+        UnidadesDeMedida u = null;
+        PreparedStatement stat = null;
+        
+        try{
+            stat = conn.prepareStatement(INSERT);
+            stat.setString(1, u.getNombre());
+            stat.setString(2, u.getSiglas());
+            if(stat.executeUpdate()==0){
+                throw new DAOException("Puede que no se haya guardado.");
+            }
+        } catch(SQLException ex){
+            throw new DAOException("Error en SQL", ex);
+        } 
+        finally{
+            if(stat != null){
+                try{
+                stat.close();
+                }catch(SQLException ex){
+                  throw new DAOException("Error en SQL", ex);
+                }    
+                }
+            
+        }
     }
     
     @Override
