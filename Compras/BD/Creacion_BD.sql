@@ -265,6 +265,7 @@ create table PresentacionesProducto (
 	puntoReorden float not null,
 	idProducto int not null,
 	idEmpaque int not null,
+	estatus char not null,
 	constraint PK_PresentacionesProducto primary key (idPresentacion)
 )
 go
@@ -360,6 +361,7 @@ create table Proveedores (
 	colonia varchar(50) not null,
 	codigoPostal varchar(5) not null,
 	idCiudad int not null,
+	estatus char not null,
 	constraint PK_Proveedores primary key (idProveedor)
 )
 go

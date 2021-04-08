@@ -136,7 +136,6 @@
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="txtId" min="-2" pref="22" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="txtNombre" alignment="0" max="32767" attributes="0"/>
                       <Component id="txtEstatus" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="btnGuardar" min="-2" pref="103" max="-2" attributes="0"/>
@@ -148,8 +147,9 @@
                               <Component id="btnLimpiar" max="32767" attributes="0"/>
                           </Group>
                       </Group>
+                      <Component id="txtNombre" alignment="0" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="18" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
