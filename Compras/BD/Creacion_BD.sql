@@ -260,6 +260,7 @@ go
 
 create table PresentacionesProducto (
 	idPresentacion int identity not null,
+        nombre varchar(50) not null,
 	precioCompra float not null,
 	precioVenta float not null,
 	puntoReorden float not null,

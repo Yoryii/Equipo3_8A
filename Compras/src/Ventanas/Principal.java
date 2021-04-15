@@ -222,7 +222,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUnidadesActionPerformed
 
     private void btnLabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLabActionPerformed
-        Laboratorio lab = new Laboratorio();
+        Laboratorios lab = new Laboratorios();
         lab.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnLabActionPerformed
