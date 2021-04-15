@@ -20,9 +20,18 @@ public class Laboratorios extends javax.swing.JFrame {
 
     public Laboratorios() {
         initComponents();
+        setDefaultCloseOperation(0);
+        setLocationRelativeTo(null);
+        this.setResizable(false);
         txtId.setVisible(false);
-        botonImagen();
         cargarTabla();
+        txtEstatus.setVisible(false);
+        botonImagen();
+        desactivarBotones();
+        
+        btnGuardar.setToolTipText("(?) Pulsa para guardar registro.");
+        btnEliminar.setToolTipText("(?) Pulsa para eliminar registro.");
+        btnCancelar.setToolTipText("(?) Cancelar modificación de registro.");
     }
 
     @SuppressWarnings("unchecked")
@@ -40,6 +49,7 @@ public class Laboratorios extends javax.swing.JFrame {
         btnCancelar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         txtId = new javax.swing.JTextField();
+        txtEstatus = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
 
@@ -51,11 +61,11 @@ public class Laboratorios extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Id", "Nombre", "Origen"
+                "Id", "Nombre", "Origen", "Estatus"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -74,12 +84,28 @@ public class Laboratorios extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("Nombre");
 
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreActionPerformed(evt);
+            }
+        });
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNombreKeyReleased(evt);
+            }
+        });
+
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setText("Origen");
 
         txtOrigen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtOrigenActionPerformed(evt);
+            }
+        });
+        txtOrigen.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtOrigenKeyReleased(evt);
             }
         });
 
@@ -132,22 +158,29 @@ public class Laboratorios extends javax.swing.JFrame {
                             .addComponent(txtNombre))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel2)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtEstatus)
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2)
-                .addGap(25, 25, 25)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(txtEstatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(13, 13, 13)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -196,7 +229,7 @@ public class Laboratorios extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    boolean editando = false;
     private void txtOrigenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOrigenActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtOrigenActionPerformed
@@ -210,7 +243,7 @@ public class Laboratorios extends javax.swing.JFrame {
         Limpiar();
         cargarTabla();
     }//GEN-LAST:event_btnCancelarActionPerformed
-    boolean editando = false;
+    
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         if (editando) {//editar
             if (txtNombre.getText().isEmpty() || txtOrigen.getText().isEmpty()) {
@@ -219,13 +252,13 @@ public class Laboratorios extends javax.swing.JFrame {
                 int id = Integer.parseInt(txtId.getText());
                 String nombre = txtNombre.getText();
                 String origen = txtOrigen.getText();
-                String estatus = "A";
+                String estatus = txtEstatus.getText();
 
       
                 try {
 
                     Connection con = Conexion.getConexion();
-                    PreparedStatement ps = con.prepareStatement("UPDATE Laboratorios SET nombre=?, origen=?, estatus=?,  WHERE idLaboratorio=?");
+                    PreparedStatement ps = con.prepareStatement("UPDATE Laboratorios SET nombre=?, origen=?, estatus=?  WHERE idLaboratorio=?");
                     ps.setString(1, nombre);
                     ps.setString(2, origen);
                     ps.setString(3, estatus);
@@ -247,7 +280,6 @@ public class Laboratorios extends javax.swing.JFrame {
             } else {
                 String nombre = txtNombre.getText();
                 String origen = txtOrigen.getText();
-                String estatus = "A";
                 
                 //inicio
                 try {
@@ -256,7 +288,7 @@ public class Laboratorios extends javax.swing.JFrame {
                     PreparedStatement ps = con.prepareStatement("INSERT INTO Laboratorios (nombre, origen, estatus) VALUES (?,?,?)");
                     ps.setString(1, nombre);
                     ps.setString(2, origen);
-                    ps.setString(3, estatus);
+                    ps.setString(3, "A");
                     ps.executeUpdate();
                     JOptionPane.showMessageDialog(null, "Registro guardado con exito");
                     Limpiar();
@@ -302,13 +334,15 @@ public class Laboratorios extends javax.swing.JFrame {
 
             Connection con = Conexion.getConexion();
             editando = true;
-            ps = con.prepareStatement("SELECT nombre, origen FROM Laboratorios  WHERE idLaboratorio=?");
+            activarBotones();
+            ps = con.prepareStatement("SELECT nombre, origen, estatus FROM Laboratorios  WHERE idLaboratorio=?");
             ps.setInt(1, id);
             rs = ps.executeQuery();
             while (rs.next()) {
                 txtId.setText(String.valueOf(id));
                 txtNombre.setText(rs.getString("nombre"));
                 txtOrigen.setText(rs.getString("origen"));
+                txtEstatus.setText(rs.getString("estatus"));
             }
 
         } catch (SQLException e) {
@@ -316,10 +350,28 @@ public class Laboratorios extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tblLaboratoriosMouseClicked
 
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreActionPerformed
+
+    private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
+        boolean x = txtNombre.getText().length() != 0;
+        btnGuardar.setEnabled(x);
+        btnCancelar.setEnabled(x);
+    }//GEN-LAST:event_txtNombreKeyReleased
+
+    private void txtOrigenKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtOrigenKeyReleased
+        boolean x = txtOrigen.getText().length() != 0;
+        btnGuardar.setEnabled(x);
+        btnCancelar.setEnabled(x);
+    }//GEN-LAST:event_txtOrigenKeyReleased
+
     private void Limpiar(){
          txtId.setText("");
         txtNombre.setText("");
         txtOrigen.setText("");
+        txtEstatus.setText("");
+        desactivarBotones();
      
     }
     
@@ -332,14 +384,14 @@ public class Laboratorios extends javax.swing.JFrame {
         ResultSetMetaData rsmd;
         int columnas;
 
-        int[] ancho = {5, 50, 30};
+        int[] ancho = {5, 50, 30, 5};
         for (int i = 0; i < tblLaboratorios.getColumnCount(); i++) {
             tblLaboratorios.getColumnModel().getColumn(i).setPreferredWidth(ancho[i]);
         }
 
         try {
             Connection con = Conexion.getConexion();
-            ps = con.prepareStatement("SELECT idLaboratorio, nombre, origen FROM Laboratorios WHERE estatus = 'A'");
+            ps = con.prepareStatement("SELECT idLaboratorio, nombre, origen, estatus FROM Laboratorios WHERE estatus = 'A'");
             rs = ps.executeQuery();
             rsmd = rs.getMetaData();
             columnas = rsmd.getColumnCount();
@@ -401,8 +453,17 @@ public class Laboratorios extends javax.swing.JFrame {
         btnCancelar.setIcon(new ImageIcon(cancelar.getImage().getScaledInstance(btnCancelar.getWidth(), btnCancelar.getHeight(), Image.SCALE_SMOOTH)));
         
         
-        
+    }
+    private void desactivarBotones(){
+        btnGuardar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+    }
 
+    private void activarBotones(){
+        btnGuardar.setEnabled(true);
+        btnEliminar.setEnabled(true);
+        btnCancelar.setEnabled(true);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
@@ -415,6 +476,7 @@ public class Laboratorios extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblLaboratorios;
+    private javax.swing.JTextField txtEstatus;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtOrigen;
