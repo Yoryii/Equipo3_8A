@@ -126,6 +126,7 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
             }
         });
 
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -265,6 +266,8 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Registro modificado.");
                     limpiar();
                     cargarTabla();
+                    //AQUI CREO QUE DEBEMOS PONERLO EN FALSE 
+                    //editando=false;
                 } catch (SQLException e) {
 
                     JOptionPane.showMessageDialog(null, e.toString());
@@ -472,9 +475,9 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblUnidades;
-    private javax.swing.JTextField txfEstatus;
-    private javax.swing.JTextField txfId;
-    private javax.swing.JTextField txfNombre;
-    private javax.swing.JTextField txfSiglas;
+    public static javax.swing.JTextField txfEstatus;
+    public static javax.swing.JTextField txfId;
+    public static javax.swing.JTextField txfNombre;
+    public static javax.swing.JTextField txfSiglas;
     // End of variables declaration//GEN-END:variables
 }

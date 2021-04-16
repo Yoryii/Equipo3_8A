@@ -25,8 +25,10 @@ public class Empaques extends javax.swing.JFrame {
     /**
      * Creates new form Empaques
      */
+    public static int editando = 0;
     public Empaques() {
         initComponents();
+        //control.setText(String.valueOf(editando));
         setDefaultCloseOperation(0);
         setLocationRelativeTo(null);
         this.setResizable(false);
@@ -44,7 +46,7 @@ public class Empaques extends javax.swing.JFrame {
         btnEliminar.setEnabled(false);
     }
 
-    boolean editando = false;
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -124,6 +126,7 @@ public class Empaques extends javax.swing.JFrame {
             }
         });
 
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -232,14 +235,14 @@ public class Empaques extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
@@ -250,8 +253,15 @@ public class Empaques extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+       this.setVisible(false);
+        TablaUnidadesMedida uniM = new TablaUnidadesMedida();
+        uniM.setVisible(true);
         btnGuardar.setEnabled(false);
-        btnEliminar.setEnabled(false);
+        
+        btnCancelar.setEnabled(false);
+        //txfNombre.setEnabled(false);
+        //txfCapacidad.setEnabled(false);
+       /*
         if (editando) {
             if (txfNombre.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Llene todos los campos!");
@@ -302,7 +312,7 @@ public class Empaques extends javax.swing.JFrame {
 
                 }
             }
-        }
+        }*/
 
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -334,7 +344,7 @@ public class Empaques extends javax.swing.JFrame {
             PreparedStatement ps;
             ResultSet rs;
             Connection con = Conexion.getConexion();
-            editando = true;
+            editando = 1;
             ps = con.prepareStatement("SELECT nombre, capacidad, estatus FROM Empaques WHERE idEmpaque=?");
             ps.setInt(1, id);
             rs = ps.executeQuery();
@@ -353,7 +363,7 @@ public class Empaques extends javax.swing.JFrame {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         btnGuardar.setEnabled(false);
         btnEliminar.setEnabled(false);
-        editando = false;
+        editando = 0;
         limpiar();
         cargarTabla();
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -374,14 +384,14 @@ public class Empaques extends javax.swing.JFrame {
         btnGuardar.setEnabled(txfCapacidad.getText().length() != 0);
     }//GEN-LAST:event_txfCapacidadKeyReleased
 
-    private void limpiar() {
+    public void limpiar() {
         txfId.setText("");
         txfNombre.setText("");
         txfCapacidad.setText("");
 
     }
 
-    private void cargarTabla() {
+    public void cargarTabla() {
 
         DefaultTableModel modeloTabla = (DefaultTableModel) tblEmpaques.getModel();
         modeloTabla.setRowCount(0);
@@ -468,8 +478,8 @@ public class Empaques extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblEmpaques;
-    private javax.swing.JTextField txfCapacidad;
-    private javax.swing.JTextField txfId;
-    private javax.swing.JTextField txfNombre;
+    public static javax.swing.JTextField txfCapacidad;
+    public static javax.swing.JTextField txfId;
+    public static javax.swing.JTextField txfNombre;
     // End of variables declaration//GEN-END:variables
 }
