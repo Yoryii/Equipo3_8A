@@ -68,6 +68,9 @@ public class PresentacionesProducto extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtPrecioCompraKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioCompraKeyTyped(evt);
+            }
         });
 
         jLabel2.setText("Precio de venta");
@@ -76,6 +79,9 @@ public class PresentacionesProducto extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtPrecioVentaKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioVentaKeyTyped(evt);
+            }
         });
 
         jLabel3.setText("Punto de reorden");
@@ -83,6 +89,9 @@ public class PresentacionesProducto extends javax.swing.JFrame {
         txtPuntoReorden.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtPuntoReordenKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPuntoReordenKeyTyped(evt);
             }
         });
 
@@ -230,7 +239,7 @@ public class PresentacionesProducto extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 891, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(219, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -477,6 +486,29 @@ public class PresentacionesProducto extends javax.swing.JFrame {
         btnGuardar.setEnabled(x);
         btnCancelar.setEnabled(x);
     }//GEN-LAST:event_txtPuntoReordenKeyReleased
+
+    private void txtPrecioCompraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioCompraKeyTyped
+        
+        char c = evt.getKeyChar();
+        if ((c<'0' || c>'9') && c!='.') {
+            evt.consume();
+        }
+        
+    }//GEN-LAST:event_txtPrecioCompraKeyTyped
+
+    private void txtPrecioVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioVentaKeyTyped
+        char c = evt.getKeyChar();
+        if ((c<'0' || c>'9') && c!='.') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPrecioVentaKeyTyped
+
+    private void txtPuntoReordenKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPuntoReordenKeyTyped
+        char c = evt.getKeyChar();
+        if ((c<'0' || c>'9') && c!='.') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPuntoReordenKeyTyped
 
     private void Limpiar() {
         txtId.setText("");
