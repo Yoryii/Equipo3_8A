@@ -24,6 +24,7 @@ public class PresentacionesProducto extends javax.swing.JFrame {
         cmbProducto.setModel(hpProductos.getValues());
         cmbEmpaque.setModel(hpEmpaques.getValues());
         cargarTabla();
+        desactivarBotones();
     }
 
     @SuppressWarnings("unchecked")
@@ -63,9 +64,27 @@ public class PresentacionesProducto extends javax.swing.JFrame {
 
         jLabel1.setText("Precio de compra");
 
+        txtPrecioCompra.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPrecioCompraKeyReleased(evt);
+            }
+        });
+
         jLabel2.setText("Precio de venta");
 
+        txtPrecioVenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPrecioVentaKeyReleased(evt);
+            }
+        });
+
         jLabel3.setText("Punto de reorden");
+
+        txtPuntoReorden.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPuntoReordenKeyReleased(evt);
+            }
+        });
 
         jLabel4.setText("Producto");
 
@@ -390,6 +409,7 @@ public class PresentacionesProducto extends javax.swing.JFrame {
 
             Connection con = Conexion.getConexion();
             editando = true;
+            activarBotones();
             ps = con.prepareStatement("SELECT PP.precioCompra, PP.precioVenta, PP.puntoReorden, P.nombre AS Producto, E.nombre AS Empaque FROM PresentacionesProducto AS PP INNER JOIN Productos AS P ON PP.idProducto = P.idProducto INNER JOIN Empaques AS E ON PP.idEmpaque = e.idEmpaque WHERE PP.idPresentacion = ?");
             ps.setInt(1, id);
             rs = ps.executeQuery();
@@ -433,6 +453,31 @@ public class PresentacionesProducto extends javax.swing.JFrame {
         pr.setVisible(true);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    boolean precioC = false;
+    boolean precioV = false;
+    boolean puntoR = false;
+    
+    private void txtPrecioCompraKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioCompraKeyReleased
+        precioC = txtPrecioCompra.getText().length() != 0;
+        boolean x = precioC && precioV && puntoR;
+        btnGuardar.setEnabled(x);
+        btnCancelar.setEnabled(x);
+    }//GEN-LAST:event_txtPrecioCompraKeyReleased
+
+    private void txtPrecioVentaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioVentaKeyReleased
+        precioV = txtPrecioVenta.getText().length() != 0;
+        boolean x = precioC && precioV && puntoR;
+            btnGuardar.setEnabled(x);
+            btnCancelar.setEnabled(x);
+    }//GEN-LAST:event_txtPrecioVentaKeyReleased
+
+    private void txtPuntoReordenKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPuntoReordenKeyReleased
+        puntoR = txtPuntoReorden.getText().length() != 0;
+        boolean x = precioC && precioV && puntoR;
+        btnGuardar.setEnabled(x);
+        btnCancelar.setEnabled(x);
+    }//GEN-LAST:event_txtPuntoReordenKeyReleased
+
     private void Limpiar() {
         txtId.setText("");
         txtPrecioCompra.setText("");
@@ -440,6 +485,7 @@ public class PresentacionesProducto extends javax.swing.JFrame {
         txtPuntoReorden.setText("");
         cmbEmpaque.setSelectedIndex(0);
         cmbProducto.setSelectedIndex(0);
+        desactivarBotones();
     }
 
     private void cargarTabla() {
@@ -521,6 +567,18 @@ public class PresentacionesProducto extends javax.swing.JFrame {
         btnCancelar.setIcon(new ImageIcon(cancelar.getImage().getScaledInstance(btnCancelar.getWidth(), btnCancelar.getHeight(), Image.SCALE_SMOOTH)));
     }
 
+    private void desactivarBotones(){
+        btnGuardar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+    }
+
+    private void activarBotones(){
+        btnGuardar.setEnabled(true);
+        btnEliminar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEliminar;

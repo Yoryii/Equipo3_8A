@@ -24,6 +24,7 @@ public class Productos extends javax.swing.JFrame {
         cmbCategoria.setModel(hpCategorias.getValues());
         cmbLaboratorio.setModel(hpLaboratorios.getValues());
         cargarTabla();
+        desactivarBotones();
 
     }
 
@@ -110,6 +111,42 @@ public class Productos extends javax.swing.JFrame {
         jLabel8.setText("Laboratorio");
 
         jLabel9.setText("Categoría");
+
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNombreKeyReleased(evt);
+            }
+        });
+
+        txtDescripcion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtDescripcionKeyReleased(evt);
+            }
+        });
+
+        txtIngredienteActivo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtIngredienteActivoKeyReleased(evt);
+            }
+        });
+
+        txtBandaToxicologica.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBandaToxicologicaKeyReleased(evt);
+            }
+        });
+
+        txtAplicacion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtAplicacionKeyReleased(evt);
+            }
+        });
+
+        txtUso.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtUsoKeyReleased(evt);
+            }
+        });
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -432,6 +469,7 @@ public class Productos extends javax.swing.JFrame {
 
             Connection con = Conexion.getConexion();
             editando = true;
+            activarBotones();
             ps = con.prepareStatement("SELECT P.nombre, P.descripcion, P.ingredienteActivo, P.bandaToxicologica, P.aplicacion, P.uso, L.nombre AS laboratorio, C.nombre AS categoria FROM Productos AS P INNER JOIN Laboratorios AS L ON P.idLaboratorio = L.idLaboratorio INNER JOIN Categorias AS C ON P.idCategoria = C.idCategoria WHERE P.idProducto=?");
             ps.setInt(1, id);
             rs = ps.executeQuery();
@@ -478,6 +516,56 @@ public class Productos extends javax.swing.JFrame {
         pr.setVisible(true);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    boolean n = false;
+    boolean d = false;
+    boolean iA = false;
+    boolean bT = false;
+    boolean a = false;
+    boolean u = false;
+    
+    
+    private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
+        n = txtNombre.getText().length() != 0;
+        boolean x = n && d && iA && bT && a && u;
+        btnGuardar.setEnabled(x);
+        btnCancelar.setEnabled(x);
+    }//GEN-LAST:event_txtNombreKeyReleased
+
+    private void txtDescripcionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionKeyReleased
+        d = txtDescripcion.getText().length() != 0;
+        boolean x = n && d && iA && bT && a && u;
+        btnGuardar.setEnabled(x);
+        btnCancelar.setEnabled(x);
+    }//GEN-LAST:event_txtDescripcionKeyReleased
+
+    private void txtIngredienteActivoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIngredienteActivoKeyReleased
+        iA = txtIngredienteActivo.getText().length() != 0;
+        boolean x = n && d && iA && bT && a && u;
+        btnGuardar.setEnabled(x);
+        btnCancelar.setEnabled(x);
+    }//GEN-LAST:event_txtIngredienteActivoKeyReleased
+
+    private void txtBandaToxicologicaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBandaToxicologicaKeyReleased
+        bT = txtBandaToxicologica.getText().length() != 0;
+        boolean x = n && d && iA && bT && a && u;
+        btnGuardar.setEnabled(x);
+        btnCancelar.setEnabled(x);
+    }//GEN-LAST:event_txtBandaToxicologicaKeyReleased
+
+    private void txtAplicacionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAplicacionKeyReleased
+        a = txtAplicacion.getText().length() != 0;
+        boolean x = n && d && iA && bT && a && u;
+        btnGuardar.setEnabled(x);
+        btnCancelar.setEnabled(x);
+    }//GEN-LAST:event_txtAplicacionKeyReleased
+
+    private void txtUsoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsoKeyReleased
+        u = txtUso.getText().length() != 0;
+        boolean x = n && d && iA && bT && a && u;
+        btnGuardar.setEnabled(x);
+        btnCancelar.setEnabled(x);
+    }//GEN-LAST:event_txtUsoKeyReleased
+
     private void Limpiar() {
         txtId.setText("");
         txtNombre.setText("");
@@ -488,6 +576,7 @@ public class Productos extends javax.swing.JFrame {
         txtUso.setText("");
         cmbCategoria.setSelectedIndex(0);
         cmbLaboratorio.setSelectedIndex(0);
+        desactivarBotones();
     }
 
     private void cargarTabla() {
@@ -544,6 +633,18 @@ public class Productos extends javax.swing.JFrame {
         
         ImageIcon cancelar = new ImageIcon("src/Img/deleteIcon.png");
         btnCancelar.setIcon(new ImageIcon(cancelar.getImage().getScaledInstance(btnCancelar.getWidth(), btnCancelar.getHeight(), Image.SCALE_SMOOTH)));
+    }
+    
+    private void desactivarBotones(){
+        btnGuardar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+    }
+
+    private void activarBotones(){
+        btnGuardar.setEnabled(true);
+        btnEliminar.setEnabled(true);
+        btnCancelar.setEnabled(true);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
