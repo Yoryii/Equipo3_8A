@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class PresentacionesProducto extends javax.swing.JFrame {
 
+    
     public PresentacionesProducto() {
         initComponents();
         txtId.setVisible(false);
@@ -25,6 +26,8 @@ public class PresentacionesProducto extends javax.swing.JFrame {
         cmbEmpaque.setModel(hpEmpaques.getValues());
         cargarTabla();
         desactivarBotones();
+        btnAnterior.setEnabled(false);
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -50,6 +53,8 @@ public class PresentacionesProducto extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPresentacionesProductos = new javax.swing.JTable();
+        btnAnterior = new javax.swing.JButton();
+        btnSiguiente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Presentaciones de producto");
@@ -226,6 +231,20 @@ public class PresentacionesProducto extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblPresentacionesProductos);
 
+        btnAnterior.setText("Anterior");
+        btnAnterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnteriorActionPerformed(evt);
+            }
+        });
+
+        btnSiguiente.setText("Siguiente");
+        btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSiguienteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -238,13 +257,18 @@ public class PresentacionesProducto extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 891, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(219, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(btnAnterior)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnSiguiente))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 891, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(246, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -254,13 +278,23 @@ public class PresentacionesProducto extends javax.swing.JFrame {
                         .addGap(36, 36, 36)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnAnterior)
+                            .addComponent(btnSiguiente))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
     boolean editando = false;
+    int cantidad = 5;
+    int pagina = 1;
+    int rango = ((pagina - 1) * cantidad);
+    int total;
+    int numeroPaginas;
+    
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
         if (editando) {//editar
@@ -510,6 +544,41 @@ public class PresentacionesProducto extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtPuntoReordenKeyTyped
 
+    private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
+        pagina++;
+        btnAnterior.setEnabled(true);
+        rango = ((pagina - 1) * cantidad);
+        cargarTabla();
+        calcularNumeroPaginas();
+        if (pagina == 1) {
+            btnAnterior.setEnabled(false);
+        } else {
+            btnAnterior.setEnabled(true);
+        }
+        if (numeroPaginas == pagina) {
+            btnSiguiente.setEnabled(false);
+        } else {
+            btnSiguiente.setEnabled(true);
+        }
+    }//GEN-LAST:event_btnSiguienteActionPerformed
+
+    private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
+        pagina--;
+        rango = ((pagina - 1) * cantidad);
+        cargarTabla();
+        calcularNumeroPaginas();
+        if (pagina == 1) {
+            btnAnterior.setEnabled(false);
+        } else {
+            btnAnterior.setEnabled(true);
+        }
+        if (numeroPaginas == pagina) {
+            btnSiguiente.setEnabled(false);
+        } else {
+            btnSiguiente.setEnabled(true);
+        }
+    }//GEN-LAST:event_btnAnteriorActionPerformed
+
     private void Limpiar() {
         txtId.setText("");
         txtPrecioCompra.setText("");
@@ -536,7 +605,9 @@ public class PresentacionesProducto extends javax.swing.JFrame {
 
         try {
             Connection con = Conexion.getConexion();
-            ps = con.prepareStatement("SELECT PP.idPresentacion, PP.precioCompra, PP.precioVenta, PP.puntoReorden, P.nombre, E.nombre FROM PresentacionesProducto AS PP INNER JOIN Productos AS P ON PP.idProducto = P.idProducto INNER JOIN Empaques AS E ON PP.idEmpaque = e.idEmpaque WHERE PP.estatus = 'A'");
+            ps = con.prepareStatement("SELECT PP.idPresentacion, PP.precioCompra, PP.precioVenta, PP.puntoReorden, P.nombre, E.nombre FROM PresentacionesProducto AS PP INNER JOIN Productos AS P ON PP.idProducto = P.idProducto INNER JOIN Empaques AS E ON PP.idEmpaque = e.idEmpaque WHERE PP.estatus = 'A' ORDER BY idPresentacion ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
+            ps.setInt(1, rango);
+            ps.setInt(2, cantidad);
             rs = ps.executeQuery();
             rsmd = rs.getMetaData();
             columnas = rsmd.getColumnCount();
@@ -550,7 +621,17 @@ public class PresentacionesProducto extends javax.swing.JFrame {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.toString());
         }
-
+        calcularNumeroPaginas();
+        if (pagina == 1) {
+            btnAnterior.setEnabled(false);
+        } else {
+            btnAnterior.setEnabled(true);
+        }
+        if (numeroPaginas == pagina) {
+            btnSiguiente.setEnabled(false);
+        } else {
+            btnSiguiente.setEnabled(true);
+        }
     }
 
     public static void main(String args[]) {
@@ -611,11 +692,39 @@ public class PresentacionesProducto extends javax.swing.JFrame {
         btnCancelar.setEnabled(true);
     }
     
+    private void sacarTotal(){
+        try {
+
+                    PreparedStatement ps;
+                    ResultSet rs;
+                    Connection con = Conexion.getConexion();
+                    ps = con.prepareStatement("SELECT COUNT(*) AS total FROM PresentacionesProducto WHERE estatus='A'");
+                    rs = ps.executeQuery();
+                    while(rs.next()){
+                    total = rs.getInt("total");
+                    }
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, e.toString());
+                }
+    }
+    
+    private void calcularNumeroPaginas(){
+        sacarTotal();
+        float totalf;
+        float cantidadf;
+        totalf = (float)total;
+        cantidadf = (float)cantidad;
+        float x = (totalf / cantidadf);
+        numeroPaginas = (int) Math.ceil(x);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAnterior;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton btnSiguiente;
     private javax.swing.JComboBox<String> cmbEmpaque;
     private javax.swing.JComboBox<String> cmbProducto;
     private javax.swing.JLabel jLabel1;
