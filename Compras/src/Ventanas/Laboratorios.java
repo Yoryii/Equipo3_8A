@@ -252,7 +252,7 @@ public class Laboratorios extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     boolean editando = false;
-     int cantidad = 5;
+    int cantidad = 5;
     int pagina = 1;
     int rango = ((pagina - 1) * cantidad);
     int total;
@@ -456,7 +456,9 @@ public class Laboratorios extends javax.swing.JFrame {
 
         try {
             Connection con = Conexion.getConexion();
-            ps = con.prepareStatement("SELECT idLaboratorio, nombre, origen, estatus FROM Laboratorios WHERE estatus = 'A'");
+            ps = con.prepareStatement("SELECT idLaboratorio, nombre, origen, estatus FROM Laboratorios WHERE estatus = 'A' ORDER BY idLaboratorio ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
+            ps.setInt(1, rango);
+            ps.setInt(2, cantidad);
             rs = ps.executeQuery();
             rsmd = rs.getMetaData();
             columnas = rsmd.getColumnCount();

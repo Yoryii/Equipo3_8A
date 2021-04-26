@@ -665,7 +665,9 @@ public class Proveedores extends javax.swing.JFrame {
 
         try {
             Connection con = Conexion.getConexion();
-            ps = con.prepareStatement("SELECT P.idProveedor, P.nombre, P.telefono, P.email, P.direccion, P.colonia, P.codigoPostal, C.nombre FROM Proveedores AS P INNER JOIN Ciudades AS C on P.idCiudad = C.idCiudad WHERE P.estatus = 'A'");
+            ps = con.prepareStatement("SELECT P.idProveedor, P.nombre, P.telefono, P.email, P.direccion, P.colonia, P.codigoPostal, C.nombre FROM Proveedores AS P INNER JOIN Ciudades AS C on P.idCiudad = C.idCiudad WHERE P.estatus = 'A'ORDER BY idProveedor ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
+            ps.setInt(1, rango);
+            ps.setInt(2, cantidad);
             rs = ps.executeQuery();
             rsmd = rs.getMetaData();
             columnas = rsmd.getColumnCount();
