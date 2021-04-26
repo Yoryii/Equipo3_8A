@@ -6,15 +6,21 @@
 package Ventanas;
 
 import Coexion.Conexion;
+import Coexion.HelperProductos;
 
 import java.awt.Image;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -26,7 +32,8 @@ public class ImagenesProducto extends javax.swing.JFrame {
     /**
      * Creates new form ImagenesProducto
      */
-     int editando = 0;
+    int editando = 0;
+
     public ImagenesProducto() {
         initComponents();
         setDefaultCloseOperation(0);
@@ -35,13 +42,16 @@ public class ImagenesProducto extends javax.swing.JFrame {
         txfId.setVisible(false);
         cargarTabla();
         botonImagen();
-        
+        HelperProductos hpProductos = new HelperProductos();
+        cmbProducto.setModel(hpProductos.getValues());
+
         //Desactivados
         btnGuardar.setEnabled(false);
         btnEliminar.setEnabled(false);
-        
+        txfRuta.setEditable(false);
+
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -57,13 +67,14 @@ public class ImagenesProducto extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txfNombre = new javax.swing.JTextField();
         btnImagen = new javax.swing.JButton();
-        cmbProductos = new javax.swing.JComboBox<>();
+        cmbProducto = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         txfPrincipal = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         txfId = new javax.swing.JTextField();
+        txfRuta = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblImagenes = new javax.swing.JTable();
         btnRegresar = new javax.swing.JButton();
@@ -115,26 +126,25 @@ public class ImagenesProducto extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel4)
-                                .addComponent(jLabel3)
-                                .addComponent(txfNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
-                                .addComponent(txfPrincipal)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel2)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(cmbProductos, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(btnImagen, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                    .addGap(25, 25, 25))))
-                        .addContainerGap(53, Short.MAX_VALUE))
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(cmbProducto, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnImagen, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txfRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txfNombre)
+                            .addComponent(txfPrincipal))
+                        .addContainerGap(31, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -154,7 +164,9 @@ public class ImagenesProducto extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnImagen)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnImagen)
+                    .addComponent(txfRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -162,7 +174,7 @@ public class ImagenesProducto extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cmbProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cmbProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -238,21 +250,30 @@ public class ImagenesProducto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImagenActionPerformed
-        // TODO add your handling code here:
+        JFileChooser j = new JFileChooser();
+        FileNameExtensionFilter fil = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
+        j.setFileFilter(fil);
+
+        int s = j.showOpenDialog(this);
+        if (s == JFileChooser.APPROVE_OPTION) {
+            String ruta = j.getSelectedFile().getAbsolutePath();
+            txfRuta.setText(ruta);
+        }
     }//GEN-LAST:event_btnImagenActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-      
+
         btnGuardar.setEnabled(false);
         btnEliminar.setEnabled(false);
-        if (editando==1) {
+        File ruta = new File(txfRuta.getText());
+        if (editando == 1) {
             if (txfNombre.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Llene todos los campos!");
             } else {
 
                 int id = Integer.parseInt(txfId.getText());
                 String nombre = txfNombre.getText();
-                String principal= txfPrincipal.getText();
+                String principal = txfPrincipal.getText();
 
                 try {
                     Connection con = Conexion.getConexion();
@@ -265,7 +286,7 @@ public class ImagenesProducto extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Registro modificado.");
                     limpiar();
                     cargarTabla();
-                    
+
                     editando = 0;
                 } catch (SQLException e) {
 
@@ -321,7 +342,7 @@ public class ImagenesProducto extends javax.swing.JFrame {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.toString());
         }
-        */
+         */
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
@@ -331,18 +352,17 @@ public class ImagenesProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        
 
         btnEliminar.setEnabled(false);
         btnGuardar.setEnabled(false);
         editando = 0;
         limpiar();
         cargarTabla();
-        
+
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void tblImagenesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblImagenesMouseClicked
-       btnGuardar.setEnabled(true);
+        btnGuardar.setEnabled(true);
         btnEliminar.setEnabled(true);
         try {
             int fila = tblImagenes.getSelectedRow();
@@ -371,10 +391,10 @@ public class ImagenesProducto extends javax.swing.JFrame {
         txfId.setText("");
         txfNombre.setText("");
         txfPrincipal.setText("");
-        
+
     }
-    
-     private void botonImagen() {
+
+    private void botonImagen() {
         ImageIcon guardar = new ImageIcon("src/Img/saveIcon.png");
         btnGuardar.setIcon(new ImageIcon(guardar.getImage().getScaledInstance(btnGuardar.getWidth(), btnGuardar.getHeight(), Image.SCALE_SMOOTH)));
 
@@ -385,8 +405,8 @@ public class ImagenesProducto extends javax.swing.JFrame {
         btnRegresar.setIcon(new ImageIcon(regresar.getImage().getScaledInstance(btnRegresar.getWidth(), btnRegresar.getHeight(), Image.SCALE_SMOOTH)));
 
     }
-     
-     private void cargarTabla() {
+
+    private void cargarTabla() {
 
         DefaultTableModel modeloTabla = (DefaultTableModel) tblImagenes.getModel();
         modeloTabla.setRowCount(0);
@@ -416,8 +436,7 @@ public class ImagenesProducto extends javax.swing.JFrame {
         }
 
     }
-    
-   
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -456,7 +475,7 @@ public class ImagenesProducto extends javax.swing.JFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnImagen;
     private javax.swing.JButton btnRegresar;
-    private javax.swing.JComboBox<String> cmbProductos;
+    private javax.swing.JComboBox<String> cmbProducto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -467,5 +486,6 @@ public class ImagenesProducto extends javax.swing.JFrame {
     private javax.swing.JTextField txfId;
     private javax.swing.JTextField txfNombre;
     private javax.swing.JTextField txfPrincipal;
+    private javax.swing.JTextField txfRuta;
     // End of variables declaration//GEN-END:variables
 }
