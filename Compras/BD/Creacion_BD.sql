@@ -296,7 +296,7 @@ go
 create table ImagenesProducto (
 	idImagen int identity not null,
 	nombreImagen varchar(100),
-	imagen varbinary not null,
+	imagen image,
 	principal char not null,
 	idProducto int not null,
 	constraint PK_ImagenesProducto primary key (idImagen)
