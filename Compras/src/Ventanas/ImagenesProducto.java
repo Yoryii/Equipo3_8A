@@ -9,6 +9,7 @@ import Coexion.Conexion;
 import Coexion.HelperProductos;
 
 import java.awt.Image;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -48,8 +49,8 @@ public class ImagenesProducto extends javax.swing.JFrame {
         //Desactivados
         btnGuardar.setEnabled(false);
         btnEliminar.setEnabled(false);
+        txfPrincipal.setEditable(false);
         txfRuta.setEditable(false);
-
     }
 
     /**
@@ -89,6 +90,12 @@ public class ImagenesProducto extends javax.swing.JFrame {
 
         jLabel3.setText("Producto");
 
+        txfNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txfNombreKeyReleased(evt);
+            }
+        });
+
         btnImagen.setText("Seleccionar imagen");
         btnImagen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,6 +104,15 @@ public class ImagenesProducto extends javax.swing.JFrame {
         });
 
         jLabel4.setText("Principal");
+
+        txfPrincipal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txfPrincipalKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txfPrincipalKeyTyped(evt);
+            }
+        });
 
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -274,14 +290,34 @@ public class ImagenesProducto extends javax.swing.JFrame {
                 int id = Integer.parseInt(txfId.getText());
                 String nombre = txfNombre.getText();
                 String principal = txfPrincipal.getText();
+                int idProducto = 1;
+                String producto = (String) cmbProducto.getSelectedItem();
+                String imagen = "null";
+                try {
+
+                    PreparedStatement ps;
+                    ResultSet rs;
+                    Connection con = Conexion.getConexion();
+                    ps = con.prepareStatement("SELECT idProducto FROM Productos WHERE nombre=?");
+                    ps.setString(1, producto);
+                    rs = ps.executeQuery();
+                    while (rs.next()) {
+                        idProducto = rs.getInt("idProducto");
+                    }
+
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, e.toString());
+                }
 
                 try {
                     Connection con = Conexion.getConexion();
-                    PreparedStatement ps = con.prepareStatement("UPDATE ImagenesProducto SET nombreImagen=?, principal=? WHERE idImagen=?");
+                    PreparedStatement ps = con.prepareStatement("UPDATE ImagenesProducto SET nombreImagen=?, imagen=null, principal=?, idProducto=? WHERE idImagen=?");
 
                     ps.setString(1, nombre);
+                    
                     ps.setString(2, principal);
-                    ps.setInt(3, id);
+                    ps.setInt(3, idProducto);
+                    ps.setInt(4, id);
                     ps.executeUpdate();
                     JOptionPane.showMessageDialog(null, "Registro modificado.");
                     limpiar();
@@ -301,12 +337,31 @@ public class ImagenesProducto extends javax.swing.JFrame {
             } else {
                 String nombre = txfNombre.getText();
                 String principal = txfPrincipal.getText();
+                int idProducto = 1;
+                String producto = (String) cmbProducto.getSelectedItem();
+                String imagen = "null";
+                try {
+
+                    PreparedStatement ps;
+                    ResultSet rs;
+                    Connection con = Conexion.getConexion();
+                    ps = con.prepareStatement("SELECT idProducto FROM Productos WHERE nombre=?");
+                    ps.setString(1, producto);
+                    rs = ps.executeQuery();
+                    while (rs.next()) {
+                        idProducto = rs.getInt("idProducto");
+                    }
+
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, e.toString());
+                }
                 try {
 
                     Connection con = Conexion.getConexion();
-                    PreparedStatement ps = con.prepareStatement("INSERT INTO ImagenesProducto (nombreImagen, principal) VALUES (?,?)");
+                    PreparedStatement ps = con.prepareStatement("INSERT INTO ImagenesProducto (nombreImagen, imagen, principal, idProducto) VALUES (?,null,?,?)");
                     ps.setString(1, nombre);
                     ps.setString(2, principal);
+                    ps.setInt(3, idProducto);
                     ps.executeUpdate();
                     JOptionPane.showMessageDialog(null, "Registro guardado.");
                     limpiar();
@@ -363,7 +418,7 @@ public class ImagenesProducto extends javax.swing.JFrame {
 
     private void tblImagenesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblImagenesMouseClicked
         btnGuardar.setEnabled(true);
-        btnEliminar.setEnabled(true);
+        //btnEliminar.setEnabled(true);
         try {
             int fila = tblImagenes.getSelectedRow();
             int id = Integer.parseInt(tblImagenes.getValueAt(fila, 0).toString());
@@ -387,6 +442,22 @@ public class ImagenesProducto extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tblImagenesMouseClicked
 
+    private void txfNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfNombreKeyReleased
+     txfPrincipal.setEditable(txfNombre.getText().length() != 0);
+    }//GEN-LAST:event_txfNombreKeyReleased
+
+    private void txfPrincipalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfPrincipalKeyReleased
+     btnGuardar.setEnabled(txfPrincipal.getText().length() != 0);
+     
+    }//GEN-LAST:event_txfPrincipalKeyReleased
+
+    private void txfPrincipalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfPrincipalKeyTyped
+       int limite = 1;
+        if (txfPrincipal.getText().length() >= limite) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txfPrincipalKeyTyped
+
     private void limpiar() {
         txfId.setText("");
         txfNombre.setText("");
@@ -406,6 +477,8 @@ public class ImagenesProducto extends javax.swing.JFrame {
 
     }
 
+    
+    
     private void cargarTabla() {
 
         DefaultTableModel modeloTabla = (DefaultTableModel) tblImagenes.getModel();
