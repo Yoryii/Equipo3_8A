@@ -24,7 +24,7 @@ public class Productos extends javax.swing.JFrame {
         cmbCategoria.setModel(hpCategorias.getValues());
         cmbLaboratorio.setModel(hpLaboratorios.getValues());
         cargarTabla();
-        desactivarBotones();
+        activarBotones();
 
     }
 
@@ -545,55 +545,55 @@ public class Productos extends javax.swing.JFrame {
         Principal pr = new Principal();
         pr.setVisible(true);
     }//GEN-LAST:event_btnRegresarActionPerformed
-
+/*
     boolean n = false;
     boolean d = false;
     boolean iA = false;
     boolean bT = false;
     boolean a = false;
-    boolean u = false;
+    boolean u = false;*/
 
 
     private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
-        n = txtNombre.getText().length() != 0;
+       /* n = txtNombre.getText().length() != 0;
         boolean x = n && d && iA && bT && a && u;
         btnGuardar.setEnabled(x);
-        btnCancelar.setEnabled(x);
+        btnCancelar.setEnabled(x);*/
     }//GEN-LAST:event_txtNombreKeyReleased
 
     private void txtDescripcionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionKeyReleased
-        d = txtDescripcion.getText().length() != 0;
+        /*d = txtDescripcion.getText().length() != 0;
         boolean x = n && d && iA && bT && a && u;
         btnGuardar.setEnabled(x);
-        btnCancelar.setEnabled(x);
+        btnCancelar.setEnabled(x);*/
     }//GEN-LAST:event_txtDescripcionKeyReleased
 
     private void txtIngredienteActivoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIngredienteActivoKeyReleased
-        iA = txtIngredienteActivo.getText().length() != 0;
+        /*iA = txtIngredienteActivo.getText().length() != 0;
         boolean x = n && d && iA && bT && a && u;
         btnGuardar.setEnabled(x);
-        btnCancelar.setEnabled(x);
+        btnCancelar.setEnabled(x);*/
     }//GEN-LAST:event_txtIngredienteActivoKeyReleased
 
     private void txtBandaToxicologicaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBandaToxicologicaKeyReleased
-        bT = txtBandaToxicologica.getText().length() != 0;
+        /*bT = txtBandaToxicologica.getText().length() != 0;
         boolean x = n && d && iA && bT && a && u;
         btnGuardar.setEnabled(x);
-        btnCancelar.setEnabled(x);
+        btnCancelar.setEnabled(x);*/
     }//GEN-LAST:event_txtBandaToxicologicaKeyReleased
 
     private void txtAplicacionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAplicacionKeyReleased
-        a = txtAplicacion.getText().length() != 0;
+        /*a = txtAplicacion.getText().length() != 0;
         boolean x = n && d && iA && bT && a && u;
         btnGuardar.setEnabled(x);
-        btnCancelar.setEnabled(x);
+        btnCancelar.setEnabled(x);*/
     }//GEN-LAST:event_txtAplicacionKeyReleased
 
     private void txtUsoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsoKeyReleased
-        u = txtUso.getText().length() != 0;
+        /*u = txtUso.getText().length() != 0;
         boolean x = n && d && iA && bT && a && u;
         btnGuardar.setEnabled(x);
-        btnCancelar.setEnabled(x);
+        btnCancelar.setEnabled(x);*/
     }//GEN-LAST:event_txtUsoKeyReleased
 
     private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
@@ -641,7 +641,7 @@ public class Productos extends javax.swing.JFrame {
         txtUso.setText("");
         cmbCategoria.setSelectedIndex(0);
         cmbLaboratorio.setSelectedIndex(0);
-        desactivarBotones();
+        activarBotones();
     }
 
     private void cargarTabla() {

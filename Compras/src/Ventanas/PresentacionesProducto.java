@@ -1,4 +1,4 @@
-package Ventanas;
+ package Ventanas;
 
 import Coexion.Conexion;
 import Coexion.HelperEmpaques;
@@ -25,7 +25,7 @@ public class PresentacionesProducto extends javax.swing.JFrame {
         cmbProducto.setModel(hpProductos.getValues());
         cmbEmpaque.setModel(hpEmpaques.getValues());
         cargarTabla();
-        desactivarBotones();
+        activarBotones();
         btnAnterior.setEnabled(false);
         
     }
@@ -495,30 +495,30 @@ public class PresentacionesProducto extends javax.swing.JFrame {
         Principal pr = new Principal();
         pr.setVisible(true);
     }//GEN-LAST:event_btnRegresarActionPerformed
-
+/*
     boolean precioC = false;
     boolean precioV = false;
-    boolean puntoR = false;
+    boolean puntoR = false;*/
     
     private void txtPrecioCompraKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioCompraKeyReleased
-        precioC = txtPrecioCompra.getText().length() != 0;
+        /*precioC = txtPrecioCompra.getText().length() != 0;
         boolean x = precioC && precioV && puntoR;
         btnGuardar.setEnabled(x);
-        btnCancelar.setEnabled(x);
+        btnCancelar.setEnabled(x);*/
     }//GEN-LAST:event_txtPrecioCompraKeyReleased
 
     private void txtPrecioVentaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioVentaKeyReleased
-        precioV = txtPrecioVenta.getText().length() != 0;
+        /*precioV = txtPrecioVenta.getText().length() != 0;
         boolean x = precioC && precioV && puntoR;
             btnGuardar.setEnabled(x);
-            btnCancelar.setEnabled(x);
+            btnCancelar.setEnabled(x);*/
     }//GEN-LAST:event_txtPrecioVentaKeyReleased
 
     private void txtPuntoReordenKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPuntoReordenKeyReleased
-        puntoR = txtPuntoReorden.getText().length() != 0;
+        /*puntoR = txtPuntoReorden.getText().length() != 0;
         boolean x = precioC && precioV && puntoR;
         btnGuardar.setEnabled(x);
-        btnCancelar.setEnabled(x);
+        btnCancelar.setEnabled(x);*/
     }//GEN-LAST:event_txtPuntoReordenKeyReleased
 
     private void txtPrecioCompraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioCompraKeyTyped
@@ -586,7 +586,7 @@ public class PresentacionesProducto extends javax.swing.JFrame {
         txtPuntoReorden.setText("");
         cmbEmpaque.setSelectedIndex(0);
         cmbProducto.setSelectedIndex(0);
-        desactivarBotones();
+        activarBotones();
     }
 
     private void cargarTabla() {
