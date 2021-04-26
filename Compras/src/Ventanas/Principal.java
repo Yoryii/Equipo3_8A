@@ -66,6 +66,10 @@ public class Principal extends javax.swing.JFrame {
         btnPresentacionesProducto = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        btnProveedores = new javax.swing.JButton();
+        btnProductosProveedor = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         lblFecha = new javax.swing.JLabel();
@@ -126,6 +130,22 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel6.setText("Presentaciones de productos");
 
+        btnProveedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProveedoresActionPerformed(evt);
+            }
+        });
+
+        btnProductosProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProductosProveedorActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("Proveedor");
+
+        jLabel8.setText("ProductosProveedor");
+
         javax.swing.GroupLayout pnlBotonesLayout = new javax.swing.GroupLayout(pnlBotones);
         pnlBotones.setLayout(pnlBotonesLayout);
         pnlBotonesLayout.setHorizontalGroup(
@@ -142,20 +162,33 @@ public class Principal extends javax.swing.JFrame {
                             .addComponent(btnLab, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBotonesLayout.createSequentialGroup()
                         .addGap(32, 32, 32)
-                        .addComponent(btnProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                        .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnProveedores, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+                            .addComponent(btnProductos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(pnlBotonesLayout.createSequentialGroup()
+                                .addGap(25, 25, 25)
+                                .addComponent(jLabel7)))))
                 .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBotonesLayout.createSequentialGroup()
-                        .addComponent(btnUnidades, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(59, 59, 59))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBotonesLayout.createSequentialGroup()
-                        .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnEmpaques, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())
                     .addGroup(pnlBotonesLayout.createSequentialGroup()
-                        .addComponent(btnPresentacionesProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBotonesLayout.createSequentialGroup()
+                                .addComponent(btnUnidades, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(59, 59, 59))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBotonesLayout.createSequentialGroup()
+                                .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnEmpaques, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap())
+                            .addGroup(pnlBotonesLayout.createSequentialGroup()
+                                .addComponent(btnPresentacionesProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))
+                    .addGroup(pnlBotonesLayout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(btnProductosProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 60, Short.MAX_VALUE))))
             .addGroup(pnlBotonesLayout.createSequentialGroup()
                 .addGap(60, 60, 60)
                 .addComponent(jLabel3)
@@ -196,7 +229,15 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addGap(29, 29, 29)
+                .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnProveedores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnProductosProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         lblNombre.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Empleado:"));
@@ -234,7 +275,7 @@ public class Principal extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(64, 64, 64)
                         .addComponent(pnlBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,7 +286,7 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(lblNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(11, 11, 11)
                 .addComponent(pnlBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         pack();
@@ -289,6 +330,18 @@ public class Principal extends javax.swing.JFrame {
         pp.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnPresentacionesProductoActionPerformed
+
+    private void btnProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedoresActionPerformed
+        Proveedores p = new Proveedores();
+        p.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnProveedoresActionPerformed
+
+    private void btnProductosProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosProveedorActionPerformed
+        ProductosProveedor pp = new ProductosProveedor();
+        pp.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnProductosProveedorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -343,6 +396,13 @@ public class Principal extends javax.swing.JFrame {
         
         ImageIcon presentacionesProducto = new ImageIcon("src/Img/PresentacionesProducto.jpg");
         btnPresentacionesProducto.setIcon(new ImageIcon(empaques.getImage().getScaledInstance(btnPresentacionesProducto.getWidth(), btnPresentacionesProducto.getHeight(), Image.SCALE_SMOOTH)));
+        
+        ImageIcon proveedores = new ImageIcon("src/Img/Proveedores.png");
+        btnProveedores.setIcon(new ImageIcon(empaques.getImage().getScaledInstance(btnProveedores .getWidth(), btnProveedores.getHeight(), Image.SCALE_SMOOTH)));
+        
+        ImageIcon productosProveedor = new ImageIcon("src/Img/ProductosProveedor.jpg");
+        btnProductosProveedor.setIcon(new ImageIcon(empaques.getImage().getScaledInstance(btnProductosProveedor.getWidth(), btnProductosProveedor.getHeight(), Image.SCALE_SMOOTH)));
+    
     }
 
 
@@ -352,6 +412,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnLab;
     private javax.swing.JButton btnPresentacionesProducto;
     private javax.swing.JButton btnProductos;
+    private javax.swing.JButton btnProductosProveedor;
+    private javax.swing.JButton btnProveedores;
     private javax.swing.JButton btnUnidades;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -360,6 +422,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblFecha;
     private javax.swing.JLabel lblFecha2;

@@ -6,12 +6,14 @@ import Coexion.HelperCategorias;
 import Coexion.HelperCiudades;
 import Coexion.HelperProveedores;
 import java.awt.Button;
+import java.awt.Image;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -24,10 +26,15 @@ public class Proveedores extends javax.swing.JFrame {
 
     public Proveedores() {
         initComponents();
+        setDefaultCloseOperation(0);
+        setLocationRelativeTo(null);
+        this.setResizable(false);
         txtId.setVisible(false);
         HelperCiudades hpCiudades= new HelperCiudades();
         cmbCiudad.setModel(hpCiudades.getValues());
         cargarTabla();
+        botonImagen();
+        desactivarBotones();
         
     }
 
@@ -51,14 +58,16 @@ public class Proveedores extends javax.swing.JFrame {
         txtCodigoPostal = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JButton();
-        btnCambiar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        btnLimpiar = new javax.swing.JButton();
         txtId = new javax.swing.JTextField();
         cmbCiudad = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblProveedores = new javax.swing.JTable();
+        btnRegresar = new javax.swing.JButton();
+        btnAnterior = new javax.swing.JButton();
+        btnSiguiente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Proveedores");
@@ -70,6 +79,11 @@ public class Proveedores extends javax.swing.JFrame {
         jLabel2.setText("Nombre");
 
         txtNombre.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNombreKeyReleased(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setText("Telefono");
@@ -78,6 +92,11 @@ public class Proveedores extends javax.swing.JFrame {
         txtTelefono.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTelefonoActionPerformed(evt);
+            }
+        });
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyReleased(evt);
             }
         });
 
@@ -90,21 +109,41 @@ public class Proveedores extends javax.swing.JFrame {
                 txtEmailActionPerformed(evt);
             }
         });
+        txtEmail.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtEmailKeyReleased(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setText("Direccion");
 
         txtDireccion.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtDireccionKeyReleased(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel6.setText("Colonia");
 
         txtColonia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtColonia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtColoniaKeyReleased(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setText("Codigo Postal");
 
         txtCodigoPostal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtCodigoPostal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCodigoPostalKeyReleased(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setText("Ciudad");
@@ -117,11 +156,11 @@ public class Proveedores extends javax.swing.JFrame {
             }
         });
 
-        btnCambiar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnCambiar.setText("Cambiar");
-        btnCambiar.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnCancelar.setText("Cambiar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCambiarActionPerformed(evt);
+                btnCancelarActionPerformed(evt);
             }
         });
 
@@ -130,14 +169,6 @@ public class Proveedores extends javax.swing.JFrame {
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
-            }
-        });
-
-        btnLimpiar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnLimpiar.setText("Limpiar");
-        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimpiarActionPerformed(evt);
             }
         });
 
@@ -150,11 +181,6 @@ public class Proveedores extends javax.swing.JFrame {
             .addGroup(ProveedoresLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(ProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(ProveedoresLayout.createSequentialGroup()
-                        .addGroup(ProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCodigoPostal, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(ProveedoresLayout.createSequentialGroup()
                         .addGroup(ProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2)
@@ -171,20 +197,21 @@ public class Proveedores extends javax.swing.JFrame {
                         .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26))
                     .addGroup(ProveedoresLayout.createSequentialGroup()
+                        .addComponent(cmbCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(ProveedoresLayout.createSequentialGroup()
                         .addGroup(ProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(ProveedoresLayout.createSequentialGroup()
-                                .addGroup(ProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtColonia, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, ProveedoresLayout.createSequentialGroup()
-                                        .addComponent(btnGuardar)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btnCambiar)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btnEliminar)))
-                                .addGap(33, 33, 33)
-                                .addComponent(btnLimpiar))
-                            .addComponent(cmbCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(txtCodigoPostal, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(ProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(ProveedoresLayout.createSequentialGroup()
+                                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(txtColonia, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         ProveedoresLayout.setVerticalGroup(
             ProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,10 +248,9 @@ public class Proveedores extends javax.swing.JFrame {
                 .addComponent(cmbCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
                 .addGroup(ProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGuardar)
-                    .addComponent(btnCambiar)
-                    .addComponent(btnEliminar)
-                    .addComponent(btnLimpiar))
+                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -259,6 +285,28 @@ public class Proveedores extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tblProveedores);
 
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
+
+        btnAnterior.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnAnterior.setText("Anterior");
+        btnAnterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnteriorActionPerformed(evt);
+            }
+        });
+
+        btnSiguiente.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnSiguiente.setText("Siguiente");
+        btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSiguienteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -267,29 +315,48 @@ public class Proveedores extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnAnterior)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSiguiente))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel11)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Proveedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Proveedores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel11)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(28, 28, 28)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnAnterior)
+                            .addComponent(btnSiguiente))))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    boolean editando = false;
+    int cantidad = 5;
+    int pagina = 1;
+    int rango = ((pagina - 1) * cantidad);
+    int total;
+    int numeroPaginas;
     private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTelefonoActionPerformed
@@ -297,57 +364,129 @@ public class Proveedores extends javax.swing.JFrame {
     private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEmailActionPerformed
-
-    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        limpiar();
-    }//GEN-LAST:event_btnLimpiarActionPerformed
-
+    
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        String nombre = txtNombre.getText();
-        int telefono = Integer.parseInt(txtTelefono.getText());
-        String email = txtEmail.getText();
-        String direccion = txtDireccion.getText();
-        String colonia = txtColonia.getText();
-        int codigoPostal = Integer.parseInt(txtCodigoPostal.getText());
-        String estatus ="A";
-        //Sacar id Ciudades
-        int idCiudad=1;
-        String ciudad = (cmbCiudad.getSelectedItem()).toString();
-        try{
-            PreparedStatement ps;
-            ResultSet rs;
-            Connection con = Conexion.getConexion();
-            ps = con.prepareStatement("SELECT idCiudad FROM Ciudades WHERE nombre=?");
-            ps.setString(1, ciudad);
-            rs = ps.executeQuery();
-            while (rs.next()){
+        
+        if (editando) {//editar
+            if (txtNombre.getText().isEmpty() || txtTelefono.getText().isEmpty() || txtEmail.getText().isEmpty() || txtDireccion.getText().isEmpty()
+                    || txtColonia.getText().isEmpty() || txtCodigoPostal.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
+            } else {
+                int id = Integer.parseInt(txtId.getText());
+                String nombre = txtNombre.getText();
+                long telefono = Long.parseLong(txtTelefono.getText());
+                String email = txtEmail.getText();
+                String direccion = txtDireccion.getText();
+                String colonia = txtColonia.getText();
+                int codigoPostal = Integer.parseInt(txtCodigoPostal.getText());
+                String estatus = "A";
+                //Sacar id Ciudad
+                int idCiudad = 1;
+                String ciudad = (String) cmbCiudad.getSelectedItem();
+                try {
+
+                    PreparedStatement ps;
+                    ResultSet rs;
+                    Connection con = Conexion.getConexion();
+                    ps = con.prepareStatement("SELECT idCiudad FROM Ciudades WHERE nombre=?");
+                    ps.setString(1, ciudad);
+                    rs = ps.executeQuery();
+                    while (rs.next()) {
+                        idCiudad = rs.getInt("idCiudad");
+                    }
+
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, e.toString());
+                }
+                //Sacar id Ciudad fin
                 
+                try {
+
+                    Connection con = Conexion.getConexion();
+                    PreparedStatement ps = con.prepareStatement("UPDATE Proveedores SET nombre=?, telefono=?, email=?, direccion=?, colonia=?,"
+                            + "codigoPostal=?, estatus=?, idCiudad=?  WHERE idProveedor=?");
+                    ps.setString(1, nombre);
+                    ps.setLong(2, telefono);
+                    ps.setString(3, email);
+                    ps.setString(4, direccion);
+                    ps.setString(5, colonia);
+                    ps.setInt(6, codigoPostal);
+                    ps.setString(7, estatus);
+                    ps.setInt(8, idCiudad);
+                    ps.setInt(9, id);
+                    ps.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Registro modificado con exito");
+                    Limpiar();
+                    cargarTabla();
+
+                } catch (SQLException e) {
+
+                    JOptionPane.showMessageDialog(null, e.toString());
+
+                }
             }
-        } catch (SQLException e){
-            JOptionPane.showMessageDialog(null, e.toString());
+        } else {//guardar
+            if (txtNombre.getText().isEmpty() || txtTelefono.getText().isEmpty() || txtEmail.getText().isEmpty() || txtDireccion.getText().isEmpty()
+                    || txtColonia.getText().isEmpty() || txtCodigoPostal.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
+            } else {
+                String nombre = txtNombre.getText();
+                long telefono = Long.parseLong(txtTelefono.getText());
+                String email = txtEmail.getText();
+                String direccion = txtDireccion.getText();
+                String colonia = txtColonia.getText();
+                int codigoPostal = Integer.parseInt(txtCodigoPostal.getText());
+                String estatus = "A";
+                //Sacar id Ciudad
+                int idCiudad = 1;
+                String ciudad = (String) cmbCiudad.getSelectedItem();
+                 
+                try {
+
+                    PreparedStatement ps;
+                    ResultSet rs;
+                    Connection con = Conexion.getConexion();
+                    ps = con.prepareStatement("SELECT idCiudad FROM Ciudades WHERE nombre=?");
+                    ps.setString(1, ciudad);
+                    rs = ps.executeQuery();
+                    while (rs.next()) {
+                        idCiudad = rs.getInt("idCiudad");
+                    }
+
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, e.toString());
+                }
+
+                //Sacar id Ciudad fin
+                //inicio
+                try {
+
+                    Connection con = Conexion.getConexion();
+                    PreparedStatement ps = con.prepareStatement("INSERT INTO Proveedores (nombre, telefono, email, direccion, colonia, codigoPostal, estatus, idCiudad) VALUES (?,?,?,?,?,?,?,?)");
+                    ps.setString(1, nombre);
+                    ps.setLong(2, telefono);
+                    ps.setString(3, email);
+                    ps.setString(4, direccion);
+                    ps.setString(5, colonia);
+                    ps.setInt(6, codigoPostal);
+                    ps.setString(7, estatus);
+                    ps.setInt(8, idCiudad);
+                     if (txtTelefono.getText().length()>10)
+                    System.out.println("No cumple");
+                    ps.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Registro guardado con exito");
+                    Limpiar();
+                    cargarTabla();
+
+                } catch (SQLException e) {
+
+                    JOptionPane.showMessageDialog(null, e.toString());
+
+                }
+                //fin
+            }
         }
         
-        try{
-            
-            Connection con = Conexion.getConexion();
-            PreparedStatement ps = con.prepareStatement("INSERT INTO proveedores (nombre, telefono, email, direccion, colonia, codigoPostal, idCiudad, estatus) VALUES (?,?,?,?,?,?,?,?)");
-            ps.setString(1, nombre);
-            ps.setInt(2, telefono);
-            ps.setString(3, email);
-            ps.setString(4, direccion);
-            ps.setString(5, colonia);
-            ps.setInt(6, codigoPostal);
-            ps.setInt(7, idCiudad);
-            ps.setString(8, estatus);
-            ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Registro guardado");
-            limpiar();
-            cargarTabla();
-          
-        
-        } catch(SQLException e){ 
-            JOptionPane.showMessageDialog(null, e.toString());
-            }
         
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -356,17 +495,20 @@ public class Proveedores extends javax.swing.JFrame {
     }//GEN-LAST:event_tblProveedoresKeyTyped
 
     private void tblProveedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProveedoresMouseClicked
-        try{
+        try {
+
             int fila = tblProveedores.getSelectedRow();
             int id = Integer.parseInt(tblProveedores.getValueAt(fila, 0).toString());
             PreparedStatement ps;
             ResultSet rs;
+
             Connection con = Conexion.getConexion();
-            ps = con.prepareStatement("SELECT nombre, telefono, email, direccion, colonia codigoPostal idCiudad WHERE id=?");
+            editando = true;
+            activarBotones();
+            ps = con.prepareStatement("SELECT P.nombre, P.telefono, P.email, P.direccion, P.colonia, P.CodigoPostal, C.nombre AS ciudad FROM Proveedores AS P INNER JOIN Ciudades AS C ON P.idCiudad = C.idCiudad WHERE P.idProveedor=?");
             ps.setInt(1, id);
             rs = ps.executeQuery();
-            
-            while(rs.next()){
+            while (rs.next()) {
                 txtId.setText(String.valueOf(id));
                 txtNombre.setText(rs.getString("nombre"));
                 txtTelefono.setText(rs.getString("telefono"));
@@ -374,70 +516,116 @@ public class Proveedores extends javax.swing.JFrame {
                 txtDireccion.setText(rs.getString("direccion"));
                 txtColonia.setText(rs.getString("colonia"));
                 txtCodigoPostal.setText(rs.getString("codigoPostal"));
-                //cmbCiudad.getSelectedItem("idCiudad"));
-                
+                cmbCiudad.setSelectedItem(rs.getString("ciudad"));
             }
-        }catch(SQLException e){
-            JOptionPane.showInternalMessageDialog(null, e.toString());
-        }
-    }//GEN-LAST:event_tblProveedoresMouseClicked
-
-    private void btnCambiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarActionPerformed
-        int id = Integer.parseInt(txtId.getText());
-        String nombre = txtNombre.getText();
-        int telefono = Integer.parseInt(txtTelefono.getText());
-        String email = txtEmail.getText();
-        String direccion = txtDireccion.getText();
-        String colonia = txtColonia.getText();
-        int codigoPostal = Integer.parseInt(txtCodigoPostal.getText());
-        String ciudad = (cmbCiudad.getSelectedItem()).toString();
-
-        try {
-
-            Connection con = Conexion.getConexion();
-            PreparedStatement ps = con.prepareStatement("UPDATE Proveedores SET (nombre=?, telefono=?, email=?, direccion=?, colonia=?, codigoPostal, idCiudad=?, WHERE id=?");
-            ps.setString(1, nombre);
-            ps.setInt(2, telefono);
-            ps.setString(3, email);
-            ps.setString(4, direccion);
-            ps.setString(5, colonia);
-            ps.setInt(6, codigoPostal);
-            ps.setString(7, ciudad);
-             ps.setInt(8, id);
-            ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Registro Modificado");
-            limpiar();
-            cargarTabla();
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.toString());
-
         }
+        
+  
+    }//GEN-LAST:event_tblProveedoresMouseClicked
 
- 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+       editando = false;
+        Limpiar();
+        cargarTabla();
       
-    }//GEN-LAST:event_btnCambiarActionPerformed
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         int id = Integer.parseInt(txtId.getText());
-
         try {
-
             Connection con = Conexion.getConexion();
-            PreparedStatement ps = con.prepareStatement("UPDATE FROM SET estatus='I' Proveedor WHERE id=?");
+            PreparedStatement ps = con.prepareStatement("UPDATE Proveedores SET estatus = 'I' WHERE idProveedor = ?");
             ps.setInt(1, id);
             ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Registro eliminado");
-            limpiar();
+            Limpiar();
             cargarTabla();
-
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.toString());
-
         }
+         
     }//GEN-LAST:event_btnEliminarActionPerformed
+    
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        dispose();
+        Principal pr = new Principal();
+        pr.setVisible(true);
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
+       boolean x = txtNombre.getText().length() != 0;
+        btnGuardar.setEnabled(x);
+        btnCancelar.setEnabled(x);
+    }//GEN-LAST:event_txtNombreKeyReleased
+
+    private void txtTelefonoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyReleased
+        boolean x = txtNombre.getText().length() != 0;
+        btnGuardar.setEnabled(x);
+        btnCancelar.setEnabled(x);
+    }//GEN-LAST:event_txtTelefonoKeyReleased
+
+    private void txtEmailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyReleased
+        boolean x = txtNombre.getText().length() != 0;
+        btnGuardar.setEnabled(x);
+        btnCancelar.setEnabled(x);
+    }//GEN-LAST:event_txtEmailKeyReleased
+
+    private void txtDireccionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyReleased
+       boolean x = txtNombre.getText().length() != 0;
+        btnGuardar.setEnabled(x);
+        btnCancelar.setEnabled(x);
+    }//GEN-LAST:event_txtDireccionKeyReleased
+
+    private void txtColoniaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtColoniaKeyReleased
+        boolean x = txtNombre.getText().length() != 0;
+        btnGuardar.setEnabled(x);
+        btnCancelar.setEnabled(x);
+    }//GEN-LAST:event_txtColoniaKeyReleased
+
+    private void txtCodigoPostalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoPostalKeyReleased
+        boolean x = txtNombre.getText().length() != 0;
+        btnGuardar.setEnabled(x);
+        btnCancelar.setEnabled(x);
+    }//GEN-LAST:event_txtCodigoPostalKeyReleased
+
+    private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
+        pagina--;
+        rango = ((pagina - 1) * cantidad);
+        cargarTabla();
+        calcularNumeroPaginas();
+        if (pagina == 1) {
+            btnAnterior.setEnabled(false);
+        } else {
+            btnAnterior.setEnabled(true);
+        }
+        if (numeroPaginas == pagina) {
+            btnSiguiente.setEnabled(false);
+        } else {
+            btnSiguiente.setEnabled(true);
+        }
+    }//GEN-LAST:event_btnAnteriorActionPerformed
+
+    private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
+        pagina++;
+        btnAnterior.setEnabled(true);
+        rango = ((pagina - 1) * cantidad);
+        cargarTabla();
+        calcularNumeroPaginas();
+        if (pagina == 1) {
+            btnAnterior.setEnabled(false);
+        } else {
+            btnAnterior.setEnabled(true);
+        }
+        if (numeroPaginas == pagina) {
+            btnSiguiente.setEnabled(false);
+        } else {
+            btnSiguiente.setEnabled(true);
+        }
+    }//GEN-LAST:event_btnSiguienteActionPerformed
        
-    private void limpiar(){
+    private void Limpiar() {
         txtId.setText("");
         txtNombre.setText("");
         txtTelefono.setText("");
@@ -446,6 +634,7 @@ public class Proveedores extends javax.swing.JFrame {
         txtColonia.setText("");
         txtCodigoPostal.setText("");
         cmbCiudad.setSelectedIndex(0);
+        desactivarBotones();
     }
     
     private void cargarTabla() {
@@ -457,20 +646,17 @@ public class Proveedores extends javax.swing.JFrame {
         ResultSetMetaData rsmd;
         int columnas;
 
-        int[] anchos = {20, 20, 20, 20, 20,20,20,20};
+        int[] ancho = {5, 80, 15, 100, 80, 50, 5, 5};
         for (int i = 0; i < tblProveedores.getColumnCount(); i++) {
-            tblProveedores.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
+            tblProveedores.getColumnModel().getColumn(i).setPreferredWidth(ancho[i]);
         }
 
         try {
-
             Connection con = Conexion.getConexion();
-            ps = con.prepareStatement("SELECT   nombre, telefono, email, direccion, colonia, codigoPostal, idCiudad FROM ProductosProveedor WHERE estatus='A'");
-
+            ps = con.prepareStatement("SELECT P.idProveedor, P.nombre, P.telefono, P.email, P.direccion, P.colonia, P.codigoPostal, C.nombre FROM Proveedores AS P INNER JOIN Ciudades AS C on P.idCiudad = C.idCiudad WHERE P.estatus = 'A'");
             rs = ps.executeQuery();
             rsmd = rs.getMetaData();
             columnas = rsmd.getColumnCount();
-
             while (rs.next()) {
                 Object[] fila = new Object[columnas];
                 for (int indice = 0; indice < columnas; indice++) {
@@ -478,12 +664,22 @@ public class Proveedores extends javax.swing.JFrame {
                 }
                 modeloTabla.addRow(fila);
             }
-
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.toString());
-
+        }
+         calcularNumeroPaginas();
+        if (pagina == 1) {
+            btnAnterior.setEnabled(false);
+        } else {
+            btnAnterior.setEnabled(true);
+        }
+        if (numeroPaginas == pagina) {
+            btnSiguiente.setEnabled(false);
+        } else {
+            btnSiguiente.setEnabled(true);
         }
 
+        
     }
     
     public static void main(String args[]) {
@@ -517,13 +713,65 @@ public class Proveedores extends javax.swing.JFrame {
             }
         });
     }
+    private void botonImagen(){
+        ImageIcon guardar = new ImageIcon("src/Img/saveIcon.png");
+        btnGuardar.setIcon(new ImageIcon(guardar.getImage().getScaledInstance(btnGuardar.getWidth(), btnGuardar.getHeight(), Image.SCALE_SMOOTH)));
+        
+        ImageIcon eliminar = new ImageIcon("src/Img/Delete.png");
+        btnEliminar.setIcon(new ImageIcon(eliminar.getImage().getScaledInstance(btnEliminar.getWidth(), btnEliminar.getHeight(), Image.SCALE_SMOOTH)));
+        
+        ImageIcon regresar = new ImageIcon("src/Img/arrow.png");
+        btnRegresar.setIcon(new ImageIcon(regresar.getImage().getScaledInstance(btnRegresar.getWidth(), btnRegresar.getHeight(), Image.SCALE_SMOOTH)));
+        
+        ImageIcon cancelar = new ImageIcon("src/Img/deleteIcon.png");
+        btnCancelar.setIcon(new ImageIcon(cancelar.getImage().getScaledInstance(btnCancelar.getWidth(), btnCancelar.getHeight(), Image.SCALE_SMOOTH)));
+    }
+     
+    private void desactivarBotones(){
+        btnGuardar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+    }
 
+    private void activarBotones(){
+        btnGuardar.setEnabled(true);
+        btnEliminar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+    }
+
+    private void sacarTotal() {
+        try {
+
+            PreparedStatement ps;
+            ResultSet rs;
+            Connection con = Conexion.getConexion();
+            ps = con.prepareStatement("SELECT COUNT(*) AS total FROM Productos WHERE estatus='A'");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                total = rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+    }
+
+    private void calcularNumeroPaginas() {
+        sacarTotal();
+        float totalf;
+        float cantidadf;
+        totalf = (float) total;
+        cantidadf = (float) cantidad;
+        float x = (totalf / cantidadf);
+        numeroPaginas = (int) Math.ceil(x);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Proveedores;
-    private javax.swing.JButton btnCambiar;
+    private javax.swing.JButton btnAnterior;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton btnSiguiente;
     private javax.swing.JComboBox<String> cmbCiudad;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;

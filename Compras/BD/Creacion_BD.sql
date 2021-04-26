@@ -361,8 +361,8 @@ create table Proveedores (
 	direccion varchar(80) not null,
 	colonia varchar(50) not null,
 	codigoPostal varchar(5) not null,
+        estatus char not null,
 	idCiudad int not null,
-	estatus char not null,
 	constraint PK_Proveedores primary key (idProveedor)
 )
 go
