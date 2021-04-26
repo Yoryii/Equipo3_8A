@@ -27,7 +27,7 @@ public class Laboratorios extends javax.swing.JFrame {
         cargarTabla();
         txtEstatus.setVisible(false);
         botonImagen();
-        desactivarBotones();
+        //desactivarBotones();
         
         btnGuardar.setToolTipText("(?) Pulsa para guardar registro.");
         btnEliminar.setToolTipText("(?) Pulsa para eliminar registro.");
@@ -273,6 +273,7 @@ public class Laboratorios extends javax.swing.JFrame {
     
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         if (editando) {//editar
+           
             if (txtNombre.getText().isEmpty() || txtOrigen.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
             } else {
@@ -294,13 +295,14 @@ public class Laboratorios extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Registro modificado con exito");
                     Limpiar();
                     cargarTabla();
-
+                 
                 } catch (SQLException e) {
-
+                   
                     JOptionPane.showMessageDialog(null, e.toString());
-
+                    
                 }
             }
+           
         } else {//guardar
             if (txtNombre.getText().isEmpty() || txtOrigen.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
@@ -394,6 +396,7 @@ public class Laboratorios extends javax.swing.JFrame {
         boolean x = n && o;
         btnGuardar.setEnabled(x);
         btnCancelar.setEnabled(x);
+        activarBotones();
     }//GEN-LAST:event_txtOrigenKeyReleased
 
     private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
@@ -536,6 +539,7 @@ public class Laboratorios extends javax.swing.JFrame {
         btnEliminar.setEnabled(false);
         btnCancelar.setEnabled(false);
     }
+    
 
     private void activarBotones(){
         btnGuardar.setEnabled(true);

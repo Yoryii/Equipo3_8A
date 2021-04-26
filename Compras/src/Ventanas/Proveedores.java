@@ -418,7 +418,7 @@ public class Proveedores extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Registro modificado con exito");
                     Limpiar();
                     cargarTabla();
-
+                    
                 } catch (SQLException e) {
 
                     JOptionPane.showMessageDialog(null, e.toString());
@@ -477,7 +477,7 @@ public class Proveedores extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Registro guardado con exito");
                     Limpiar();
                     cargarTabla();
-
+                  
                 } catch (SQLException e) {
 
                     JOptionPane.showMessageDialog(null, e.toString());
@@ -564,7 +564,7 @@ public class Proveedores extends javax.swing.JFrame {
         boolean x = n && t && e && d && c && cP;
         btnGuardar.setEnabled(x);
         btnCancelar.setEnabled(x);
-        
+        activarBotones();
     }//GEN-LAST:event_txtNombreKeyReleased
 
     private void txtTelefonoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyReleased
@@ -572,6 +572,7 @@ public class Proveedores extends javax.swing.JFrame {
         boolean x = n && t && e && d && c && cP;
         btnGuardar.setEnabled(x);
         btnCancelar.setEnabled(x);
+        activarBotones();
     }//GEN-LAST:event_txtTelefonoKeyReleased
 
     private void txtEmailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyReleased
@@ -579,6 +580,7 @@ public class Proveedores extends javax.swing.JFrame {
         boolean x = n && t && e && d && c && cP;
         btnGuardar.setEnabled(x);
         btnCancelar.setEnabled(x);
+        activarBotones();
     }//GEN-LAST:event_txtEmailKeyReleased
 
     private void txtDireccionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyReleased
@@ -586,6 +588,7 @@ public class Proveedores extends javax.swing.JFrame {
         boolean x = n && t && e && d && c && cP;
         btnGuardar.setEnabled(x);
         btnCancelar.setEnabled(x);
+        activarBotones();
     }//GEN-LAST:event_txtDireccionKeyReleased
 
     private void txtColoniaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtColoniaKeyReleased
@@ -593,6 +596,7 @@ public class Proveedores extends javax.swing.JFrame {
         boolean x = n && t && e && d && c && cP;
         btnGuardar.setEnabled(x);
         btnCancelar.setEnabled(x);
+        activarBotones();
     }//GEN-LAST:event_txtColoniaKeyReleased
 
     private void txtCodigoPostalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoPostalKeyReleased
@@ -600,6 +604,7 @@ public class Proveedores extends javax.swing.JFrame {
         boolean x = n && t && e && d && c && cP;
         btnGuardar.setEnabled(x);
         btnCancelar.setEnabled(x);
+        activarBotones();
     }//GEN-LAST:event_txtCodigoPostalKeyReleased
 
     private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
