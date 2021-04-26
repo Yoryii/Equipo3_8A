@@ -413,10 +413,10 @@ public class Principal extends javax.swing.JFrame {
         btnEmpaques.setIcon(new ImageIcon(empaques.getImage().getScaledInstance(btnEmpaques.getWidth(), btnEmpaques.getHeight(), Image.SCALE_SMOOTH)));
         
         ImageIcon productos = new ImageIcon("src/Img/Productos.png");
-        btnProductos.setIcon(new ImageIcon(empaques.getImage().getScaledInstance(btnProductos .getWidth(), btnProductos.getHeight(), Image.SCALE_SMOOTH)));
+        btnProductos.setIcon(new ImageIcon(productos.getImage().getScaledInstance(btnProductos .getWidth(), btnProductos.getHeight(), Image.SCALE_SMOOTH)));
         
         ImageIcon presentacionesProducto = new ImageIcon("src/Img/PresentacionesProducto.jpg");
-        btnPresentacionesProducto.setIcon(new ImageIcon(empaques.getImage().getScaledInstance(btnPresentacionesProducto.getWidth(), btnPresentacionesProducto.getHeight(), Image.SCALE_SMOOTH)));
+        btnPresentacionesProducto.setIcon(new ImageIcon(presentacionesProducto.getImage().getScaledInstance(btnPresentacionesProducto.getWidth(), btnPresentacionesProducto.getHeight(), Image.SCALE_SMOOTH)));
         
         ImageIcon proveedores = new ImageIcon("src/Img/Proveedores.png");
         btnProveedores.setIcon(new ImageIcon(empaques.getImage().getScaledInstance(btnProveedores .getWidth(), btnProveedores.getHeight(), Image.SCALE_SMOOTH)));
