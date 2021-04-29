@@ -647,7 +647,7 @@ public class Productos extends javax.swing.JFrame {
         ResultSetMetaData rsmd;
         int columnas;
 
-        int[] ancho = {5, 70, 150, 150, 150, 150, 150, 85, 70};
+        int[] ancho = {50, 70, 150, 150, 150, 150, 150, 85, 70};
         for (int i = 0; i < tblProductos.getColumnCount(); i++) {
             tblProductos.getColumnModel().getColumn(i).setPreferredWidth(ancho[i]);
         }
