@@ -15,7 +15,6 @@ import javax.swing.table.DefaultTableModel;
 
 public class PresentacionesProducto extends javax.swing.JFrame {
 
-    
     public PresentacionesProducto() {
         initComponents();
         txtId.setVisible(false);
@@ -27,7 +26,7 @@ public class PresentacionesProducto extends javax.swing.JFrame {
         cargarTabla();
         desactivarBotones();
         btnAnterior.setEnabled(false);
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -288,7 +287,7 @@ public class PresentacionesProducto extends javax.swing.JFrame {
     int rango = ((pagina - 1) * cantidad);
     int total;
     int numeroPaginas;
-    
+
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
         if (editando) {//editar
@@ -493,7 +492,7 @@ public class PresentacionesProducto extends javax.swing.JFrame {
     boolean precioC = false;
     boolean precioV = false;
     boolean puntoR = false;
-    
+
     private void txtPrecioCompraKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioCompraKeyReleased
         boolean x = validarCamposVacios();
         btnGuardar.setEnabled(x);
@@ -502,8 +501,8 @@ public class PresentacionesProducto extends javax.swing.JFrame {
 
     private void txtPrecioVentaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioVentaKeyReleased
         boolean x = validarCamposVacios();
-            btnGuardar.setEnabled(x);
-            btnCancelar.setEnabled(x);
+        btnGuardar.setEnabled(x);
+        btnCancelar.setEnabled(x);
     }//GEN-LAST:event_txtPrecioVentaKeyReleased
 
     private void txtPuntoReordenKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPuntoReordenKeyReleased
@@ -520,27 +519,73 @@ public class PresentacionesProducto extends javax.swing.JFrame {
         x = precioC && precioV && puntoR;
         return x;
     }
-    
+
     private void txtPrecioCompraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioCompraKeyTyped
-        
+
         char c = evt.getKeyChar();
-        if ((c<'0' || c>'9') && c!='.') {
-            evt.consume();
+
+        boolean hayPunto = false;
+        String cadena = txtPrecioCompra.getText();
+        for (int i = 0; i < cadena.length(); i++) {
+            if (".".charAt(0)==cadena.charAt(i)) {
+                hayPunto = true;
+            }
         }
-        
+
+        if (hayPunto) {
+            if ((c < '0' || c > '9')) {//solo acepta digitos
+                evt.consume();
+            }
+        } else {
+            if ((c < '0' || c > '9') && c != '.') {//acepta digitos y puntos
+                evt.consume();
+            }
+        }
+
+
     }//GEN-LAST:event_txtPrecioCompraKeyTyped
 
     private void txtPrecioVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioVentaKeyTyped
         char c = evt.getKeyChar();
-        if ((c<'0' || c>'9') && c!='.') {
-            evt.consume();
+
+        boolean hayPunto = false;
+        String cadena = txtPrecioVenta.getText();
+        for (int i = 0; i < cadena.length(); i++) {
+            if (".".charAt(0)==cadena.charAt(i)) {
+                hayPunto = true;
+            }
+        }
+
+        if (hayPunto) {
+            if ((c < '0' || c > '9')) {//solo acepta digitos
+                evt.consume();
+            }
+        } else {
+            if ((c < '0' || c > '9') && c != '.') {//acepta digitos y puntos
+                evt.consume();
+            }
         }
     }//GEN-LAST:event_txtPrecioVentaKeyTyped
 
     private void txtPuntoReordenKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPuntoReordenKeyTyped
         char c = evt.getKeyChar();
-        if ((c<'0' || c>'9') && c!='.') {
-            evt.consume();
+
+        boolean hayPunto = false;
+        String cadena = txtPuntoReorden.getText();
+        for (int i = 0; i < cadena.length(); i++) {
+            if (".".charAt(0)==cadena.charAt(i)) {
+                hayPunto = true;
+            }
+        }
+
+        if (hayPunto) {
+            if ((c < '0' || c > '9')) {//solo acepta digitos
+                evt.consume();
+            }
+        } else {
+            if ((c < '0' || c > '9') && c != '.') {//acepta digitos y puntos
+                evt.consume();
+            }
         }
     }//GEN-LAST:event_txtPuntoReordenKeyTyped
 
@@ -665,59 +710,59 @@ public class PresentacionesProducto extends javax.swing.JFrame {
             }
         });
     }
-    
-    private void botonImagen(){
+
+    private void botonImagen() {
         ImageIcon guardar = new ImageIcon("src/Img/saveIcon.png");
         btnGuardar.setIcon(new ImageIcon(guardar.getImage().getScaledInstance(btnGuardar.getWidth(), btnGuardar.getHeight(), Image.SCALE_SMOOTH)));
-        
+
         ImageIcon eliminar = new ImageIcon("src/Img/Delete.png");
         btnEliminar.setIcon(new ImageIcon(eliminar.getImage().getScaledInstance(btnEliminar.getWidth(), btnEliminar.getHeight(), Image.SCALE_SMOOTH)));
-        
+
         ImageIcon regresar = new ImageIcon("src/Img/arrow.png");
         btnRegresar.setIcon(new ImageIcon(regresar.getImage().getScaledInstance(btnRegresar.getWidth(), btnRegresar.getHeight(), Image.SCALE_SMOOTH)));
-        
+
         ImageIcon cancelar = new ImageIcon("src/Img/deleteIcon.png");
         btnCancelar.setIcon(new ImageIcon(cancelar.getImage().getScaledInstance(btnCancelar.getWidth(), btnCancelar.getHeight(), Image.SCALE_SMOOTH)));
     }
 
-    private void desactivarBotones(){
+    private void desactivarBotones() {
         btnGuardar.setEnabled(false);
         btnEliminar.setEnabled(false);
         btnCancelar.setEnabled(false);
     }
 
-    private void activarBotones(){
+    private void activarBotones() {
         btnGuardar.setEnabled(true);
         btnEliminar.setEnabled(true);
         btnCancelar.setEnabled(true);
     }
-    
-    private void sacarTotal(){
+
+    private void sacarTotal() {
         try {
 
-                    PreparedStatement ps;
-                    ResultSet rs;
-                    Connection con = Conexion.getConexion();
-                    ps = con.prepareStatement("SELECT COUNT(*) AS total FROM PresentacionesProducto WHERE estatus='A'");
-                    rs = ps.executeQuery();
-                    while(rs.next()){
-                    total = rs.getInt("total");
-                    }
-                } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, e.toString());
-                }
+            PreparedStatement ps;
+            ResultSet rs;
+            Connection con = Conexion.getConexion();
+            ps = con.prepareStatement("SELECT COUNT(*) AS total FROM PresentacionesProducto WHERE estatus='A'");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                total = rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
     }
-    
-    private void calcularNumeroPaginas(){
+
+    private void calcularNumeroPaginas() {
         sacarTotal();
         float totalf;
         float cantidadf;
-        totalf = (float)total;
-        cantidadf = (float)cantidad;
+        totalf = (float) total;
+        cantidadf = (float) cantidad;
         float x = (totalf / cantidadf);
         numeroPaginas = (int) Math.ceil(x);
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnterior;
     private javax.swing.JButton btnCancelar;
