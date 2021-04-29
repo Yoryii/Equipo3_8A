@@ -971,10 +971,10 @@ public class ProductosProveedor extends javax.swing.JFrame {
 
         try {
             Connection con = Conexion.getConexion();
-            ps = con.prepareStatement("SELECT Pro.nombre, Pre.nombre, PP.diasRetardo, PP.precioEstandar, PP.precioUltimaCompra, PP.cantMinPedir, PP.cantMaxPedir FROM ProductosProveedor AS PP INNER JOIN Proveedores AS Pro on PP.idProveedor = Pro.idProveedor INNER JOIN PresentacionesProducto AS Pre on PP.idPresentacion = Pre.idPresentacion WHERE PP.estatus = 'A'  ");
-            //ORDER BY idProveedor ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONL
-            //ps.setInt(1, rango);
-            //ps.setInt(2, cantidad);
+            ps = con.prepareStatement("SELECT Pro.nombre, Pre.nombre, PP.diasRetardo, PP.precioEstandar, PP.precioUltimaCompra, PP.cantMinPedir, PP.cantMaxPedir FROM ProductosProveedor AS PP INNER JOIN Proveedores AS Pro on PP.idProveedor = Pro.idProveedor INNER JOIN PresentacionesProducto AS Pre on PP.idPresentacion = Pre.idPresentacion WHERE PP.estatus = 'A' ORDER BY diasRetardo ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY ");
+            //ORDER BY diasRetardo ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
+            ps.setInt(1, rango);
+            ps.setInt(2, cantidad);
             rs = ps.executeQuery();
             rsmd = rs.getMetaData();
             columnas = rsmd.getColumnCount();
