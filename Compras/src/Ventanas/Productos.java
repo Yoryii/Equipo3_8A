@@ -552,7 +552,8 @@ public class Productos extends javax.swing.JFrame {
     boolean bT = false;
     boolean a = false;
     boolean u = false;
-
+    
+   
 
     private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
         boolean x = validarCamposVacios();

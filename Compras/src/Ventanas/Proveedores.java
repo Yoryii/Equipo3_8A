@@ -31,6 +31,7 @@ public class Proveedores extends javax.swing.JFrame {
         cargarTabla();
         botonImagen();
         desactivarBotones();
+        btnAnterior.setEnabled(false);
         
     }
 
@@ -557,52 +558,53 @@ public class Proveedores extends javax.swing.JFrame {
     boolean d = false;
     boolean c = false;
     boolean cP = false;
-    private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
+    
+    private boolean validarCamposVacios() {
+        boolean x;
         n = txtNombre.getText().length() != 0;
-        boolean x = n && t && e && d && c && cP;
+        t = txtTelefono.getText().length() != 0;
+        e = txtEmail.getText().length() != 0;
+        d = txtDireccion.getText().length() != 0;
+        c = txtColonia.getText().length() != 0;
+        cP = txtCodigoPostal.getText().length() != 0;
+        x = n && t && t && d && c && cP;
+        return x;
+    }
+    
+    private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
+       boolean x = validarCamposVacios();
         btnGuardar.setEnabled(x);
         btnCancelar.setEnabled(x);
-        activarBotones();
     }//GEN-LAST:event_txtNombreKeyReleased
 
     private void txtTelefonoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyReleased
-         t = txtTelefono.getText().length() != 0;
-        boolean x = n && t && e && d && c && cP;
+        boolean x = validarCamposVacios();
         btnGuardar.setEnabled(x);
         btnCancelar.setEnabled(x);
-        activarBotones();
     }//GEN-LAST:event_txtTelefonoKeyReleased
 
     private void txtEmailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyReleased
-        e = txtEmail.getText().length() != 0;
-        boolean x = n && t && e && d && c && cP;
+       boolean x = validarCamposVacios();
         btnGuardar.setEnabled(x);
         btnCancelar.setEnabled(x);
-        activarBotones();
     }//GEN-LAST:event_txtEmailKeyReleased
 
     private void txtDireccionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyReleased
-        d = txtDireccion.getText().length() != 0;
-        boolean x = n && t && e && d && c && cP;
+       boolean x = validarCamposVacios();
         btnGuardar.setEnabled(x);
         btnCancelar.setEnabled(x);
-        activarBotones();
     }//GEN-LAST:event_txtDireccionKeyReleased
 
     private void txtColoniaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtColoniaKeyReleased
-         c = txtColonia.getText().length() != 0;
-        boolean x = n && t && e && d && c && cP;
+       boolean x = validarCamposVacios();
         btnGuardar.setEnabled(x);
         btnCancelar.setEnabled(x);
-        activarBotones();
     }//GEN-LAST:event_txtColoniaKeyReleased
 
     private void txtCodigoPostalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoPostalKeyReleased
-         cP = txtCodigoPostal.getText().length() != 0;
-        boolean x = n && t && e && d && c && cP;
+       boolean x = validarCamposVacios();
         btnGuardar.setEnabled(x);
         btnCancelar.setEnabled(x);
-        activarBotones();
     }//GEN-LAST:event_txtCodigoPostalKeyReleased
 
     private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed

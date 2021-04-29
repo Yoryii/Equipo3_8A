@@ -34,6 +34,7 @@ public class ProductosProveedor extends javax.swing.JFrame {
         cmbPresentacion.setModel(hpPresentacionesProducto.getValues());
         cargarTabla();
         desactivarBotones();
+        btnAnterior.setEnabled(false);
     }
 
     
@@ -380,9 +381,9 @@ public class ProductosProveedor extends javax.swing.JFrame {
                         .addGap(0, 6, Short.MAX_VALUE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSiguiente)
-                    .addComponent(btnAnterior))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAnterior)
+                    .addComponent(btnSiguiente))
                 .addContainerGap())
         );
 
@@ -841,44 +842,47 @@ public class ProductosProveedor extends javax.swing.JFrame {
     boolean pUC = false;
     boolean cMi = false;
     boolean cMa = false;
-    private void txtDiasRetardoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDiasRetardoKeyReleased
+    
+    private boolean validarCamposVacios() {
+        boolean x;
         dR = txtDiasRetardo.getText().length() != 0;
-        boolean x = dR && pE && pUC && cMi && cMa;
+        pE = txtPrecioEstandar.getText().length() != 0;
+        pUC = txtPrecioUltimaCompra.getText().length() != 0;
+        cMi = txtCantMinPedir.getText().length() != 0;
+        cMa = txtCantMaxPedir.getText().length() != 0;
+        x = dR && pE && pUC && cMi && cMa;
+        return x;
+    }
+
+    
+    private void txtDiasRetardoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDiasRetardoKeyReleased
+        boolean x = validarCamposVacios();
         btnGuardar.setEnabled(x);
         btnCancelar.setEnabled(x);
-        activarBotones();
     }//GEN-LAST:event_txtDiasRetardoKeyReleased
 
     private void txtPrecioEstandarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioEstandarKeyReleased
-        pE = txtPrecioEstandar.getText().length() != 0;
-        boolean x = dR && pE && pUC && cMi && cMa;
+        boolean x = validarCamposVacios();
         btnGuardar.setEnabled(x);
         btnCancelar.setEnabled(x);
-        activarBotones();
     }//GEN-LAST:event_txtPrecioEstandarKeyReleased
 
     private void txtPrecioUltimaCompraKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioUltimaCompraKeyReleased
-        pUC = txtPrecioUltimaCompra.getText().length() != 0;
-        boolean x = dR && pE && pUC && cMi && cMa;
+        boolean x = validarCamposVacios();
         btnGuardar.setEnabled(x);
         btnCancelar.setEnabled(x);
-        activarBotones();
     }//GEN-LAST:event_txtPrecioUltimaCompraKeyReleased
 
     private void txtCantMinPedirKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantMinPedirKeyReleased
-        cMi = txtCantMinPedir.getText().length() != 0;
-        boolean x = dR && pE && pUC && cMi && cMa;
+       boolean x = validarCamposVacios();
         btnGuardar.setEnabled(x);
         btnCancelar.setEnabled(x);
-        activarBotones();
     }//GEN-LAST:event_txtCantMinPedirKeyReleased
 
     private void txtCantMaxPedirKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantMaxPedirKeyReleased
-        cMa = txtCantMaxPedir.getText().length() != 0;
-        boolean x = dR && pE && pUC && cMi && cMa;
+       boolean x = validarCamposVacios();
         btnGuardar.setEnabled(x);
         btnCancelar.setEnabled(x);
-        activarBotones();
     }//GEN-LAST:event_txtCantMaxPedirKeyReleased
 
     private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
