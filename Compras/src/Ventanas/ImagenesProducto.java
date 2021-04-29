@@ -7,9 +7,11 @@ package Ventanas;
 
 import Coexion.Conexion;
 import Coexion.HelperProductos;
+import java.awt.Color;
 
 import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -34,13 +36,24 @@ public class ImagenesProducto extends javax.swing.JFrame {
      * Creates new form ImagenesProducto
      */
     int editando = 0;
-
+    int bandera = 0;
+    //IMAGENES
+    String filename = null;
+    byte[] person_image = null;
+    
+    
+    //Esto debería ir en el DAO
+    //private byte[] picture;
+    
+    
     public ImagenesProducto() {
         initComponents();
         setDefaultCloseOperation(0);
         setLocationRelativeTo(null);
         this.setResizable(false);
         txfId.setVisible(false);
+        txfRuta.setVisible(false);
+        btnImagen.setVisible(false);
         cargarTabla();
         botonImagen();
         HelperProductos hpProductos = new HelperProductos();
@@ -52,6 +65,7 @@ public class ImagenesProducto extends javax.swing.JFrame {
         txfPrincipal.setEditable(false);
         txfRuta.setEnabled(false);
         txfRuta.setEditable(false);
+
     }
 
     /**
@@ -68,7 +82,6 @@ public class ImagenesProducto extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txfNombre = new javax.swing.JTextField();
-        btnImagen = new javax.swing.JButton();
         cmbProducto = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         txfPrincipal = new javax.swing.JTextField();
@@ -81,9 +94,15 @@ public class ImagenesProducto extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        btnMostrarImagen = new javax.swing.JButton();
+        btnImagen = new javax.swing.JButton();
+        lblTexto = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblImagenes = new javax.swing.JTable();
         btnRegresar = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        lblImagen = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -101,13 +120,6 @@ public class ImagenesProducto extends javax.swing.JFrame {
             }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txfNombreKeyTyped(evt);
-            }
-        });
-
-        btnImagen.setText("Seleccionar imagen");
-        btnImagen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImagenActionPerformed(evt);
             }
         });
 
@@ -150,58 +162,81 @@ public class ImagenesProducto extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(102, 102, 102));
         jLabel7.setText("Cancelar");
 
+        btnMostrarImagen.setText("Seleccionar imagen");
+        btnMostrarImagen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMostrarImagenActionPerformed(evt);
+            }
+        });
+
+        btnImagen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImagenActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLabel3)
+                                .addComponent(txfNombre)
+                                .addComponent(txfPrincipal)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel2)
+                                            .addGap(29, 29, 29))
+                                        .addComponent(cmbProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel4)
+                                        .addComponent(btnMostrarImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addGap(0, 61, Short.MAX_VALUE)
+                                            .addComponent(lblMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(lblTexto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel1)
+                                .addGap(129, 129, 129)
+                                .addComponent(txfRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(cmbProducto, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnImagen, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txfRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txfNombre)
-                            .addComponent(txfPrincipal))
-                        .addContainerGap(31, Short.MAX_VALUE))
+                                .addComponent(txfId, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(36, 36, 36)
+                                .addComponent(btnImagen))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txfId, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(jLabel5)
-                .addGap(73, 73, 73)
-                .addComponent(jLabel6)
-                .addGap(74, 74, 74)
-                .addComponent(jLabel7)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(50, 50, 50)
+                        .addComponent(jLabel5)
+                        .addGap(73, 73, 73)
+                        .addComponent(jLabel6)
+                        .addGap(74, 74, 74)
+                        .addComponent(jLabel7)))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel1))
-                    .addComponent(txfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btnImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txfRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,8 +248,8 @@ public class ImagenesProducto extends javax.swing.JFrame {
                         .addComponent(lblMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnImagen)
-                    .addComponent(txfRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnMostrarImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -233,7 +268,7 @@ public class ImagenesProducto extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(jLabel6)
                     .addComponent(jLabel7))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         tblImagenes.setModel(new javax.swing.table.DefaultTableModel(
@@ -272,19 +307,34 @@ public class ImagenesProducto extends javax.swing.JFrame {
             }
         });
 
+        lblImagen.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel9.setText("Imagen");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(211, 211, 211)
+                                .addComponent(jLabel9))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(109, 109, 109)
+                                .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(6, 6, 6))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel8)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -294,35 +344,42 @@ public class ImagenesProducto extends javax.swing.JFrame {
                 .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(82, 82, 82)
+                                .addComponent(jLabel8)
+                                .addGap(170, 170, 170))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(11, 11, 11)
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImagenActionPerformed
-        JFileChooser j = new JFileChooser();
-        FileNameExtensionFilter fil = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
-        j.setFileFilter(fil);
-
-        int s = j.showOpenDialog(this);
-        if (s == JFileChooser.APPROVE_OPTION) {
-            String ruta = j.getSelectedFile().getAbsolutePath();
-            txfRuta.setText(ruta);
-        }
-    }//GEN-LAST:event_btnImagenActionPerformed
-
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-
+        
         btnGuardar.setEnabled(false);
         btnEliminar.setEnabled(false);
         File ruta = new File(txfRuta.getText());
         if (editando == 1) {
-            if (txfNombre.getText().isEmpty()) {
+            if (txfNombre.getText().isEmpty() || txfPrincipal.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Llene todos los campos!");
-            } else {
+               
+            } 
+            else if(bandera == 0){
+                lblTexto.setForeground(Color.RED);
+                lblTexto.setText("Selecciona una imagen!");
+            }
+            else {
 
                 int id = Integer.parseInt(txfId.getText());
                 String nombre = txfNombre.getText();
@@ -348,17 +405,18 @@ public class ImagenesProducto extends javax.swing.JFrame {
 
                 try {
                     Connection con = Conexion.getConexion();
-                    PreparedStatement ps = con.prepareStatement("UPDATE ImagenesProducto SET nombreImagen=?, imagen=null, principal=?, idProducto=? WHERE idImagen=?");
+                    PreparedStatement ps = con.prepareStatement("UPDATE ImagenesProducto SET nombreImagen=?, imagen=?, principal=?, idProducto=? WHERE idImagen=?");
 
                     ps.setString(1, nombre);
-                    
-                    ps.setString(2, principal);
-                    ps.setInt(3, idProducto);
-                    ps.setInt(4, id);
+                    ps.setBytes(2, person_image);
+                    ps.setString(3, principal);
+                    ps.setInt(4, idProducto);
+                    ps.setInt(5, id);
                     ps.executeUpdate();
                     JOptionPane.showMessageDialog(null, "Registro modificado.");
                     limpiar();
                     cargarTabla();
+                    bandera = 0;
 
                     editando = 0;
                 } catch (SQLException e) {
@@ -369,9 +427,15 @@ public class ImagenesProducto extends javax.swing.JFrame {
 
             }
         } else {//guardar
-            if (txfNombre.getText().isEmpty()) {
+            if (txfNombre.getText().isEmpty() || txfPrincipal.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Llene todos los campos!");
-            } else {
+                
+            } 
+            else if(bandera == 0){
+                lblTexto.setForeground(Color.RED);
+                lblTexto.setText("Selecciona una imagen!");
+            }
+            else {
                 String nombre = txfNombre.getText();
                 String principal = txfPrincipal.getText();
                 int idProducto = 1;
@@ -395,14 +459,17 @@ public class ImagenesProducto extends javax.swing.JFrame {
                 try {
 
                     Connection con = Conexion.getConexion();
-                    PreparedStatement ps = con.prepareStatement("INSERT INTO ImagenesProducto (nombreImagen, imagen, principal, idProducto) VALUES (?,null,?,?)");
+                    PreparedStatement ps = con.prepareStatement("INSERT INTO ImagenesProducto (nombreImagen, imagen, principal, idProducto) VALUES (?,?,?,?)");
                     ps.setString(1, nombre);
-                    ps.setString(2, principal);
-                    ps.setInt(3, idProducto);
+                    ps.setBytes(2, person_image);
+                    ps.setString(3, principal);
+                    ps.setInt(4, idProducto);
+                    
                     ps.executeUpdate();
                     JOptionPane.showMessageDialog(null, "Registro guardado.");
                     limpiar();
                     cargarTabla();
+                    bandera = 0;
 
                 } catch (SQLException e) {
 
@@ -416,7 +483,7 @@ public class ImagenesProducto extends javax.swing.JFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
 
-        /*
+        
         btnGuardar.setEnabled(false);
         btnEliminar.setEnabled(false);
 
@@ -424,7 +491,7 @@ public class ImagenesProducto extends javax.swing.JFrame {
 
         try {
             Connection con = Conexion.getConexion();
-            PreparedStatement ps = con.prepareStatement("UPDATE UnidadesMedida SET estatus='I' WHERE idUnidad=?");
+            PreparedStatement ps = con.prepareStatement("Delete from ImagenesProducto where idImagen = ?");
 
             ps.setInt(1, id);
             ps.executeUpdate();
@@ -434,7 +501,7 @@ public class ImagenesProducto extends javax.swing.JFrame {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.toString());
         }
-         */
+         
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
@@ -448,6 +515,7 @@ public class ImagenesProducto extends javax.swing.JFrame {
         btnEliminar.setEnabled(false);
         btnGuardar.setEnabled(false);
         editando = 0;
+        
         limpiar();
         cargarTabla();
 
@@ -455,7 +523,7 @@ public class ImagenesProducto extends javax.swing.JFrame {
 
     private void tblImagenesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblImagenesMouseClicked
         btnGuardar.setEnabled(true);
-        //btnEliminar.setEnabled(true);
+        btnEliminar.setEnabled(true);
         try {
             int fila = tblImagenes.getSelectedRow();
             int id = Integer.parseInt(tblImagenes.getValueAt(fila, 0).toString());
@@ -464,7 +532,7 @@ public class ImagenesProducto extends javax.swing.JFrame {
 
             editando = 1;
             Connection con = Conexion.getConexion();
-            ps = con.prepareStatement("SELECT nombreImagen, principal FROM ImagenesProducto WHERE idImagen=?");
+            ps = con.prepareStatement("SELECT nombreImagen, imagen, principal FROM ImagenesProducto WHERE idImagen=?");
             ps.setInt(1, id);
             rs = ps.executeQuery();
 
@@ -472,6 +540,8 @@ public class ImagenesProducto extends javax.swing.JFrame {
                 txfId.setText(String.valueOf(id));
                 txfNombre.setText(rs.getString("nombreImagen"));
                 txfPrincipal.setText(rs.getString("principal"));
+                ImageIcon imageIcon = new ImageIcon(new ImageIcon(rs.getBytes("imagen")).getImage().getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_SMOOTH));
+                lblImagen.setIcon(imageIcon);
                 //txfEstatus.setText(rs.getString("estatus"));
             }
         } catch (SQLException e) {
@@ -480,24 +550,64 @@ public class ImagenesProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_tblImagenesMouseClicked
 
     private void txfNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfNombreKeyReleased
-     txfPrincipal.setEditable(txfNombre.getText().length() != 0);
+        txfPrincipal.setEditable(txfNombre.getText().length() != 0);
     }//GEN-LAST:event_txfNombreKeyReleased
 
     private void txfPrincipalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfPrincipalKeyReleased
-     btnGuardar.setEnabled(txfPrincipal.getText().length() != 0);
-     
+        btnGuardar.setEnabled(txfPrincipal.getText().length() != 0);
+
     }//GEN-LAST:event_txfPrincipalKeyReleased
 
     private void txfPrincipalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfPrincipalKeyTyped
-       int limite = 1;
+        int limite = 1;
         if (txfPrincipal.getText().length() >= limite) {
             evt.consume();
         }
     }//GEN-LAST:event_txfPrincipalKeyTyped
 
     private void txfNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfNombreKeyTyped
-   
+
     }//GEN-LAST:event_txfNombreKeyTyped
+
+    private void btnMostrarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarImagenActionPerformed
+        
+        JFileChooser chooser = new JFileChooser();
+        chooser.showOpenDialog(null);
+        File f = chooser.getSelectedFile();
+        filename = f.getAbsolutePath();
+        ImageIcon imageIcon = new ImageIcon(new ImageIcon(filename).getImage().getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_SMOOTH));
+        lblImagen.setIcon(imageIcon);
+        
+        try{
+            File image = new File(filename);
+            FileInputStream fis = new FileInputStream(image);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] buf = new byte[1024];
+            for (int readNum;(readNum=fis.read(buf))!=-1;) {
+                bos.write(buf, 0, readNum);
+            }
+            person_image = bos.toByteArray();
+            bandera = 1;
+            btnGuardar.setEnabled(true);
+            lblTexto.setText("");
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+    }//GEN-LAST:event_btnMostrarImagenActionPerformed
+
+    private void btnImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImagenActionPerformed
+        JFileChooser j = new JFileChooser();
+        FileNameExtensionFilter fil = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
+        j.setFileFilter(fil);
+
+        int s = j.showOpenDialog(this);
+        if (s == JFileChooser.APPROVE_OPTION) {
+            String ruta = j.getSelectedFile().getAbsolutePath();
+            txfRuta.setText(ruta);
+        }
+    }//GEN-LAST:event_btnImagenActionPerformed
 
     private void limpiar() {
         txfId.setText("");
@@ -515,16 +625,14 @@ public class ImagenesProducto extends javax.swing.JFrame {
 
         ImageIcon regresar = new ImageIcon("src/Img/arrow.png");
         btnRegresar.setIcon(new ImageIcon(regresar.getImage().getScaledInstance(btnRegresar.getWidth(), btnRegresar.getHeight(), Image.SCALE_SMOOTH)));
-        
+
         ImageIcon cancelar = new ImageIcon("src/Img/deleteIcon.png");
         btnCancelar.setIcon(new ImageIcon(cancelar.getImage().getScaledInstance(btnCancelar.getWidth(), btnCancelar.getHeight(), Image.SCALE_SMOOTH)));
 
     }
 
-    
-    
     private void cargarTabla() {
-
+        
         DefaultTableModel modeloTabla = (DefaultTableModel) tblImagenes.getModel();
         modeloTabla.setRowCount(0);
 
@@ -577,6 +685,7 @@ public class ImagenesProducto extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(ImagenesProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -591,6 +700,7 @@ public class ImagenesProducto extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnImagen;
+    private javax.swing.JButton btnMostrarImagen;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JComboBox<String> cmbProducto;
     private javax.swing.JLabel jLabel1;
@@ -600,9 +710,13 @@ public class ImagenesProducto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblMensaje;
+    private javax.swing.JLabel lblTexto;
     private javax.swing.JTable tblImagenes;
     private javax.swing.JTextField txfId;
     private javax.swing.JTextField txfNombre;
