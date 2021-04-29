@@ -296,8 +296,168 @@ public class PresentacionesProducto extends javax.swing.JFrame {
     int numeroPaginas;
     
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-
+        
         if (editando) {//editar
+            if (txtNombre.getText().isEmpty() || txtPrecioCompra.getText().isEmpty() || txtPrecioVenta.getText().isEmpty() || txtPuntoReorden.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
+            } else {
+                int id = Integer.parseInt(txtId.getText());
+                String nombre = txtNombre.getText();
+                float precioCompra = Float.parseFloat(txtPrecioCompra.getText());
+                float precioVenta = Float.parseFloat(txtPrecioVenta.getText());
+                float puntoReorden = Float.parseFloat(txtPuntoReorden.getText());
+                String estatus = "A";
+                //Sacar idProducto e idEmpaque inicio
+                int idProducto = 1;
+                int idEmpaque = 1;
+                String producto = (String) cmbProducto.getSelectedItem();
+                String empaque = (String) cmbEmpaque.getSelectedItem();
+
+                try {
+
+                    PreparedStatement ps;
+                    ResultSet rs;
+                    Connection con = Conexion.getConexion();
+                    ps = con.prepareStatement("SELECT idProducto FROM Productos WHERE nombre=?");
+                    ps.setString(1, producto);
+                    rs = ps.executeQuery();
+                    while (rs.next()) {
+                        idProducto = rs.getInt("idProducto");
+                    }
+
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, e.toString());
+                }
+
+                try {
+
+                    PreparedStatement ps;
+                    ResultSet rs;
+                    Connection con = Conexion.getConexion();
+                    ps = con.prepareStatement("SELECT idEmpaque FROM Empaques WHERE nombre=?");
+                    ps.setString(1, empaque);
+                    rs = ps.executeQuery();
+                    while (rs.next()) {
+                        idEmpaque = rs.getInt("idEmpaque");
+                    }
+
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, e.toString());
+                }
+
+                //Sacar idProducto e idEmpaque fin
+                try {
+
+                    Connection con = Conexion.getConexion();
+                    PreparedStatement ps = con.prepareStatement("UPDATE PresentacionesProducto SET nombre=?, precioCompra=?, precioVenta=?, puntoReorden=?, idProducto=?, idEmpaque=?, estatus=? WHERE idPresentacion=?");
+                    ps.setString(1, nombre);
+                    ps.setFloat(2, precioCompra);
+                    ps.setFloat(3, precioVenta);
+                    ps.setFloat(4, puntoReorden);
+                    ps.setInt(5, idProducto);
+                    ps.setInt(6, idEmpaque);
+                    ps.setString(7, estatus);
+                    ps.setInt(8, id);
+                    ps.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Registro modificado con exito");
+                    Limpiar();
+                    cargarTabla();
+
+                } catch (SQLException e) {
+
+                    JOptionPane.showMessageDialog(null, e.toString());
+
+                }
+            }
+        } else {//guardar
+            if (txtNombre.getText().isEmpty() ||txtPrecioCompra.getText().isEmpty() || txtPrecioVenta.getText().isEmpty() || txtPuntoReorden.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
+            } else {
+                String nombre = txtNombre.getText();
+                float precioCompra = Float.parseFloat(txtPrecioCompra.getText());
+                float precioVenta = Float.parseFloat(txtPrecioVenta.getText());
+                float puntoReorden = Float.parseFloat(txtPuntoReorden.getText());
+                String estatus = "A";
+                //Sacar idProducto e idEmpaque inicio
+                int idProducto = 1;
+                int idEmpaque = 1;
+                String producto = (String) cmbProducto.getSelectedItem();
+                String empaque = (String) cmbEmpaque.getSelectedItem();
+
+                try {
+
+                    PreparedStatement ps;
+                    ResultSet rs;
+                    Connection con = Conexion.getConexion();
+                    ps = con.prepareStatement("SELECT idProducto FROM Productos WHERE nombre=?");
+                    ps.setString(1, producto);
+                    rs = ps.executeQuery();
+                    while (rs.next()) {
+                        idProducto = rs.getInt("idProducto");
+                    }
+
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, e.toString());
+                }
+
+                try {
+
+                    PreparedStatement ps;
+                    ResultSet rs;
+                    Connection con = Conexion.getConexion();
+                    ps = con.prepareStatement("SELECT idEmpaque FROM Empaques WHERE nombre=?");
+                    ps.setString(1, empaque);
+                    rs = ps.executeQuery();
+                    while (rs.next()) {
+                        idEmpaque = rs.getInt("idEmpaque");
+                    }
+
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, e.toString());
+                }
+
+                //Sacar idProducto e idEmpaque fin
+                //inicio
+                try {
+
+                    Connection con = Conexion.getConexion();
+                    PreparedStatement ps = con.prepareStatement("INSERT INTO PresentacionesProducto "
+                            + "(nombre, precioCompra, precioVenta, puntoReorden, idProducto, idEmpaque, estatus) VALUES (?,?,?,?,?,?,?)");
+                    ps.setString(1, nombre);
+                    ps.setFloat(2, precioCompra);
+                    ps.setFloat(3, precioVenta);
+                    ps.setFloat(4, puntoReorden);
+                    ps.setInt(5, idProducto);
+                    ps.setInt(6, idEmpaque);
+                    ps.setString(7, estatus);
+                    ps.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Registro guardado con exito");
+                    Limpiar();
+                    cargarTabla();
+
+                } catch (SQLException e) {
+
+                    JOptionPane.showMessageDialog(null, e.toString());
+
+                }
+                //fin
+            }
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        /*if (editando) {//editar
             if (txtPrecioCompra.getText().isEmpty() || txtPrecioVenta.getText().isEmpty() || txtPuntoReorden.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
             } else {
@@ -438,12 +598,56 @@ public class PresentacionesProducto extends javax.swing.JFrame {
                 }
                 //fin
             }
-        }
+        }*/
 
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void tblPresentacionesProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPresentacionesProductosMouseClicked
+        
         try {
+
+            int fila = tblPresentacionesProductos.getSelectedRow();
+            int id = Integer.parseInt(tblPresentacionesProductos.getValueAt(fila, 0).toString());
+            PreparedStatement ps;
+            ResultSet rs;
+
+            Connection con = Conexion.getConexion();
+            editando = true;
+            ps = con.prepareStatement("SELECT PP.nombre, PP.precioCompra, PP.precioVenta, PP.puntoReorden, P.nombre AS Producto, E.nombre AS Empaque FROM PresentacionesProducto AS PP INNER JOIN Productos AS P ON PP.idProducto = P.idProducto INNER JOIN Empaques AS E ON PP.idEmpaque = e.idEmpaque WHERE PP.idPresentacion = ?");
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                txtId.setText(String.valueOf(id));
+                txtNombre.setText(rs.getString("nombre"));
+                txtPrecioCompra.setText(rs.getString("precioCompra"));
+                txtPrecioVenta.setText(rs.getString("precioVenta"));
+                txtPuntoReorden.setText(rs.getString("puntoReorden"));
+                cmbEmpaque.setSelectedItem(rs.getString("Empaque"));
+                cmbProducto.setSelectedItem(rs.getString("Producto"));
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        /*try {
 
             int fila = tblPresentacionesProductos.getSelectedRow();
             int id = Integer.parseInt(tblPresentacionesProductos.getValueAt(fila, 0).toString());
@@ -467,10 +671,11 @@ public class PresentacionesProducto extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.toString());
-        }
+        }*/
     }//GEN-LAST:event_tblPresentacionesProductosMouseClicked
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+         
         int id = Integer.parseInt(txtId.getText());
         try {
             Connection con = Conexion.getConexion();
@@ -580,13 +785,25 @@ public class PresentacionesProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAnteriorActionPerformed
 
     private void Limpiar() {
-        txtId.setText("");
+       txtId.setText("");
+        txtNombre.setText("");
         txtPrecioCompra.setText("");
         txtPrecioVenta.setText("");
         txtPuntoReorden.setText("");
         cmbEmpaque.setSelectedIndex(0);
         cmbProducto.setSelectedIndex(0);
-        activarBotones();
+        
+        
+        
+        
+        
+        /*txtId.setText("");
+        txtPrecioCompra.setText("");
+        txtPrecioVenta.setText("");
+        txtPuntoReorden.setText("");
+        cmbEmpaque.setSelectedIndex(0);
+        cmbProducto.setSelectedIndex(0);
+        activarBotones();*/
     }
 
     private void cargarTabla() {
@@ -598,14 +815,14 @@ public class PresentacionesProducto extends javax.swing.JFrame {
         ResultSetMetaData rsmd;
         int columnas;
 
-        int[] ancho = {5, 100, 100, 100, 100, 100};
+        int[] ancho = {5, 100, 100, 100, 100, 100, 100};
         for (int i = 0; i < tblPresentacionesProductos.getColumnCount(); i++) {
             tblPresentacionesProductos.getColumnModel().getColumn(i).setPreferredWidth(ancho[i]);
         }
 
         try {
             Connection con = Conexion.getConexion();
-            ps = con.prepareStatement("SELECT PP.idPresentacion, PP.precioCompra, PP.precioVenta, PP.puntoReorden, P.nombre, E.nombre FROM PresentacionesProducto AS PP INNER JOIN Productos AS P ON PP.idProducto = P.idProducto INNER JOIN Empaques AS E ON PP.idEmpaque = e.idEmpaque WHERE PP.estatus = 'A' ORDER BY idPresentacion ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
+            ps = con.prepareStatement("SELECT PP.idPresentacion, PP,nombre, PP.precioCompra, PP.precioVenta, PP.puntoReorden, P.nombre, E.nombre FROM PresentacionesProducto AS PP INNER JOIN Productos AS P ON PP.idProducto = P.idProducto INNER JOIN Empaques AS E ON PP.idEmpaque = e.idEmpaque WHERE PP.estatus = 'A' ORDER BY idPresentacion ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
             ps.setInt(1, rango);
             ps.setInt(2, cantidad);
             rs = ps.executeQuery();

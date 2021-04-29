@@ -854,6 +854,7 @@ public class ProductosProveedor extends javax.swing.JFrame {
         boolean x = dR && pE && pUC && cMi && cMa;
         btnGuardar.setEnabled(x);
         btnCancelar.setEnabled(x);
+        activarBotones();
     }//GEN-LAST:event_txtPrecioEstandarKeyReleased
 
     private void txtPrecioUltimaCompraKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioUltimaCompraKeyReleased
@@ -861,6 +862,7 @@ public class ProductosProveedor extends javax.swing.JFrame {
         boolean x = dR && pE && pUC && cMi && cMa;
         btnGuardar.setEnabled(x);
         btnCancelar.setEnabled(x);
+        activarBotones();
     }//GEN-LAST:event_txtPrecioUltimaCompraKeyReleased
 
     private void txtCantMinPedirKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantMinPedirKeyReleased
@@ -868,6 +870,7 @@ public class ProductosProveedor extends javax.swing.JFrame {
         boolean x = dR && pE && pUC && cMi && cMa;
         btnGuardar.setEnabled(x);
         btnCancelar.setEnabled(x);
+        activarBotones();
     }//GEN-LAST:event_txtCantMinPedirKeyReleased
 
     private void txtCantMaxPedirKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantMaxPedirKeyReleased

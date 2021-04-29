@@ -2,17 +2,13 @@
 package Ventanas;
 
 import Coexion.Conexion;
-import Coexion.HelperCategorias;
 import Coexion.HelperCiudades;
-import Coexion.HelperProveedores;
-import java.awt.Button;
 import java.awt.Image;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -365,6 +361,8 @@ public class Proveedores extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEmailActionPerformed
     
+   
+
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         
         if (editando) {//editar
