@@ -405,16 +405,17 @@ public class ProductosProveedor extends javax.swing.JFrame {
             Connection con = Conexion.getConexion();
             editando = true;
             activarBotones();
-            ps = con.prepareStatement("SELECT PP.diasRetardo, PP.precioEstandar, PP.precioUltimaCompra, PP.cantMinPedir, PP.cantMaxPedir, Pro.nombre AS proveedor, Pre.nombre AS presentacion FROM ProductosProveedor AS PP INNER JOIN Proveedores AS Pro ON PP.idProveedor = Pro.idProveedor INNER JOIN PresentacionesProducto AS Pre ON PP.idPresentacion = Pre.idPresentacion");
+            ps = con.prepareStatement("SELECT Pro.nombre AS proveedor, Pre.nombre AS presentacion, PP.diasRetardo, PP.precioEstandar, PP.precioUltimaCompra, PP.cantMinPedir, PP.cantMaxPedir  FROM ProductosProveedor AS PP INNER JOIN Proveedores AS Pro ON PP.idProveedor = Pro.idProveedor INNER JOIN PresentacionesProducto AS Pre ON PP.idPresentacion = Pre.idPresentacion");
             rs = ps.executeQuery();
             while (rs.next()) {
+                cmbProveedor.setSelectedItem(rs.getString("proveedor"));
+                cmbPresentacion.setSelectedItem(rs.getString("presentacion"));
                 txtDiasRetardo.setText(rs.getString("diasRetardo"));
                 txtPrecioEstandar.setText(rs.getString("precioEstandar"));
                 txtPrecioUltimaCompra.setText(rs.getString("precioUltimaCompra"));
                 txtCantMinPedir.setText(rs.getString("cantMinpedir"));
                 txtCantMaxPedir.setText(rs.getString("cantMaxPedir"));
-                cmbProveedor.setSelectedItem(rs.getString("proveedor"));
-                cmbPresentacion.setSelectedItem(rs.getString("presentacion"));
+                
             }
 
         } catch (SQLException e) {
@@ -563,16 +564,17 @@ public class ProductosProveedor extends javax.swing.JFrame {
                 try {
 
                     Connection con = Conexion.getConexion();
-                    PreparedStatement ps = con.prepareStatement("UPDATE ProductosProveedor SET diasRetardo=?, precioEstandar=?, precioUltimaCompra=?, cantMinPedir=?, cantMaxPedir=?,"
-                            + "estatus=?, idProveedor=?, idPresentacion=?");
-                    ps.setInt(1, diasRetardo);
-                    ps.setFloat(2, precioEstandar);
-                    ps.setFloat(3, precioUltimaCompra);
-                    ps.setInt(4, cantMinPedir);
-                    ps.setInt(5, cantMaxPedir);
-                    ps.setString(6, estatus);
-                    ps.setInt(7, idProveedor);
-                    ps.setInt(8, idPresentacion);
+                    PreparedStatement ps = con.prepareStatement("UPDATE ProductosProveedor SET idProveedor=?, idPresentacion=?, diasRetardo=?, precioEstandar=?, precioUltimaCompra=?, cantMinPedir=?, cantMaxPedir=?,"
+                    + "estatus=? ");
+                    ps.setInt(1, idProveedor);
+                    ps.setInt(2, idPresentacion);
+                    ps.setInt(3, diasRetardo);
+                    ps.setFloat(4, precioEstandar);
+                    ps.setFloat(5, precioUltimaCompra);
+                    ps.setInt(6, cantMinPedir);
+                    ps.setInt(7, cantMaxPedir);
+                    ps.setString(8, estatus);
+                    
                     ps.executeUpdate();
                     JOptionPane.showMessageDialog(null, "Registro modificado con exito");
                     Limpiar();
@@ -637,15 +639,16 @@ public class ProductosProveedor extends javax.swing.JFrame {
                 try {
 
                     Connection con = Conexion.getConexion();
-                    PreparedStatement ps = con.prepareStatement("INSERT INTO ProductosProveedor (diasRetardo, precioEstandar, precioUltimaCompra, cantMinPedir, cantMaxPedir, estatus, idProveedor, idPresentacion) VALUES (?,?,?,?,?,?,?,?)");
-                    ps.setInt(1, diasRetardo);
-                    ps.setFloat(2, precioEstandar);
-                    ps.setFloat(3, precioUltimaCompra);
-                    ps.setInt(4, cantMinPedir);
-                    ps.setInt(5, cantMaxPedir);
-                    ps.setString(6, estatus);
-                    ps.setInt(7, idProveedor);
-                    ps.setInt(8, idPresentacion);
+                    PreparedStatement ps = con.prepareStatement("INSERT INTO ProductosProveedor (idProveedor, idPresentacion, diasRetardo, precioEstandar, precioUltimaCompra, cantMinPedir, cantMaxPedir, estatus) VALUES (?,?,?,?,?,?,?,?)");
+                    ps.setInt(1, idProveedor);
+                    ps.setInt(2, idPresentacion);
+                    ps.setInt(3, diasRetardo);
+                    ps.setFloat(4, precioEstandar);
+                    ps.setFloat(5, precioUltimaCompra);
+                    ps.setInt(6, cantMinPedir);
+                    ps.setInt(7, cantMaxPedir);
+                    ps.setString(8, estatus);
+                   
                     ps.executeUpdate();
                     JOptionPane.showMessageDialog(null, "Registro guardado con exito");
                     Limpiar();
@@ -929,13 +932,14 @@ public class ProductosProveedor extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCantMinPedirActionPerformed
 
     private void Limpiar(){
+        cmbProveedor.setSelectedIndex(0);
+        cmbPresentacion.setSelectedIndex(0);
         txtDiasRetardo.setText("");
         txtPrecioEstandar.setText("");
         txtPrecioUltimaCompra.setText("");
         txtCantMinPedir.setText("");
         txtCantMaxPedir.setText("");
-        cmbProveedor.setSelectedIndex(0);
-        cmbPresentacion.setSelectedIndex(0);
+        
         desactivarBotones();
  
         
@@ -960,14 +964,14 @@ public class ProductosProveedor extends javax.swing.JFrame {
         ResultSetMetaData rsmd;
         int columnas;
 
-        int[] ancho = {5, 5, 150, 150, 150, 150, 150, 150};
+        int[] ancho = { 50, 150, 150, 150, 150, 150, 150};
         for (int i = 0; i < tblProductosProveedor.getColumnCount(); i++) {
             tblProductosProveedor.getColumnModel().getColumn(i).setPreferredWidth(ancho[i]);
         }
 
         try {
             Connection con = Conexion.getConexion();
-            ps = con.prepareStatement("SELECT PP.diasRetardo, PP.precioEstandar, PP.precioUltimaCompra, PP.cantMinPedir, PP.cantMaxPedir, Pro.nombre, Pre.nombre FROM ProductosProveedor AS PP INNER JOIN Proveedores AS Pro on PP.idProveedor = Pro.idProveedor INNER JOIN PresentacionesProducto AS Pre on PP.idPresentacion = Pre.idPresentacion WHERE PP.estatus = 'A' ");
+            ps = con.prepareStatement("SELECT Pro.nombre, Pre.nombre, PP.diasRetardo, PP.precioEstandar, PP.precioUltimaCompra, PP.cantMinPedir, PP.cantMaxPedir FROM ProductosProveedor AS PP INNER JOIN Proveedores AS Pro on PP.idProveedor = Pro.idProveedor INNER JOIN PresentacionesProducto AS Pre on PP.idPresentacion = Pre.idPresentacion WHERE PP.estatus = 'A'  ");
             //ORDER BY idProveedor ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONL
             //ps.setInt(1, rango);
             //ps.setInt(2, cantidad);
