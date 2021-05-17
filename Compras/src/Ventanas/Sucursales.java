@@ -21,6 +21,8 @@ public class Sucursales extends javax.swing.JFrame {
         HelperCiudades hpCiudades = new HelperCiudades();
         cmbCiudad.setModel(hpCiudades.getValues());
         cargarTabla();
+        //desactivarBotones();
+        btnAnterior.setEnabled(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -88,6 +90,11 @@ public class Sucursales extends javax.swing.JFrame {
         cmbCiudad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
 
@@ -248,6 +255,123 @@ public class Sucursales extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        if (editando) {//editar
+            if (txtNombre.getText().isEmpty() || txtTelefono.getText().isEmpty() || txtDireccion.getText().isEmpty() || txtColonia.getText().isEmpty()|| txtCP.getText().isEmpty() || txtPresupuesto.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
+            } else {
+                int id = Integer.parseInt(txtId.getText());
+                String nombre = txtNombre.getText();
+                String telefono = txtTelefono.getText();
+                String direccion = txtDireccion.getText();
+                String colonia = txtColonia.getText();
+                String CP = txtCP.getText();
+                float presupuesto = Float.parseFloat(txtPresupuesto.getText());
+                String estatus = "A";
+                //Sacar idCiudad inicio
+                int idCiudad = 1;
+                String ciudad = (String) cmbCiudad.getSelectedItem();
+
+                try {
+
+                    PreparedStatement ps;
+                    ResultSet rs;
+                    Connection con = Conexion.getConexion();
+                    ps = con.prepareStatement("SELECT idCiudad FROM Ciudades WHERE nombre=?");
+                    ps.setString(1, ciudad);
+                    rs = ps.executeQuery();
+                    while (rs.next()) {
+                        idCiudad = rs.getInt("idCiudad");
+                    }
+
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, e.toString());
+                }
+                //Sacar idCiudad fin
+                try {
+
+                    Connection con = Conexion.getConexion();
+                    PreparedStatement ps = con.prepareStatement("UPDATE Sucursales SET nombre=?, telefono=?, direccion=?, colonia=?, codigoPostal=?, presupuesto=?, estatus=?, idCiudad=? WHERE idSucursal=?");
+                    ps.setString(1, nombre);
+                    ps.setString(2, telefono);
+                    ps.setString(3, direccion);
+                    ps.setString(4, colonia);
+                    ps.setString(5, CP);
+                    ps.setFloat(6, presupuesto);
+                    ps.setString(7, estatus);
+                    ps.setInt(8, idCiudad);
+                    ps.setInt(9, id);
+                    ps.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Registro modificado con exito");
+                    Limpiar();
+                    cargarTabla();
+
+                } catch (SQLException e) {
+
+                    JOptionPane.showMessageDialog(null, e.toString());
+
+                }
+            }
+        } else {//guardar
+            if (txtNombre.getText().isEmpty() || txtTelefono.getText().isEmpty() || txtDireccion.getText().isEmpty() || txtColonia.getText().isEmpty()|| txtCP.getText().isEmpty() || txtPresupuesto.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
+            } else {
+                String nombre = txtNombre.getText();
+                String telefono = txtTelefono.getText();
+                String direccion = txtDireccion.getText();
+                String colonia = txtColonia.getText();
+                String CP = txtCP.getText();
+                float presupuesto = Float.parseFloat(txtPresupuesto.getText());
+                String estatus = "A";
+                //Sacar idCiudad inicio
+                int idCiudad = 1;
+                String ciudad = (String) cmbCiudad.getSelectedItem();
+
+                try {
+
+                    PreparedStatement ps;
+                    ResultSet rs;
+                    Connection con = Conexion.getConexion();
+                    ps = con.prepareStatement("SELECT idCiudad FROM Ciudades WHERE nombre=?");
+                    ps.setString(1, ciudad);
+                    rs = ps.executeQuery();
+                    while (rs.next()) {
+                        idCiudad = rs.getInt("idCiudad");
+                    }
+
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, e.toString());
+                }
+                //Sacar idCiudad fin
+                //inicio
+                try {
+
+                    Connection con = Conexion.getConexion();
+                    PreparedStatement ps = con.prepareStatement("INSERT INTO Sucursales "
+                            + "(nombre, telefono, direccion, colonia, codigoPostal, presupuesto, estatus, idCiudad) VALUES (?,?,?,?,?,?,?,?)");
+                    ps.setString(1, nombre);
+                    ps.setString(2, telefono);
+                    ps.setString(3, direccion);
+                    ps.setString(4, colonia);
+                    ps.setString(5, CP);
+                    ps.setFloat(6, presupuesto);
+                    ps.setString(7, estatus);
+                    ps.setInt(8, idCiudad);
+                    ps.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Registro guardado con exito");
+                    Limpiar();
+                    cargarTabla();
+
+                } catch (SQLException e) {
+
+                    JOptionPane.showMessageDialog(null, e.toString());
+
+                }
+                //fin
+            }
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
     boolean editando = false;
     int cantidad = 5;
     int pagina = 1;
@@ -255,6 +379,20 @@ public class Sucursales extends javax.swing.JFrame {
     int total;
     int numeroPaginas;
 
+    private void Limpiar() {
+        txtId.setText("");
+        txtNombre.setText("");
+        txtTelefono.setText("");
+        txtDireccion.setText("");
+        txtColonia.setText("");
+        txtCP.setText("");
+        txtPresupuesto.setText("");
+        cmbCiudad.setSelectedIndex(0);
+        desactivarBotones();
+        cargarTabla();
+
+    }
+    
     private void cargarTabla() {
         DefaultTableModel modeloTabla = (DefaultTableModel) tblSucursales.getModel();
         modeloTabla.setRowCount(0);
@@ -346,6 +484,18 @@ public class Sucursales extends javax.swing.JFrame {
         btnCancelar.setIcon(new ImageIcon(cancelar.getImage().getScaledInstance(btnCancelar.getWidth(), btnCancelar.getHeight(), Image.SCALE_SMOOTH)));
     }
 
+    private void desactivarBotones() {
+        btnGuardar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+    }
+
+    private void activarBotones() {
+        btnGuardar.setEnabled(true);
+        btnEliminar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+    }
+    
     private void sacarTotal() {
         try {
 
