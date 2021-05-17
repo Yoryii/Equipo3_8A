@@ -521,16 +521,21 @@ public class Productos extends javax.swing.JFrame {
     }//GEN-LAST:event_tblProductosMouseClicked
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        int id = Integer.parseInt(txtId.getText());
-        try {
-            Connection con = Conexion.getConexion();
-            PreparedStatement ps = con.prepareStatement("UPDATE Productos SET estatus = 'I' WHERE idProducto = ?");
-            ps.setInt(1, id);
-            ps.executeUpdate();
+        int confirmacion = JOptionPane.showConfirmDialog(null, "Estás seguro de eliminar el registro?");
+        if (confirmacion != 0) {
             Limpiar();
-            cargarTabla();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.toString());
+        } else {
+            int id = Integer.parseInt(txtId.getText());
+            try {
+                Connection con = Conexion.getConexion();
+                PreparedStatement ps = con.prepareStatement("UPDATE Productos SET estatus = 'I' WHERE idProducto = ?");
+                ps.setInt(1, id);
+                ps.executeUpdate();
+                Limpiar();
+                cargarTabla();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e.toString());
+            }
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -552,8 +557,7 @@ public class Productos extends javax.swing.JFrame {
     boolean bT = false;
     boolean a = false;
     boolean u = false;
-    
-   
+
 
     private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
         boolean x = validarCamposVacios();
@@ -637,6 +641,7 @@ public class Productos extends javax.swing.JFrame {
         cmbCategoria.setSelectedIndex(0);
         cmbLaboratorio.setSelectedIndex(0);
         desactivarBotones();
+        cargarTabla();
     }
 
     private void cargarTabla() {
@@ -722,11 +727,11 @@ public class Productos extends javax.swing.JFrame {
 
     private boolean validarCamposVacios() {
         boolean x;
-        n = txtNombre.getText().length() != 0;                                     
-        d = txtDescripcion.getText().length() != 0;                       
-        iA = txtIngredienteActivo.getText().length() != 0;                                               
-        bT = txtBandaToxicologica.getText().length() != 0;                                       
-        a = txtAplicacion.getText().length() != 0;                                 
+        n = txtNombre.getText().length() != 0;
+        d = txtDescripcion.getText().length() != 0;
+        iA = txtIngredienteActivo.getText().length() != 0;
+        bT = txtBandaToxicologica.getText().length() != 0;
+        a = txtAplicacion.getText().length() != 0;
         u = txtUso.getText().length() != 0;
         x = n && d && iA && bT && a && u;
         return x;

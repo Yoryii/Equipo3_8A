@@ -308,7 +308,7 @@ public class PresentacionesProducto extends javax.swing.JFrame {
     int numeroPaginas;
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        
+
         if (editando) {//editar
             if (txtNombre.getText().isEmpty() || txtPrecioCompra.getText().isEmpty() || txtPrecioVenta.getText().isEmpty() || txtPuntoReorden.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
@@ -382,7 +382,7 @@ public class PresentacionesProducto extends javax.swing.JFrame {
                 }
             }
         } else {//guardar
-            if (txtNombre.getText().isEmpty() ||txtPrecioCompra.getText().isEmpty() || txtPrecioVenta.getText().isEmpty() || txtPuntoReorden.getText().isEmpty()) {
+            if (txtNombre.getText().isEmpty() || txtPrecioCompra.getText().isEmpty() || txtPrecioVenta.getText().isEmpty() || txtPuntoReorden.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
             } else {
                 String nombre = txtNombre.getText();
@@ -455,20 +455,7 @@ public class PresentacionesProducto extends javax.swing.JFrame {
                 //fin
             }
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
         /*if (editando) {//editar
             if (txtPrecioCompra.getText().isEmpty() || txtPrecioVenta.getText().isEmpty() || txtPuntoReorden.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
@@ -615,8 +602,8 @@ public class PresentacionesProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void tblPresentacionesProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPresentacionesProductosMouseClicked
-        
-       try {
+
+        try {
 
             int fila = tblPresentacionesProductos.getSelectedRow();
             int id = Integer.parseInt(tblPresentacionesProductos.getValueAt(fila, 0).toString());
@@ -642,24 +629,7 @@ public class PresentacionesProducto extends javax.swing.JFrame {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.toString());
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
         /*try {
 
             int fila = tblPresentacionesProductos.getSelectedRow();
@@ -688,17 +658,21 @@ public class PresentacionesProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_tblPresentacionesProductosMouseClicked
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-         
-        int id = Integer.parseInt(txtId.getText());
-        try {
-            Connection con = Conexion.getConexion();
-            PreparedStatement ps = con.prepareStatement("UPDATE PresentacionesProducto SET estatus = 'I' WHERE idPresentacion = ?");
-            ps.setInt(1, id);
-            ps.executeUpdate();
+        int confirmacion = JOptionPane.showConfirmDialog(null, "Estás seguro de eliminar el registro?");
+        if (confirmacion != 0) {
             Limpiar();
-            cargarTabla();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.toString());
+        } else {
+            int id = Integer.parseInt(txtId.getText());
+            try {
+                Connection con = Conexion.getConexion();
+                PreparedStatement ps = con.prepareStatement("UPDATE PresentacionesProducto SET estatus = 'I' WHERE idPresentacion = ?");
+                ps.setInt(1, id);
+                ps.executeUpdate();
+                Limpiar();
+                cargarTabla();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e.toString());
+            }
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -754,7 +728,7 @@ public class PresentacionesProducto extends javax.swing.JFrame {
         boolean hayPunto = false;
         String cadena = txtPrecioCompra.getText();
         for (int i = 0; i < cadena.length(); i++) {
-            if (".".charAt(0)==cadena.charAt(i)) {
+            if (".".charAt(0) == cadena.charAt(i)) {
                 hayPunto = true;
             }
         }
@@ -778,7 +752,7 @@ public class PresentacionesProducto extends javax.swing.JFrame {
         boolean hayPunto = false;
         String cadena = txtPrecioVenta.getText();
         for (int i = 0; i < cadena.length(); i++) {
-            if (".".charAt(0)==cadena.charAt(i)) {
+            if (".".charAt(0) == cadena.charAt(i)) {
                 hayPunto = true;
             }
         }
@@ -800,7 +774,7 @@ public class PresentacionesProducto extends javax.swing.JFrame {
         boolean hayPunto = false;
         String cadena = txtPuntoReorden.getText();
         for (int i = 0; i < cadena.length(); i++) {
-            if (".".charAt(0)==cadena.charAt(i)) {
+            if (".".charAt(0) == cadena.charAt(i)) {
                 hayPunto = true;
             }
         }
@@ -866,11 +840,6 @@ public class PresentacionesProducto extends javax.swing.JFrame {
         cmbEmpaque.setSelectedIndex(0);
         cmbProducto.setSelectedIndex(0);
 
-        
-        
-        
-        
-        
         /*txtId.setText("");
         txtPrecioCompra.setText("");
         txtPrecioVenta.setText("");
@@ -878,7 +847,7 @@ public class PresentacionesProducto extends javax.swing.JFrame {
         cmbEmpaque.setSelectedIndex(0);
         cmbProducto.setSelectedIndex(0);
         activarBotones();
-        */
+         */
         desactivarBotones();
         cargarTabla();
 
