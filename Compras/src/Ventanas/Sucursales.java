@@ -201,6 +201,11 @@ public class Sucursales extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblSucursales.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblSucursalesMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblSucursales);
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -257,7 +262,7 @@ public class Sucursales extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         if (editando) {//editar
-            if (txtNombre.getText().isEmpty() || txtTelefono.getText().isEmpty() || txtDireccion.getText().isEmpty() || txtColonia.getText().isEmpty()|| txtCP.getText().isEmpty() || txtPresupuesto.getText().isEmpty()) {
+            if (txtNombre.getText().isEmpty() || txtTelefono.getText().isEmpty() || txtDireccion.getText().isEmpty() || txtColonia.getText().isEmpty() || txtCP.getText().isEmpty() || txtPresupuesto.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
             } else {
                 int id = Integer.parseInt(txtId.getText());
@@ -313,7 +318,7 @@ public class Sucursales extends javax.swing.JFrame {
                 }
             }
         } else {//guardar
-            if (txtNombre.getText().isEmpty() || txtTelefono.getText().isEmpty() || txtDireccion.getText().isEmpty() || txtColonia.getText().isEmpty()|| txtCP.getText().isEmpty() || txtPresupuesto.getText().isEmpty()) {
+            if (txtNombre.getText().isEmpty() || txtTelefono.getText().isEmpty() || txtDireccion.getText().isEmpty() || txtColonia.getText().isEmpty() || txtCP.getText().isEmpty() || txtPresupuesto.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
             } else {
                 String nombre = txtNombre.getText();
@@ -372,6 +377,36 @@ public class Sucursales extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    private void tblSucursalesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSucursalesMouseClicked
+        try {
+
+            int fila = tblSucursales.getSelectedRow();
+            int id = Integer.parseInt(tblSucursales.getValueAt(fila, 0).toString());
+            PreparedStatement ps;
+            ResultSet rs;
+
+            Connection con = Conexion.getConexion();
+            editando = true;
+            activarBotones();
+            ps = con.prepareStatement("SELECT S.nombre, S.telefono, S.direccion, S.colonia, S.codigoPostal, S.presupuesto, C.nombre AS Ciudad FROM Sucursales AS S JOIN Ciudades AS C ON S.idCiudad = C.idCiudad WHERE idSucursal=?");
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                txtId.setText(String.valueOf(id));
+                txtNombre.setText(rs.getString("nombre"));
+                txtTelefono.setText(rs.getString("telefono"));
+                txtDireccion.setText(rs.getString("direccion"));
+                txtColonia.setText(rs.getString("colonia"));
+                txtCP.setText(rs.getString("codigoPostal"));
+                txtPresupuesto.setText(rs.getString("presupuesto"));
+                cmbCiudad.setSelectedItem(rs.getString("Ciudad"));
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+    }//GEN-LAST:event_tblSucursalesMouseClicked
+
     boolean editando = false;
     int cantidad = 5;
     int pagina = 1;
@@ -392,7 +427,7 @@ public class Sucursales extends javax.swing.JFrame {
         cargarTabla();
 
     }
-    
+
     private void cargarTabla() {
         DefaultTableModel modeloTabla = (DefaultTableModel) tblSucursales.getModel();
         modeloTabla.setRowCount(0);
@@ -495,7 +530,7 @@ public class Sucursales extends javax.swing.JFrame {
         btnEliminar.setEnabled(true);
         btnCancelar.setEnabled(true);
     }
-    
+
     private void sacarTotal() {
         try {
 
