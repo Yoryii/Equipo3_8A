@@ -1,8 +1,16 @@
 package Ventanas;
 
+import Coexion.Conexion;
 import Coexion.HelperCiudades;
 import java.awt.Image;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class Sucursales extends javax.swing.JFrame {
 
@@ -12,6 +20,7 @@ public class Sucursales extends javax.swing.JFrame {
         botonImagen();
         HelperCiudades hpCiudades = new HelperCiudades();
         cmbCiudad.setModel(hpCiudades.getValues());
+        cargarTabla();
     }
 
     @SuppressWarnings("unchecked")
@@ -41,7 +50,7 @@ public class Sucursales extends javax.swing.JFrame {
         txtId = new javax.swing.JTextField();
         btnRegresar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblSucursales = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
         btnAnterior = new javax.swing.JButton();
         btnSiguiente = new javax.swing.JButton();
@@ -162,7 +171,7 @@ public class Sucursales extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblSucursales.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -185,7 +194,7 @@ public class Sucursales extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(tblSucursales);
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel8.setText("Sucursales");
@@ -239,6 +248,58 @@ public class Sucursales extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    boolean editando = false;
+    int cantidad = 5;
+    int pagina = 1;
+    int rango = ((pagina - 1) * cantidad);
+    int total;
+    int numeroPaginas;
+
+    private void cargarTabla() {
+        DefaultTableModel modeloTabla = (DefaultTableModel) tblSucursales.getModel();
+        modeloTabla.setRowCount(0);
+
+        PreparedStatement ps;
+        ResultSet rs;
+        ResultSetMetaData rsmd;
+        int columnas;
+
+        int[] ancho = {15, 100, 100, 100, 100, 100, 100, 100};
+        for (int i = 0; i < tblSucursales.getColumnCount(); i++) {
+            tblSucursales.getColumnModel().getColumn(i).setPreferredWidth(ancho[i]);
+        }
+
+        try {
+            Connection con = Conexion.getConexion();
+            ps = con.prepareStatement("SELECT S.idSucursal, S.nombre, S.telefono, S.direccion, S.colonia, S.codigoPostal, S.presupuesto, C.nombre FROM Sucursales AS S INNER JOIN Ciudades AS C ON S.idCiudad = S.idCiudad WHERE S.estatus = 'A' ORDER BY idSucursal ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
+            ps.setInt(1, rango);
+            ps.setInt(2, cantidad);
+            rs = ps.executeQuery();
+            rsmd = rs.getMetaData();
+            columnas = rsmd.getColumnCount();
+            while (rs.next()) {
+                Object[] fila = new Object[columnas];
+                for (int indice = 0; indice < columnas; indice++) {
+                    fila[indice] = rs.getObject(indice + 1);
+                }
+                modeloTabla.addRow(fila);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+        calcularNumeroPaginas();
+        if (pagina == 1) {
+            btnAnterior.setEnabled(false);
+        } else {
+            btnAnterior.setEnabled(true);
+        }
+        if (numeroPaginas == pagina) {
+            btnSiguiente.setEnabled(false);
+        } else {
+            btnSiguiente.setEnabled(true);
+        }
+    }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -270,7 +331,7 @@ public class Sucursales extends javax.swing.JFrame {
             }
         });
     }
-    
+
     private void botonImagen() {
         ImageIcon guardar = new ImageIcon("src/Img/saveIcon.png");
         btnGuardar.setIcon(new ImageIcon(guardar.getImage().getScaledInstance(btnGuardar.getWidth(), btnGuardar.getHeight(), Image.SCALE_SMOOTH)));
@@ -284,7 +345,32 @@ public class Sucursales extends javax.swing.JFrame {
         ImageIcon cancelar = new ImageIcon("src/Img/deleteIcon.png");
         btnCancelar.setIcon(new ImageIcon(cancelar.getImage().getScaledInstance(btnCancelar.getWidth(), btnCancelar.getHeight(), Image.SCALE_SMOOTH)));
     }
-    
+
+    private void sacarTotal() {
+        try {
+
+            PreparedStatement ps;
+            ResultSet rs;
+            Connection con = Conexion.getConexion();
+            ps = con.prepareStatement("SELECT COUNT(*) AS total FROM PresentacionesProducto WHERE estatus='A'");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                total = rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+    }
+
+    private void calcularNumeroPaginas() {
+        sacarTotal();
+        float totalf;
+        float cantidadf;
+        totalf = (float) total;
+        cantidadf = (float) cantidad;
+        float x = (totalf / cantidadf);
+        numeroPaginas = (int) Math.ceil(x);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnterior;
@@ -305,8 +391,8 @@ public class Sucursales extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTable tblSucursales;
     private javax.swing.JTextField txtCP;
     private javax.swing.JTextField txtColonia;
     private javax.swing.JTextField txtDireccion;
