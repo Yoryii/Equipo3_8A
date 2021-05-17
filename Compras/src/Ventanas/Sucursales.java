@@ -264,8 +264,18 @@ public class Sucursales extends javax.swing.JFrame {
         jLabel8.setText("Sucursales");
 
         btnAnterior.setText("Anterior");
+        btnAnterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnteriorActionPerformed(evt);
+            }
+        });
 
         btnSiguiente.setText("Siguiente");
+        btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSiguienteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -532,6 +542,41 @@ public class Sucursales extends javax.swing.JFrame {
         btnCancelar.setEnabled(y);
     }//GEN-LAST:event_txtPresupuestoKeyReleased
 
+    private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
+        pagina++;
+        btnAnterior.setEnabled(true);
+        rango = ((pagina - 1) * cantidad);
+        cargarTabla();
+        calcularNumeroPaginas();
+        if (pagina == 1) {
+            btnAnterior.setEnabled(false);
+        } else {
+            btnAnterior.setEnabled(true);
+        }
+        if (numeroPaginas == pagina) {
+            btnSiguiente.setEnabled(false);
+        } else {
+            btnSiguiente.setEnabled(true);
+        }
+    }//GEN-LAST:event_btnSiguienteActionPerformed
+
+    private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
+        pagina--;
+        rango = ((pagina - 1) * cantidad);
+        cargarTabla();
+        calcularNumeroPaginas();
+        if (pagina == 1) {
+            btnAnterior.setEnabled(false);
+        } else {
+            btnAnterior.setEnabled(true);
+        }
+        if (numeroPaginas == pagina) {
+            btnSiguiente.setEnabled(false);
+        } else {
+            btnSiguiente.setEnabled(true);
+        }
+    }//GEN-LAST:event_btnAnteriorActionPerformed
+
     boolean editando = false;
     int cantidad = 5;
     int pagina = 1;
@@ -696,7 +741,7 @@ public class Sucursales extends javax.swing.JFrame {
             PreparedStatement ps;
             ResultSet rs;
             Connection con = Conexion.getConexion();
-            ps = con.prepareStatement("SELECT COUNT(*) AS total FROM PresentacionesProducto WHERE estatus='A'");
+            ps = con.prepareStatement("SELECT COUNT(*) AS total FROM Sucursales WHERE estatus='A'");
             rs = ps.executeQuery();
             while (rs.next()) {
                 total = rs.getInt("total");
