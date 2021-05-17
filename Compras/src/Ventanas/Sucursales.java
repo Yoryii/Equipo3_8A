@@ -21,7 +21,7 @@ public class Sucursales extends javax.swing.JFrame {
         HelperCiudades hpCiudades = new HelperCiudades();
         cmbCiudad.setModel(hpCiudades.getValues());
         cargarTabla();
-        //desactivarBotones();
+        desactivarBotones();
         btnAnterior.setEnabled(false);
     }
 
@@ -69,20 +69,56 @@ public class Sucursales extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setText("Nombre");
 
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNombreKeyReleased(evt);
+            }
+        });
+
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel1.setText("Teléfono");
+
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyReleased(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel3.setText("Dirección");
 
+        txtDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtDireccionKeyReleased(evt);
+            }
+        });
+
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setText("Colonia");
+
+        txtColonia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtColoniaKeyReleased(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel5.setText("Código postal");
 
+        txtCP.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCPKeyReleased(evt);
+            }
+        });
+
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel6.setText("Presupuesto");
+
+        txtPresupuesto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPresupuestoKeyReleased(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel7.setText("Ciudad");
@@ -454,12 +490,88 @@ public class Sucursales extends javax.swing.JFrame {
         pr.setVisible(true);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
+        boolean x = validarCamposVacios();
+        btnGuardar.setEnabled(x);
+        boolean y = validarCampoNoVacio();
+        btnCancelar.setEnabled(y);
+    }//GEN-LAST:event_txtNombreKeyReleased
+
+    private void txtTelefonoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyReleased
+        boolean x = validarCamposVacios();
+        btnGuardar.setEnabled(x);
+        boolean y = validarCampoNoVacio();
+        btnCancelar.setEnabled(y);
+    }//GEN-LAST:event_txtTelefonoKeyReleased
+
+    private void txtDireccionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyReleased
+        boolean x = validarCamposVacios();
+        btnGuardar.setEnabled(x);
+        boolean y = validarCampoNoVacio();
+        btnCancelar.setEnabled(y);
+    }//GEN-LAST:event_txtDireccionKeyReleased
+
+    private void txtColoniaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtColoniaKeyReleased
+        boolean x = validarCamposVacios();
+        btnGuardar.setEnabled(x);
+        boolean y = validarCampoNoVacio();
+        btnCancelar.setEnabled(y);
+    }//GEN-LAST:event_txtColoniaKeyReleased
+
+    private void txtCPKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCPKeyReleased
+        boolean x = validarCamposVacios();
+        btnGuardar.setEnabled(x);
+        boolean y = validarCampoNoVacio();
+        btnCancelar.setEnabled(y);
+    }//GEN-LAST:event_txtCPKeyReleased
+
+    private void txtPresupuestoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPresupuestoKeyReleased
+        boolean x = validarCamposVacios();
+        btnGuardar.setEnabled(x);
+        boolean y = validarCampoNoVacio();
+        btnCancelar.setEnabled(y);
+    }//GEN-LAST:event_txtPresupuestoKeyReleased
+
     boolean editando = false;
     int cantidad = 5;
     int pagina = 1;
     int rango = ((pagina - 1) * cantidad);
     int total;
     int numeroPaginas;
+    
+    //Validación de campos vacios
+    
+    boolean n = false;
+    boolean t = false;
+    boolean d = false;
+    boolean c = false;
+    boolean cp = false;
+    boolean p = false;
+    
+    private boolean validarCamposVacios() {
+        boolean x;
+        n = txtNombre.getText().length() != 0;
+        t = txtTelefono.getText().length() == 10;
+        d = txtDireccion.getText().length() != 0;
+        c = txtColonia.getText().length() != 0;
+        cp = txtCP.getText().length() == 5;
+        p = txtPresupuesto.getText().length() != 0;
+        x = n && t && d && c && cp && p;
+        return x;
+    }
+    
+    private boolean validarCampoNoVacio(){
+        boolean y;
+        n = txtNombre.getText().length() != 0;
+        t = txtTelefono.getText().length() != 0;
+        d = txtDireccion.getText().length() != 0;
+        c = txtColonia.getText().length() != 0;
+        cp = txtCP.getText().length() != 0;
+        p = txtPresupuesto.getText().length() != 0;
+        y = n || t || d || c || cp || p;
+        return y;
+    }
+
 
     private void Limpiar() {
         txtId.setText("");
