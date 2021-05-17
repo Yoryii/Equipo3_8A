@@ -99,6 +99,11 @@ public class Sucursales extends javax.swing.JFrame {
         btnCancelar.setText("Cancelar");
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -406,6 +411,25 @@ public class Sucursales extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e.toString());
         }
     }//GEN-LAST:event_tblSucursalesMouseClicked
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        int confirmacion = JOptionPane.showConfirmDialog(null, "Estás seguro de eliminar el registro?");
+        if (confirmacion != 0) {
+            Limpiar();
+        } else {
+            int id = Integer.parseInt(txtId.getText());
+            try {
+                Connection con = Conexion.getConexion();
+                PreparedStatement ps = con.prepareStatement("UPDATE Sucursales SET estatus = 'I' WHERE idSucursal = ?");
+                ps.setInt(1, id);
+                ps.executeUpdate();
+                Limpiar();
+                cargarTabla();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e.toString());
+            }
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     boolean editando = false;
     int cantidad = 5;
