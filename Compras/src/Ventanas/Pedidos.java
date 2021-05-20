@@ -29,7 +29,11 @@ public class Pedidos extends javax.swing.JFrame {
         btnXML.setEnabled(false);
         btnModificar.setEnabled(false);
         btnImprimir.setEnabled(false);
-    
+        
+        txfFechaRecepcion.setEditable(false);
+        txfTotal.setEditable(false);
+        txfCantidad.setEditable(false);
+        txfEstatus.setEditable(false);
     
     }
 
