@@ -533,16 +533,21 @@ public class Proveedores extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        int id = Integer.parseInt(txtId.getText());
-        try {
-            Connection con = Conexion.getConexion();
-            PreparedStatement ps = con.prepareStatement("UPDATE Proveedores SET estatus = 'I' WHERE idProveedor = ?");
-            ps.setInt(1, id);
-            ps.executeUpdate();
+        int confirmacion = JOptionPane.showConfirmDialog(null, "Estás seguro de eliminar el registro?");
+        if (confirmacion != 0) {
             Limpiar();
-            cargarTabla();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.toString());
+        } else {
+            int id = Integer.parseInt(txtId.getText());
+            try {
+                Connection con = Conexion.getConexion();
+                PreparedStatement ps = con.prepareStatement("UPDATE Proveedores SET estatus = 'I' WHERE idProveedor = ?");
+                ps.setInt(1, id);
+                ps.executeUpdate();
+                Limpiar();
+                cargarTabla();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e.toString());
+            }
         }
          
     }//GEN-LAST:event_btnEliminarActionPerformed
@@ -557,54 +562,71 @@ public class Proveedores extends javax.swing.JFrame {
     boolean e = false;
     boolean d = false;
     boolean c = false;
-    boolean cP = false;
+    boolean cp = false;
     
     private boolean validarCamposVacios() {
         boolean x;
+        n = txtNombre.getText().length() != 0;
+        t = txtTelefono.getText().length() == 10;
+        e = txtEmail.getText().length() != 0;
+        d = txtDireccion.getText().length() != 0;
+        c = txtColonia.getText().length() != 0;
+        cp = txtCodigoPostal.getText().length() == 5;
+        x = n && t && e && d && c && cp;
+        return x;
+    }
+     private boolean validarCampoNoVacio(){
+        boolean y;
         n = txtNombre.getText().length() != 0;
         t = txtTelefono.getText().length() != 0;
         e = txtEmail.getText().length() != 0;
         d = txtDireccion.getText().length() != 0;
         c = txtColonia.getText().length() != 0;
-        cP = txtCodigoPostal.getText().length() != 0;
-        x = n && t && t && d && c && cP;
-        return x;
+        cp = txtCodigoPostal.getText().length() != 0;
+        y = n || t || e|| d || c || cp;
+        return y;
     }
     
     private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
-       boolean x = validarCamposVacios();
+        boolean x = validarCamposVacios();
         btnGuardar.setEnabled(x);
-        btnCancelar.setEnabled(x);
+        boolean y = validarCampoNoVacio();
+        btnCancelar.setEnabled(y);
     }//GEN-LAST:event_txtNombreKeyReleased
 
     private void txtTelefonoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyReleased
         boolean x = validarCamposVacios();
         btnGuardar.setEnabled(x);
-        btnCancelar.setEnabled(x);
+        boolean y = validarCampoNoVacio();
+        btnCancelar.setEnabled(y);
     }//GEN-LAST:event_txtTelefonoKeyReleased
 
     private void txtEmailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyReleased
-       boolean x = validarCamposVacios();
+        boolean x = validarCamposVacios();
         btnGuardar.setEnabled(x);
-        btnCancelar.setEnabled(x);
+        boolean y = validarCampoNoVacio();
+        btnCancelar.setEnabled(y);
     }//GEN-LAST:event_txtEmailKeyReleased
 
     private void txtDireccionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyReleased
-       boolean x = validarCamposVacios();
+        boolean x = validarCamposVacios();
         btnGuardar.setEnabled(x);
-        btnCancelar.setEnabled(x);
+        boolean y = validarCampoNoVacio();
+        btnCancelar.setEnabled(y);
     }//GEN-LAST:event_txtDireccionKeyReleased
 
     private void txtColoniaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtColoniaKeyReleased
        boolean x = validarCamposVacios();
         btnGuardar.setEnabled(x);
-        btnCancelar.setEnabled(x);
+        boolean y = validarCampoNoVacio();
+        btnCancelar.setEnabled(y);
     }//GEN-LAST:event_txtColoniaKeyReleased
 
     private void txtCodigoPostalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoPostalKeyReleased
        boolean x = validarCamposVacios();
         btnGuardar.setEnabled(x);
-        btnCancelar.setEnabled(x);
+        boolean y = validarCampoNoVacio();
+        btnCancelar.setEnabled(y);
     }//GEN-LAST:event_txtCodigoPostalKeyReleased
 
     private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed

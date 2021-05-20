@@ -27,7 +27,7 @@ public class Laboratorios extends javax.swing.JFrame {
         cargarTabla();
         txtEstatus.setVisible(false);
         botonImagen();
-        //desactivarBotones();
+        desactivarBotones();
         
         btnGuardar.setToolTipText("(?) Pulsa para guardar registro.");
         btnEliminar.setToolTipText("(?) Pulsa para eliminar registro.");
@@ -340,16 +340,21 @@ public class Laboratorios extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        int id = Integer.parseInt(txtId.getText());
-        try {
-            Connection con = Conexion.getConexion();
-            PreparedStatement ps = con.prepareStatement("UPDATE Laboratorios SET estatus = 'I' WHERE idLaboratorio = ?");
-            ps.setInt(1, id);
-            ps.executeUpdate();
+       int confirmacion = JOptionPane.showConfirmDialog(null, "Estás seguro de eliminar el registro?");
+        if (confirmacion != 0) {
             Limpiar();
-            cargarTabla();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.toString());
+        } else {
+            int id = Integer.parseInt(txtId.getText());
+            try {
+                Connection con = Conexion.getConexion();
+                PreparedStatement ps = con.prepareStatement("UPDATE Laboratorios SET estatus = 'I' WHERE idLaboratorio = ?");
+                ps.setInt(1, id);
+                ps.executeUpdate();
+                Limpiar();
+                cargarTabla();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e.toString());
+            }
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -384,19 +389,35 @@ public class Laboratorios extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreActionPerformed
     boolean n = false;
     boolean o = false;
+    
+     private boolean validarCamposVacios() {
+        boolean x;
+        n = txtNombre.getText().length() != 0;
+        o = txtOrigen.getText().length() != 0;
+        x = n && o;
+        return x;
+    }
+    
+    private boolean validarCampoNoVacio(){
+        boolean y;
+        n = txtNombre.getText().length() != 0;
+        o = txtOrigen.getText().length() != 0;
+        y = n || o;
+        return y;
+    }
+
     private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
-         n = txtNombre.getText().length() != 0;
-        boolean x = n && o;
+        boolean x = validarCamposVacios();
         btnGuardar.setEnabled(x);
-        btnCancelar.setEnabled(x);
+        boolean y = validarCampoNoVacio();
+        btnCancelar.setEnabled(y);
     }//GEN-LAST:event_txtNombreKeyReleased
 
     private void txtOrigenKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtOrigenKeyReleased
-        o = txtOrigen.getText().length() != 0;
-        boolean x = n && o;
+        boolean x = validarCamposVacios();
         btnGuardar.setEnabled(x);
-        btnCancelar.setEnabled(x);
-        activarBotones();
+        boolean y = validarCampoNoVacio();
+        btnCancelar.setEnabled(y);
     }//GEN-LAST:event_txtOrigenKeyReleased
 
     private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
