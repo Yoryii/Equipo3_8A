@@ -145,6 +145,11 @@ public class Empaques extends javax.swing.JFrame {
             }
         });
 
+        txfCapacidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfCapacidadActionPerformed(evt);
+            }
+        });
         txfCapacidad.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txfCapacidadKeyReleased(evt);
@@ -392,6 +397,10 @@ public class Empaques extends javax.swing.JFrame {
     private void txfNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txfNombreActionPerformed
+
+    private void txfCapacidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfCapacidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfCapacidadActionPerformed
 
     public void limpiar() {
         txfId.setText("");
