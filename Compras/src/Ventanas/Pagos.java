@@ -404,7 +404,7 @@ public class Pagos extends javax.swing.JFrame {
                     ps.setFloat(2, importe);
                     ps.setString(3, estatus);
                     ps.setInt(4, idPedido);
-                    ps.setInt(4, idFormaPago);
+                    ps.setInt(5, idFormaPago);
                     ps.setInt(6, id);
                     ps.executeUpdate();
                     JOptionPane.showMessageDialog(null, "Registro modificado con exito");
@@ -509,7 +509,7 @@ public class Pagos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void tblPagosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPagosMouseClicked
+    private void tblPagosMouseClicked(java.awt.event.MouseEvent evt) {                                      
        try {
 
             int fila = tblPagos.getSelectedRow();
@@ -534,10 +534,10 @@ public class Pagos extends javax.swing.JFrame {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.toString());
         
-    }//GEN-LAST:event_tblSucursalesMouseClicked
+    }                                          
         
         
-    }//GEN-LAST:event_tblPagosMouseClicked
+    }                                     
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         dispose();

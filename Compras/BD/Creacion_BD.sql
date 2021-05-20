@@ -380,7 +380,7 @@ create table CuentasProveedor (
 go
 
 create table Pagos (
-	idPago int not null,
+	idPago int identity not null,
 	fecha date not null,
 	importe float not null,
         estatus char not null,
