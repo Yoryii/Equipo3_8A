@@ -378,7 +378,7 @@ public class ProductosProveedor extends javax.swing.JFrame {
                                         .addComponent(btnAnterior)
                                         .addGap(727, 727, 727)
                                         .addComponent(btnSiguiente)))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                .addContainerGap(27, Short.MAX_VALUE))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -432,7 +432,7 @@ public class ProductosProveedor extends javax.swing.JFrame {
                 txtDiasRetardo.setText(rs.getString("diasRetardo"));
                 txtPrecioEstandar.setText(rs.getString("precioEstandar"));
                 txtPrecioUltimaCompra.setText(rs.getString("precioUltimaCompra"));
-                txtCantMinPedir.setText(rs.getString("cantMinpedir"));
+                txtCantMinPedir.setText(rs.getString("cantMinPedir"));
                 txtCantMaxPedir.setText(rs.getString("cantMaxPedir"));
                 
             }
