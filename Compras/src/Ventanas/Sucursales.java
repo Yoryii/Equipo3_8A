@@ -82,6 +82,9 @@ public class Sucursales extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtTelefonoKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
         });
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -109,6 +112,9 @@ public class Sucursales extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtCPKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCPKeyTyped(evt);
+            }
         });
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -117,6 +123,9 @@ public class Sucursales extends javax.swing.JFrame {
         txtPresupuesto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtPresupuestoKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPresupuestoKeyTyped(evt);
             }
         });
 
@@ -577,22 +586,64 @@ public class Sucursales extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAnteriorActionPerformed
 
+    private void txtPresupuestoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPresupuestoKeyTyped
+        char c = evt.getKeyChar();
+
+        boolean hayPunto = false;
+        String cadena = txtPresupuesto.getText();
+        for (int i = 0; i < cadena.length(); i++) {
+            if (".".charAt(0) == cadena.charAt(i)) {
+                hayPunto = true;
+            }
+        }
+
+        if (hayPunto) {
+            if ((c < '0' || c > '9')) {//solo acepta digitos
+                evt.consume();
+            }
+        } else {
+            if ((c < '0' || c > '9') && c != '.') {//acepta digitos y puntos
+                evt.consume();
+            }
+        }
+
+    }//GEN-LAST:event_txtPresupuestoKeyTyped
+
+    private void txtCPKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCPKeyTyped
+        if (txtCP.getText().length() == 5) {
+            evt.consume();
+        }
+        char c = evt.getKeyChar();
+        if ((c < '0' || c > '9')) {//solo acepta digitos
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCPKeyTyped
+
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+        if (txtTelefono.getText().length() == 10) {
+            evt.consume();
+        }
+        char c = evt.getKeyChar();
+        if ((c < '0' || c > '9')) {//solo acepta digitos
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtTelefonoKeyTyped
+
     boolean editando = false;
     int cantidad = 5;
     int pagina = 1;
     int rango = ((pagina - 1) * cantidad);
     int total;
     int numeroPaginas;
-    
+
     //Validación de campos vacios
-    
     boolean n = false;
     boolean t = false;
     boolean d = false;
     boolean c = false;
     boolean cp = false;
     boolean p = false;
-    
+
     private boolean validarCamposVacios() {
         boolean x;
         n = txtNombre.getText().length() != 0;
@@ -604,8 +655,8 @@ public class Sucursales extends javax.swing.JFrame {
         x = n && t && d && c && cp && p;
         return x;
     }
-    
-    private boolean validarCampoNoVacio(){
+
+    private boolean validarCampoNoVacio() {
         boolean y;
         n = txtNombre.getText().length() != 0;
         t = txtTelefono.getText().length() != 0;
@@ -616,7 +667,6 @@ public class Sucursales extends javax.swing.JFrame {
         y = n || t || d || c || cp || p;
         return y;
     }
-
 
     private void Limpiar() {
         txtId.setText("");
