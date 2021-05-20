@@ -26,7 +26,7 @@ public class ProductosProveedor extends javax.swing.JFrame {
         setDefaultCloseOperation(0);
         setLocationRelativeTo(null);
         this.setResizable(false);
-        txtId.setVisible(false);
+        txtIdPro.setVisible(false);
         botonImagen();
         HelperProveedores hpProveedores= new HelperProveedores();
         cmbProveedor.setModel(hpProveedores.getValues());
@@ -55,12 +55,13 @@ public class ProductosProveedor extends javax.swing.JFrame {
         txtPrecioUltimaCompra = new javax.swing.JTextField();
         txtCantMinPedir = new javax.swing.JTextField();
         txtCantMaxPedir = new javax.swing.JTextField();
-        txtId = new javax.swing.JTextField();
+        txtIdPro = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         cmbProveedor = new javax.swing.JComboBox<>();
         cmbPresentacion = new javax.swing.JComboBox<>();
         btnEliminar = new javax.swing.JButton();
+        txtIdPre = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProductosProveedor = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -159,9 +160,9 @@ public class ProductosProveedor extends javax.swing.JFrame {
             }
         });
 
-        txtId.addActionListener(new java.awt.event.ActionListener() {
+        txtIdPro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIdActionPerformed(evt);
+                txtIdProActionPerformed(evt);
             }
         });
 
@@ -185,6 +186,12 @@ public class ProductosProveedor extends javax.swing.JFrame {
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
+            }
+        });
+
+        txtIdPre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdPreActionPerformed(evt);
             }
         });
 
@@ -219,13 +226,6 @@ public class ProductosProveedor extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(69, 69, 69)
-                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(33, 33, 33)
-                                .addComponent(cmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                     .addComponent(btnGuardar)
@@ -236,7 +236,19 @@ public class ProductosProveedor extends javax.swing.JFrame {
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabel6)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtCantMaxPedir, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(txtCantMaxPedir, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel8)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtIdPre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel7)
+                                        .addGap(69, 69, 69)
+                                        .addComponent(txtIdPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(33, 33, 33)
+                                .addComponent(cmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -249,12 +261,13 @@ public class ProductosProveedor extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtIdPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(cmbPresentacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbPresentacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtIdPre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(38, 38, 38)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -399,15 +412,21 @@ public class ProductosProveedor extends javax.swing.JFrame {
        try {
 
             int fila = tblProductosProveedor.getSelectedRow();
+            int idPro = Integer.parseInt(tblProductosProveedor.getValueAt(fila, 0).toString());
+            int idPre = Integer.parseInt(tblProductosProveedor.getValueAt(fila, 0).toString());
             PreparedStatement ps;
             ResultSet rs;
 
             Connection con = Conexion.getConexion();
             editando = true;
             activarBotones();
-            ps = con.prepareStatement("SELECT Pro.nombre AS proveedor, Pre.nombre AS presentacion, PP.diasRetardo, PP.precioEstandar, PP.precioUltimaCompra, PP.cantMinPedir, PP.cantMaxPedir  FROM ProductosProveedor AS PP INNER JOIN Proveedores AS Pro ON PP.idProveedor = Pro.idProveedor INNER JOIN PresentacionesProducto AS Pre ON PP.idPresentacion = Pre.idPresentacion");
+            ps = con.prepareStatement("SELECT Pro.nombre AS proveedor, Pre.nombre AS presentacion, PP.diasRetardo, PP.precioEstandar, PP.precioUltimaCompra, PP.cantMinPedir, PP.cantMaxPedir  FROM ProductosProveedor AS PP INNER JOIN Proveedores AS Pro ON PP.idProveedor = Pro.idProveedor INNER JOIN PresentacionesProducto AS Pre ON PP.idPresentacion = Pre.idPresentacion WHERE PP.idPro=? AND PP.idPre=? ");
+            ps.setInt(1, idPro);
+            ps.setInt(2, idPre);
             rs = ps.executeQuery();
             while (rs.next()) {
+                txtIdPro.setText(String.valueOf(idPro));
+                txtIdPre.setText(String.valueOf(idPre));
                 cmbProveedor.setSelectedItem(rs.getString("proveedor"));
                 cmbPresentacion.setSelectedItem(rs.getString("presentacion"));
                 txtDiasRetardo.setText(rs.getString("diasRetardo"));
@@ -456,9 +475,9 @@ public class ProductosProveedor extends javax.swing.JFrame {
         
     }//GEN-LAST:event_tblProductosProveedorMouseClicked
 
-    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
+    private void txtIdProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdProActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtIdActionPerformed
+    }//GEN-LAST:event_txtIdProActionPerformed
 
     private void txtPrecioUltimaCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioUltimaCompraActionPerformed
         // TODO add your handling code here:
@@ -469,36 +488,24 @@ public class ProductosProveedor extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPrecioEstandarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        try {
-            Connection con = Conexion.getConexion();
-            PreparedStatement ps = con.prepareStatement("UPDATE ProductosProveedor SET estatus = 'I'");
-            ps.executeUpdate();
+         int confirmacion = JOptionPane.showConfirmDialog(null, "Estás seguro de eliminar el registro?");
+        if (confirmacion != 0) {
             Limpiar();
-            cargarTabla();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.toString());
+        } else {
+            int idPro = Integer.parseInt(txtIdPro.getText());
+            int idPre = Integer.parseInt(txtIdPre.getText());
+            try {
+                Connection con = Conexion.getConexion();
+                PreparedStatement ps = con.prepareStatement("UPDATE ProductosProveedor SET estatus = 'I' WHERE idPro = ? AND idPre=? ");
+                ps.setInt(1, idPro);
+                ps.setInt(2, idPre);
+                ps.executeUpdate();
+                Limpiar();
+                cargarTabla();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e.toString());
+            }
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        /*int id = Integer.parseInt(txtId.getText());
-        try {
-            Connection con = Conexion.getConexion();
-            PreparedStatement ps = con.prepareStatement("UPDATE ProductosProveedor SET estatus = 'I' WHERE idProductoProveedor=? ");
-            ps.setInt(1, id);
-            ps.executeUpdate();
-            Limpiar();
-            cargarTabla();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.toString());
-        }*/
         
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -516,6 +523,8 @@ public class ProductosProveedor extends javax.swing.JFrame {
                     || txtCantMaxPedir.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
             } else {
+                int idPro = Integer.parseInt(txtIdPro.getText());
+                int idPre = Integer.parseInt(txtIdPre.getText());
                 int diasRetardo = Integer.parseInt(txtDiasRetardo.getText());
                 float precioEstandar = Float.parseFloat(txtPrecioEstandar.getText());
                 float precioUltimaCompra = Float.parseFloat(txtPrecioUltimaCompra.getText());
@@ -565,7 +574,7 @@ public class ProductosProveedor extends javax.swing.JFrame {
 
                     Connection con = Conexion.getConexion();
                     PreparedStatement ps = con.prepareStatement("UPDATE ProductosProveedor SET idProveedor=?, idPresentacion=?, diasRetardo=?, precioEstandar=?, precioUltimaCompra=?, cantMinPedir=?, cantMaxPedir=?,"
-                    + "estatus=? ");
+                    + "estatus=? WHERE idPro= ? AND idPre = ? ");
                     ps.setInt(1, idProveedor);
                     ps.setInt(2, idPresentacion);
                     ps.setInt(3, diasRetardo);
@@ -574,7 +583,8 @@ public class ProductosProveedor extends javax.swing.JFrame {
                     ps.setInt(6, cantMinPedir);
                     ps.setInt(7, cantMaxPedir);
                     ps.setString(8, estatus);
-                    
+                    ps.setInt(9, idPro);
+                    ps.setInt(10,idPre);
                     ps.executeUpdate();
                     JOptionPane.showMessageDialog(null, "Registro modificado con exito");
                     Limpiar();
@@ -648,7 +658,7 @@ public class ProductosProveedor extends javax.swing.JFrame {
                     ps.setInt(6, cantMinPedir);
                     ps.setInt(7, cantMaxPedir);
                     ps.setString(8, estatus);
-                   
+                  
                     ps.executeUpdate();
                     JOptionPane.showMessageDialog(null, "Registro guardado con exito");
                     Limpiar();
@@ -662,169 +672,7 @@ public class ProductosProveedor extends javax.swing.JFrame {
                 //fin
             }
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-       /* if (editando) {//editar
-            if (txtDiasRetardo.getText().isEmpty() || txtPrecioEstandar.getText().isEmpty() || txtPrecioEstandar.getText().isEmpty() || txtPrecioUltimaCompra.getText().isEmpty() || txtCantMinPedir.getText().isEmpty()
-                    || txtCantMaxPedir.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
-            } else {
-                int id = Integer.parseInt(txtId.getText());
-                int diasRetardo = Integer.parseInt(txtDiasRetardo.getText());
-                float precioEstandar = Float.parseFloat(txtPrecioEstandar.getText());
-                float precioUltimaCompra = Float.parseFloat(txtPrecioUltimaCompra.getText());
-                int cantMinPedir = Integer.parseInt(txtCantMinPedir.getText());
-                int cantMaxPedir = Integer.parseInt(txtCantMaxPedir.getText());
-                String estatus = "A";
-                //Sacar id Proveedor e id Presentacion inicio
-                int idProveedor = 1;
-                int idPresentacion = 1;
-                String proveedor = (String) cmbProveedor.getSelectedItem();
-                String presentacion = (String) cmbPresentacion.getSelectedItem();
 
-                try {
-
-                    PreparedStatement ps;
-                    ResultSet rs;
-                    Connection con = Conexion.getConexion();
-                    ps = con.prepareStatement("SELECT idPresentacion FROM PresentacionesProducto WHERE nombre=?");
-                    ps.setString(1, presentacion);
-                    rs = ps.executeQuery();
-                    while (rs.next()) {
-                        idPresentacion = rs.getInt("idPresentacion");
-                    }
-
-                } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, e.toString());
-                }
-
-                try {
-
-                    PreparedStatement ps;
-                    ResultSet rs;
-                    Connection con = Conexion.getConexion();
-                    ps = con.prepareStatement("SELECT idProveedor FROM Proveedores WHERE nombre=?");
-                    ps.setString(1, proveedor);
-                    rs = ps.executeQuery();
-                    while (rs.next()) {
-                        idProveedor = rs.getInt("idProveedor");
-                    }
-
-                } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, e.toString());
-                }
-
-                //Sacar id Proveedor e id Presentacion fin
-                try {
-
-                    Connection con = Conexion.getConexion();
-                    PreparedStatement ps = con.prepareStatement("UPDATE ProductosProveedor SET diasRetardo=?, precioEstandar=?, precioUltimaCompra=?, cantMinPedir=?, cantMaxPedir=?,"
-                            + "estatus=?, idProveedor=?, idPresentacion=?  WHERE idProductoProveedor=? ");
-                    ps.setInt(1, diasRetardo);
-                    ps.setFloat(2, precioEstandar);
-                    ps.setFloat(3, precioUltimaCompra);
-                    ps.setInt(4, cantMinPedir);
-                    ps.setInt(5, cantMaxPedir);
-                    ps.setString(6, estatus);
-                    ps.setInt(7, idProveedor);
-                    ps.setInt(8, idPresentacion);
-                    ps.setInt(9, id);
-                    ps.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "Registro modificado con exito");
-                    Limpiar();
-                    cargarTabla();
-
-                } catch (SQLException e) {
-
-                    JOptionPane.showMessageDialog(null, e.toString());
-
-                }
-            }
-        } else {//guardar
-            if (txtDiasRetardo.getText().isEmpty() || txtPrecioEstandar.getText().isEmpty() || txtPrecioUltimaCompra.getText().isEmpty() || txtCantMinPedir.getText().isEmpty()
-                    || txtCantMaxPedir.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
-            } else {
-                int diasRetardo = Integer.parseInt(txtDiasRetardo.getText());
-                float precioEstandar = Float.parseFloat(txtPrecioEstandar.getText());
-                float precioUltimaCompra = Float.parseFloat(txtPrecioUltimaCompra.getText());
-                int cantMinPedir = Integer.parseInt(txtCantMinPedir.getText());
-                int cantMaxPedir = Integer.parseInt(txtCantMaxPedir.getText());
-                String estatus = "A";
-                //Sacar id Proveedor e id Presentacion inicio
-                int idProveedor = 1;
-                int idPresentacion = 1;
-                String proveedor = (String) cmbProveedor.getSelectedItem();
-                String presentacion = (String) cmbPresentacion.getSelectedItem();
-                try {
-
-                    PreparedStatement ps;
-                    ResultSet rs;
-                    Connection con = Conexion.getConexion();
-                    ps = con.prepareStatement("SELECT idProveedor FROM Proveedores WHERE nombre=?");
-                    ps.setString(1, proveedor);
-                    rs = ps.executeQuery();
-                    while (rs.next()) {
-                        idProveedor = rs.getInt("idProveedor");
-                    }
-
-                } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, e.toString());
-                }
-
-                try {
-
-                    PreparedStatement ps;
-                    ResultSet rs;
-                    Connection con = Conexion.getConexion();
-                    ps = con.prepareStatement("SELECT idPresentacion FROM PresentacionesProducto WHERE nombre=?");
-                    ps.setString(1, presentacion);
-                    rs = ps.executeQuery();
-                    while (rs.next()) {
-                        idPresentacion = rs.getInt("idPresentacion");
-                    }
-
-                } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, e.toString());
-                }
-
-                //Sacar id Proveedor e id Presentacion fin
-                //inicio
-                try {
-
-                    Connection con = Conexion.getConexion();
-                    PreparedStatement ps = con.prepareStatement("INSERT INTO ProductosProveedor (diasRetardo, precioEstandar, precioUltimaCompra, cantMinPedir, cantMaxPedir, estatus, idProveedor, idPresentacion) VALUES (?,?,?,?,?,?,?,?)");
-                    ps.setInt(1, diasRetardo);
-                    ps.setFloat(2, precioEstandar);
-                    ps.setFloat(3, precioUltimaCompra);
-                    ps.setInt(4, cantMinPedir);
-                    ps.setInt(5, cantMaxPedir);
-                    ps.setString(6, estatus);
-                    ps.setInt(7, idProveedor);
-                    ps.setInt(8, idPresentacion);
-                    ps.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "Registro guardado con exito");
-                    Limpiar();
-                    cargarTabla();
-
-                } catch (SQLException e) {
-
-                    JOptionPane.showMessageDialog(null, e.toString());
-
-                }
-                //fin
-            }
-        }*/
-        
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void txtCantMaxPedirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantMaxPedirActionPerformed
@@ -845,47 +693,61 @@ public class ProductosProveedor extends javax.swing.JFrame {
     boolean pUC = false;
     boolean cMi = false;
     boolean cMa = false;
-    
-    private boolean validarCamposVacios() {
+     private boolean validarCamposVacios() {
         boolean x;
+        dR = txtDiasRetardo.getText().length() != 0;
+        pE = txtPrecioEstandar.getText().length() != 10;
+        pUC = txtPrecioUltimaCompra.getText().length() != 0;
+        cMi = txtCantMinPedir.getText().length() != 0;
+        cMa = txtCantMaxPedir.getText().length() != 5;
+        x = dR && pE && pUC && cMi && cMa;
+        return x;
+    }
+    
+    private boolean validarCampoNoVacio(){
+        boolean y;
         dR = txtDiasRetardo.getText().length() != 0;
         pE = txtPrecioEstandar.getText().length() != 0;
         pUC = txtPrecioUltimaCompra.getText().length() != 0;
         cMi = txtCantMinPedir.getText().length() != 0;
         cMa = txtCantMaxPedir.getText().length() != 0;
-        x = dR && pE && pUC && cMi && cMa;
-        return x;
+        y = dR || pE || pUC || cMi || cMa;
+        return y;
     }
-
     
     private void txtDiasRetardoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDiasRetardoKeyReleased
         boolean x = validarCamposVacios();
         btnGuardar.setEnabled(x);
-        btnCancelar.setEnabled(x);
+        boolean y = validarCampoNoVacio();
+        btnCancelar.setEnabled(y);
     }//GEN-LAST:event_txtDiasRetardoKeyReleased
 
     private void txtPrecioEstandarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioEstandarKeyReleased
         boolean x = validarCamposVacios();
         btnGuardar.setEnabled(x);
-        btnCancelar.setEnabled(x);
+        boolean y = validarCampoNoVacio();
+        btnCancelar.setEnabled(y);
     }//GEN-LAST:event_txtPrecioEstandarKeyReleased
 
     private void txtPrecioUltimaCompraKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioUltimaCompraKeyReleased
         boolean x = validarCamposVacios();
         btnGuardar.setEnabled(x);
-        btnCancelar.setEnabled(x);
+        boolean y = validarCampoNoVacio();
+        btnCancelar.setEnabled(y);
     }//GEN-LAST:event_txtPrecioUltimaCompraKeyReleased
 
     private void txtCantMinPedirKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantMinPedirKeyReleased
-       boolean x = validarCamposVacios();
+        boolean x = validarCamposVacios();
         btnGuardar.setEnabled(x);
-        btnCancelar.setEnabled(x);
+        boolean y = validarCampoNoVacio();
+        btnCancelar.setEnabled(y);
     }//GEN-LAST:event_txtCantMinPedirKeyReleased
 
     private void txtCantMaxPedirKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantMaxPedirKeyReleased
-       boolean x = validarCamposVacios();
+        boolean x = validarCamposVacios();
         btnGuardar.setEnabled(x);
-        btnCancelar.setEnabled(x);
+        boolean y = validarCampoNoVacio();
+        btnCancelar.setEnabled(y);
     }//GEN-LAST:event_txtCantMaxPedirKeyReleased
 
     private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
@@ -931,7 +793,13 @@ public class ProductosProveedor extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCantMinPedirActionPerformed
 
+    private void txtIdPreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdPreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdPreActionPerformed
+
     private void Limpiar(){
+        txtIdPro.setText("");
+        txtIdPre.setText("");
         cmbProveedor.setSelectedIndex(0);
         cmbPresentacion.setSelectedIndex(0);
         txtDiasRetardo.setText("");
@@ -939,21 +807,8 @@ public class ProductosProveedor extends javax.swing.JFrame {
         txtPrecioUltimaCompra.setText("");
         txtCantMinPedir.setText("");
         txtCantMaxPedir.setText("");
-        
         desactivarBotones();
- 
-        
-        
-        
-        /*txtId.setText("");
-        txtDiasRetardo.setText("");
-        txtPrecioEstandar.setText("");
-        txtPrecioUltimaCompra.setText("");
-        txtCantMinPedir.setText("");
-        txtCantMaxPedir.setText("");
-        cmbProveedor.setSelectedIndex(0);
-        cmbPresentacion.setSelectedIndex(0);*/
- 
+        cargarTabla();
     }
     private void cargarTabla() {
        DefaultTableModel modeloTabla = (DefaultTableModel) tblProductosProveedor.getModel();
@@ -971,8 +826,8 @@ public class ProductosProveedor extends javax.swing.JFrame {
 
         try {
             Connection con = Conexion.getConexion();
-            ps = con.prepareStatement("SELECT Pro.nombre, Pre.nombre, PP.diasRetardo, PP.precioEstandar, PP.precioUltimaCompra, PP.cantMinPedir, PP.cantMaxPedir FROM ProductosProveedor AS PP INNER JOIN Proveedores AS Pro on PP.idProveedor = Pro.idProveedor INNER JOIN PresentacionesProducto AS Pre on PP.idPresentacion = Pre.idPresentacion WHERE PP.estatus = 'A' ORDER BY diasRetardo ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY ");
-            //ORDER BY diasRetardo ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
+            ps = con.prepareStatement("SELECT  Pro.nombre, Pre.nombre, PP.diasRetardo, PP.precioEstandar, PP.precioUltimaCompra, PP.cantMinPedir, PP.cantMaxPedir FROM ProductosProveedor AS PP INNER JOIN Proveedores AS Pro on PP.idProveedor = Pro.idProveedor INNER JOIN PresentacionesProducto AS Pre on PP.idPresentacion = Pre.idPresentacion WHERE PP.estatus = 'A' ORDER BY diasRetardo ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY ");
+            //ORDER BY diasRetardo ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY  PP.idProveedor=? AND PP.idPresentacion=?,
             ps.setInt(1, rango);
             ps.setInt(2, cantidad);
             rs = ps.executeQuery();
@@ -999,46 +854,6 @@ public class ProductosProveedor extends javax.swing.JFrame {
         } else {
             btnSiguiente.setEnabled(true);
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        /*DefaultTableModel modeloTabla = (DefaultTableModel) tblProductosProveedor.getModel();
-        modeloTabla.setRowCount(0);
-
-        PreparedStatement ps;
-        ResultSet rs;
-        ResultSetMetaData rsmd;
-        int columnas;
-
-        int[] ancho = {5, 5, 150, 150, 150, 150, 150, 150};
-        for (int i = 0; i < tblProductosProveedor.getColumnCount(); i++) {
-            tblProductosProveedor.getColumnModel().getColumn(i).setPreferredWidth(ancho[i]);
-        }
-
-        try {
-            Connection con = Conexion.getConexion();
-            ps = con.prepareStatement("SELECT PP.idProductoProveedor, PP.diasRetardo, PP.precioEstandar, PP.precioUltimaCompra, PP.cantMinPedir, PP.cantMaxPedir, Pro.nombre, Pre.nombre FROM ProductosProveedor AS PP INNER JOIN Proveedores AS Pro on PP.idProveedor = Pro.idProveedor INNER JOIN PresentacionesProducto AS Pre on PP.idPresentacion = Pre.idPresentacion WHERE PP.estatus = 'A'");
-            rs = ps.executeQuery();
-            rsmd = rs.getMetaData();
-            columnas = rsmd.getColumnCount();
-            while (rs.next()) {
-                Object[] fila = new Object[columnas];
-                for (int indice = 0; indice < columnas; indice++) {
-                    fila[indice] = rs.getObject(indice + 1);
-                }
-                modeloTabla.addRow(fila);
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.toString());
-        }*/
-        
 
     }
     
@@ -1146,7 +961,8 @@ public class ProductosProveedor extends javax.swing.JFrame {
     private javax.swing.JTextField txtCantMaxPedir;
     private javax.swing.JTextField txtCantMinPedir;
     private javax.swing.JTextField txtDiasRetardo;
-    private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtIdPre;
+    private javax.swing.JTextField txtIdPro;
     private javax.swing.JTextField txtPrecioEstandar;
     private javax.swing.JTextField txtPrecioUltimaCompra;
     // End of variables declaration//GEN-END:variables

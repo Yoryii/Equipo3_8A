@@ -311,6 +311,7 @@ create table ProductosProveedor (
 	precioUltimaCompra float not null,
 	cantMinPedir int not null,
 	cantMaxPedir int not null,
+        estatus char not null,
 	constraint PK_ProductosProveedor primary key (idProveedor, idPresentacion)
 )
 go
@@ -331,6 +332,7 @@ go
 
 create table Pedidos (
 	idPedido int identity not null,
+        nombre varchar(80) not null,
 	fechaRegistro date not null,
 	fechaRecepcion date not null,
 	totalPagar float not null,
@@ -381,6 +383,7 @@ create table Pagos (
 	idPago int not null,
 	fecha date not null,
 	importe float not null,
+        estatus char not null,
 	idPedido int not null,
 	idFormaPago int not null,
 	constraint PK_Pagos primary key (idPago)
