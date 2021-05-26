@@ -6,6 +6,9 @@
 package Ventanas;
 
 import Coexion.Conexion;
+import Coexion.HelperEmpleados;
+import Coexion.HelperProveedores;
+import Coexion.HelperSucursales;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -34,6 +37,24 @@ public class Pedidos extends javax.swing.JFrame {
         txfTotal.setEditable(false);
         txfCantidad.setEditable(false);
         txfEstatus.setEditable(false);
+        
+        txfTotal.setEnabled(false);
+        txfCantidad.setEnabled(false);
+        
+        //Valores default
+        txfEstatus.setText("P");
+        
+        
+        
+        //Combos Box
+        HelperProveedores hpProveedores = new HelperProveedores();
+        cmbProveedor.setModel(hpProveedores.getValues());
+        
+        HelperSucursales hpSuc = new HelperSucursales();
+        cmbSucursales.setModel(hpSuc.getValues());
+        
+        HelperEmpleados hpEmpleados = new HelperEmpleados();
+        cmbEmpleado.setModel(hpEmpleados.getValues());
     
     }
 
@@ -59,9 +80,9 @@ public class Pedidos extends javax.swing.JFrame {
         txfTotal = new javax.swing.JTextField();
         txfCantidad = new javax.swing.JTextField();
         txfEstatus = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        cmbProveedor = new javax.swing.JComboBox<>();
+        cmbSucursales = new javax.swing.JComboBox<>();
+        cmbEmpleado = new javax.swing.JComboBox<>();
         btnModificar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
@@ -123,12 +144,6 @@ public class Pedidos extends javax.swing.JFrame {
                 txfEstatusKeyReleased(evt);
             }
         });
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -197,12 +212,12 @@ public class Pedidos extends javax.swing.JFrame {
                             .addComponent(txfEstatus))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jLabel6)
                                 .addComponent(jLabel7)
-                                .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cmbProveedor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cmbSucursales, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel8))
                         .addGap(58, 58, 58))))
         );
@@ -234,15 +249,15 @@ public class Pedidos extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(13, 13, 13)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbSucursales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cmbEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(93, 93, 93)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -430,23 +445,23 @@ public class Pedidos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     private void txfFechaRKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfFechaRKeyReleased
-       txfFechaRecepcion.setEditable(txfFechaR.getText().length() != 0);
+      // txfFechaRecepcion.setEditable(txfFechaR.getText().length() != 0);
     }//GEN-LAST:event_txfFechaRKeyReleased
 
     private void txfFechaRecepcionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfFechaRecepcionKeyReleased
-       txfTotal.setEditable(txfFechaRecepcion.getText().length() != 0);
+      // txfTotal.setEditable(txfFechaRecepcion.getText().length() != 0);
     }//GEN-LAST:event_txfFechaRecepcionKeyReleased
 
     private void txfTotalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfTotalKeyReleased
-        txfCantidad.setEditable(txfTotal.getText().length() != 0);
+       // txfCantidad.setEditable(txfTotal.getText().length() != 0);
     }//GEN-LAST:event_txfTotalKeyReleased
 
     private void txfCantidadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfCantidadKeyReleased
-        txfEstatus.setEditable(txfCantidad.getText().length() != 0);
+      //  txfEstatus.setEditable(txfCantidad.getText().length() != 0);
     }//GEN-LAST:event_txfCantidadKeyReleased
 
     private void txfEstatusKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfEstatusKeyReleased
-       btnGuardar.setEnabled(txfEstatus.getText().length() != 0);
+      // btnGuardar.setEnabled(txfEstatus.getText().length() != 0);
     }//GEN-LAST:event_txfEstatusKeyReleased
 
     /**
@@ -493,9 +508,9 @@ public class Pedidos extends javax.swing.JFrame {
     private javax.swing.JButton btnPedidosDetalle;
     private javax.swing.JButton btnRemoverP;
     private javax.swing.JButton btnXML;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> cmbEmpleado;
+    private javax.swing.JComboBox<String> cmbProveedor;
+    private javax.swing.JComboBox<String> cmbSucursales;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
