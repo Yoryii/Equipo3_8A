@@ -12,6 +12,7 @@ import Coexion.HelperSucursales;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,6 +26,18 @@ public class Pedidos extends javax.swing.JFrame {
      */
     public Pedidos() {
         initComponents();
+        
+        //FECHA PEDIDO
+        Calendar calendario = Calendar.getInstance();
+        int hora, minutos, segundos;
+        int dia, mes, annio;
+        dia = calendario.get(Calendar.DATE);
+        mes = calendario.get(Calendar.MONTH);
+        annio = calendario.get(Calendar.YEAR);
+        txfFechaR.setText(dia + "-" + (mes+1) + "-" + annio  + "\n");
+        
+        
+        //Validaciones
         btnRemoverP.setEnabled(false);
         btnGuardar.setEnabled(false);
         btnConfirmar.setEnabled(false);
@@ -33,6 +46,7 @@ public class Pedidos extends javax.swing.JFrame {
         btnModificar.setEnabled(false);
         btnImprimir.setEnabled(false);
         
+        txfFechaR.setEditable(false);
         txfFechaRecepcion.setEditable(false);
         txfTotal.setEditable(false);
         txfCantidad.setEditable(false);
