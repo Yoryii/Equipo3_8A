@@ -26,7 +26,7 @@ public class Pedidos extends javax.swing.JFrame {
      */
     public Pedidos() {
         initComponents();
-        
+
         //FECHA PEDIDO
         Calendar calendario = Calendar.getInstance();
         int hora, minutos, segundos;
@@ -34,42 +34,43 @@ public class Pedidos extends javax.swing.JFrame {
         dia = calendario.get(Calendar.DATE);
         mes = calendario.get(Calendar.MONTH);
         annio = calendario.get(Calendar.YEAR);
-        txfFechaR.setText(dia + "-" + (mes+1) + "-" + annio  + "\n");
+        txfFechaR.setText(dia + "-" + (mes + 1) + "-" + annio + "\n");
         
         
+        
+        
+
         //Validaciones
         btnRemoverP.setEnabled(false);
-        btnGuardar.setEnabled(false);
+        //btnGuardar.setEnabled(false);
         btnConfirmar.setEnabled(false);
         btnCancelar.setEnabled(false);
         btnXML.setEnabled(false);
         btnModificar.setEnabled(false);
         btnImprimir.setEnabled(false);
-        
+
         txfFechaR.setEditable(false);
         txfFechaRecepcion.setEditable(false);
         txfTotal.setEditable(false);
         txfCantidad.setEditable(false);
         txfEstatus.setEditable(false);
-        
+
         txfTotal.setEnabled(false);
         txfCantidad.setEnabled(false);
-        
+
         //Valores default
         txfEstatus.setText("P");
-        
-        
-        
+
         //Combos Box
         HelperProveedores hpProveedores = new HelperProveedores();
         cmbProveedor.setModel(hpProveedores.getValues());
-        
+
         HelperSucursales hpSuc = new HelperSucursales();
         cmbSucursales.setModel(hpSuc.getValues());
-        
+
         HelperEmpleados hpEmpleados = new HelperEmpleados();
         cmbEmpleado.setModel(hpEmpleados.getValues());
-    
+
     }
 
     /**
@@ -378,6 +379,10 @@ public class Pedidos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+       
+        
+        
+        /*
         this.setVisible(false);
         TablaUnidadesMedida uniM = new TablaUnidadesMedida();
         uniM.setVisible(true);
@@ -386,7 +391,7 @@ public class Pedidos extends javax.swing.JFrame {
         btnCancelar.setEnabled(false);
         //txfNombre.setEnabled(false);
         //txfCapacidad.setEnabled(false);
-        /*
+        
         if (editando) {
             if (txfNombre.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Llene todos los campos!");
@@ -455,27 +460,27 @@ public class Pedidos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPedidosDetalleActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-       
+
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     private void txfFechaRKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfFechaRKeyReleased
-      // txfFechaRecepcion.setEditable(txfFechaR.getText().length() != 0);
+        // txfFechaRecepcion.setEditable(txfFechaR.getText().length() != 0);
     }//GEN-LAST:event_txfFechaRKeyReleased
 
     private void txfFechaRecepcionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfFechaRecepcionKeyReleased
-      // txfTotal.setEditable(txfFechaRecepcion.getText().length() != 0);
+        // txfTotal.setEditable(txfFechaRecepcion.getText().length() != 0);
     }//GEN-LAST:event_txfFechaRecepcionKeyReleased
 
     private void txfTotalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfTotalKeyReleased
-       // txfCantidad.setEditable(txfTotal.getText().length() != 0);
+        // txfCantidad.setEditable(txfTotal.getText().length() != 0);
     }//GEN-LAST:event_txfTotalKeyReleased
 
     private void txfCantidadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfCantidadKeyReleased
-      //  txfEstatus.setEditable(txfCantidad.getText().length() != 0);
+        //  txfEstatus.setEditable(txfCantidad.getText().length() != 0);
     }//GEN-LAST:event_txfCantidadKeyReleased
 
     private void txfEstatusKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfEstatusKeyReleased
-      // btnGuardar.setEnabled(txfEstatus.getText().length() != 0);
+        // btnGuardar.setEnabled(txfEstatus.getText().length() != 0);
     }//GEN-LAST:event_txfEstatusKeyReleased
 
     /**
