@@ -26,6 +26,9 @@ public class Pedidos extends javax.swing.JFrame {
      */
     public Pedidos() {
         initComponents();
+        
+        setLocationRelativeTo(null);
+        this.setResizable(false);
 
         //FECHA PEDIDO
         Calendar calendario = Calendar.getInstance();
@@ -39,7 +42,6 @@ public class Pedidos extends javax.swing.JFrame {
         
         
         
-
         //Validaciones
         btnRemoverP.setEnabled(false);
         //btnGuardar.setEnabled(false);
@@ -294,9 +296,17 @@ public class Pedidos extends javax.swing.JFrame {
 
             },
             new String [] {
-                "idPedido", "nombre", "fechaRegistro", "fechaRecepcion", "totalPagar", "cantidadPagada", "estatus", "idProveedor", "idSucursal", "idEmpleado"
+                "idPedidoDetalle", "cantPedida", "precioCompra", "subTotal", "cantRecibida", "cantRechazada", "cantAceptada", "idPedido", "idPresentacion"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         btnPedidosDetalle.setText("Agregar Producto");

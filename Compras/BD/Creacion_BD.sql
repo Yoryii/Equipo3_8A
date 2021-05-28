@@ -304,8 +304,8 @@ create table ImagenesProducto (
 go
 
 create table ProductosProveedor (
-	idProveedor int identity not null,
-	idPresentacion int identity not null,
+	idProveedor int not null,
+	idPresentacion int not null,
 	diasRetardo int not null,
 	precioEstandar float not null,
 	precioUltimaCompra float not null,
@@ -332,9 +332,9 @@ go
 
 create table Pedidos (
 	idPedido int identity not null,
-        nombre varchar(80) not null,
+    nombre varchar(80) not null,
 	fechaRegistro date not null,
-	fechaRecepcion date not null,
+	fechaRecepcion date,
 	totalPagar float not null,
 	cantidadPagada float not null,
 	estatus char not null,
