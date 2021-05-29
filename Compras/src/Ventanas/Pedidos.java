@@ -11,9 +11,12 @@ import Coexion.HelperProveedores;
 import Coexion.HelperSucursales;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,15 +24,15 @@ import javax.swing.JOptionPane;
  */
 public class Pedidos extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Pedidos
-     */
+    
     public Pedidos() {
         initComponents();
         
         setLocationRelativeTo(null);
         this.setResizable(false);
-
+        txfId.setVisible(false);
+        cargarTabla();
+        
         //FECHA PEDIDO
         Calendar calendario = Calendar.getInstance();
         int hora, minutos, segundos;
@@ -106,9 +109,10 @@ public class Pedidos extends javax.swing.JFrame {
         btnConfirmar = new javax.swing.JButton();
         btnImprimir = new javax.swing.JButton();
         btnXML = new javax.swing.JButton();
+        txfId = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblDetallePedido = new javax.swing.JTable();
         btnPedidosDetalle = new javax.swing.JButton();
         btnRemoverP = new javax.swing.JButton();
 
@@ -229,14 +233,19 @@ public class Pedidos extends javax.swing.JFrame {
                             .addComponent(txfEstatus))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel6)
-                                .addComponent(jLabel7)
-                                .addComponent(cmbProveedor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(cmbSucursales, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel8))
-                        .addGap(58, 58, 58))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cmbEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel6)
+                                        .addComponent(jLabel7)
+                                        .addComponent(cmbProveedor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(cmbSucursales, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel8))
+                                .addGap(58, 58, 58))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(txfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(72, 72, 72))))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,7 +283,9 @@ public class Pedidos extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cmbEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45)
+                        .addComponent(txfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(93, 93, 93)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -291,7 +302,7 @@ public class Pedidos extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalle Pedido"));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblDetallePedido.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -307,7 +318,12 @@ public class Pedidos extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        tblDetallePedido.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDetallePedidoMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblDetallePedido);
 
         btnPedidosDetalle.setText("Agregar Producto");
         btnPedidosDetalle.addActionListener(new java.awt.event.ActionListener() {
@@ -493,9 +509,66 @@ public class Pedidos extends javax.swing.JFrame {
         // btnGuardar.setEnabled(txfEstatus.getText().length() != 0);
     }//GEN-LAST:event_txfEstatusKeyReleased
 
-    /**
-     * @param args the command line arguments
-     */
+    private void tblDetallePedidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDetallePedidoMouseClicked
+      //btnGuardar.setEnabled(true);
+      //btnEliminar.setEnabled(true);
+       /* try {
+            int fila = tblDetallePedido.getSelectedRow();
+            int id = Integer.parseInt(tblDetallePedido.getValueAt(fila, 0).toString());
+            PreparedStatement ps;
+            ResultSet rs;
+            Connection con = Conexion.getConexion();
+            
+            ps = con.prepareStatement("SELECT fechaRegistro, fechaRecepcion, totalPagar FROM Empaques WHERE idEmpaque=?");
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                txfId.setText(String.valueOf(id));
+                txfFechaR.setText(rs.getString("fe"));
+                txfCapacidad.setText(rs.getString("capacidad"));
+
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+      */
+    }//GEN-LAST:event_tblDetallePedidoMouseClicked
+
+    
+    
+     public void cargarTabla() {
+
+        DefaultTableModel modeloTabla = (DefaultTableModel) tblDetallePedido.getModel();
+        modeloTabla.setRowCount(0);
+
+        PreparedStatement ps;
+        ResultSet rs;
+        ResultSetMetaData rsmd;
+        int columnas;
+
+        try {
+            Connection con = Conexion.getConexion();
+
+            ps = con.prepareStatement("SELECT idPedidoDetalle, cantPedida, precioCompra, subTotal, cantRecibida, cantRechazada, cantAceptada, idPedido, idPresentacion FROM PedidoDetalle");
+            rs = ps.executeQuery();
+            rsmd = rs.getMetaData();
+            columnas = rsmd.getColumnCount();
+
+            while (rs.next()) {
+                Object[] fila = new Object[columnas];
+                for (int indice = 0; indice < columnas; indice++) {
+                    fila[indice] = rs.getObject(indice + 1);
+                }
+                modeloTabla.addRow(fila);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+
+    }
+    
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -551,11 +624,12 @@ public class Pedidos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblDetallePedido;
     private javax.swing.JTextField txfCantidad;
     private javax.swing.JTextField txfEstatus;
     private javax.swing.JTextField txfFechaR;
     private javax.swing.JTextField txfFechaRecepcion;
+    private javax.swing.JTextField txfId;
     private javax.swing.JTextField txfTotal;
     // End of variables declaration//GEN-END:variables
 }
