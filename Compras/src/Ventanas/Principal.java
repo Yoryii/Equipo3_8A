@@ -5,13 +5,9 @@
  */
 package Ventanas;
 
-import java.awt.Color;
 import java.awt.Image;
-import java.sql.Date;
 import java.util.Calendar;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 
 /**
  *
