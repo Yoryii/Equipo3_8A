@@ -6,10 +6,17 @@
 package Ventanas;
 
 import Coexion.Conexion;
+import Coexion.HelperEmpleados;
+import Coexion.HelperProveedores;
+import Coexion.HelperSucursales;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,24 +24,58 @@ import javax.swing.JOptionPane;
  */
 public class Pedidos extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Pedidos
-     */
+    
     public Pedidos() {
         initComponents();
+        
+        setLocationRelativeTo(null);
+        this.setResizable(false);
+        txfId.setVisible(false);
+        cargarTabla();
+        
+        //FECHA PEDIDO
+        Calendar calendario = Calendar.getInstance();
+        int hora, minutos, segundos;
+        int dia, mes, annio;
+        dia = calendario.get(Calendar.DATE);
+        mes = calendario.get(Calendar.MONTH);
+        annio = calendario.get(Calendar.YEAR);
+        txfFechaR.setText(dia + "-" + (mes + 1) + "-" + annio + "\n");
+        
+        
+        
+        
+        //Validaciones
         btnRemoverP.setEnabled(false);
-        btnGuardar.setEnabled(false);
+        //btnGuardar.setEnabled(false);
         btnConfirmar.setEnabled(false);
         btnCancelar.setEnabled(false);
         btnXML.setEnabled(false);
         btnModificar.setEnabled(false);
         btnImprimir.setEnabled(false);
-        
+
+        txfFechaR.setEditable(false);
         txfFechaRecepcion.setEditable(false);
         txfTotal.setEditable(false);
         txfCantidad.setEditable(false);
         txfEstatus.setEditable(false);
-    
+
+        txfTotal.setEnabled(false);
+        txfCantidad.setEnabled(false);
+
+        //Valores default
+        txfEstatus.setText("P");
+
+        //Combos Box
+        HelperProveedores hpProveedores = new HelperProveedores();
+        cmbProveedor.setModel(hpProveedores.getValues());
+
+        HelperSucursales hpSuc = new HelperSucursales();
+        cmbSucursales.setModel(hpSuc.getValues());
+
+        HelperEmpleados hpEmpleados = new HelperEmpleados();
+        cmbEmpleado.setModel(hpEmpleados.getValues());
+
     }
 
     /**
@@ -59,18 +100,19 @@ public class Pedidos extends javax.swing.JFrame {
         txfTotal = new javax.swing.JTextField();
         txfCantidad = new javax.swing.JTextField();
         txfEstatus = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        cmbProveedor = new javax.swing.JComboBox<>();
+        cmbSucursales = new javax.swing.JComboBox<>();
+        cmbEmpleado = new javax.swing.JComboBox<>();
         btnModificar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnConfirmar = new javax.swing.JButton();
         btnImprimir = new javax.swing.JButton();
         btnXML = new javax.swing.JButton();
+        txfId = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblDetallePedido = new javax.swing.JTable();
         btnPedidosDetalle = new javax.swing.JButton();
         btnRemoverP = new javax.swing.JButton();
 
@@ -123,12 +165,6 @@ public class Pedidos extends javax.swing.JFrame {
                 txfEstatusKeyReleased(evt);
             }
         });
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -197,14 +233,19 @@ public class Pedidos extends javax.swing.JFrame {
                             .addComponent(txfEstatus))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel6)
-                                .addComponent(jLabel7)
-                                .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel8))
-                        .addGap(58, 58, 58))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cmbEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel6)
+                                        .addComponent(jLabel7)
+                                        .addComponent(cmbProveedor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(cmbSucursales, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel8))
+                                .addGap(58, 58, 58))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(txfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(72, 72, 72))))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,15 +275,17 @@ public class Pedidos extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(13, 13, 13)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbSucursales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cmbEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45)
+                        .addComponent(txfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(93, 93, 93)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -259,15 +302,28 @@ public class Pedidos extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalle Pedido"));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblDetallePedido.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "idPedido", "nombre", "fechaRegistro", "fechaRecepcion", "totalPagar", "cantidadPagada", "estatus", "idProveedor", "idSucursal", "idEmpleado"
+                "idPedidoDetalle", "cantPedida", "precioCompra", "subTotal", "cantRecibida", "cantRechazada", "cantAceptada", "idPedido", "idPresentacion"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblDetallePedido.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDetallePedidoMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblDetallePedido);
 
         btnPedidosDetalle.setText("Agregar Producto");
         btnPedidosDetalle.addActionListener(new java.awt.event.ActionListener() {
@@ -302,7 +358,7 @@ public class Pedidos extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnPedidosDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRemoverP, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -310,17 +366,17 @@ public class Pedidos extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
+                .addGap(22, 22, 22)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addGap(31, 31, 31)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -349,6 +405,10 @@ public class Pedidos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+       
+        
+        
+        /*
         this.setVisible(false);
         TablaUnidadesMedida uniM = new TablaUnidadesMedida();
         uniM.setVisible(true);
@@ -357,7 +417,7 @@ public class Pedidos extends javax.swing.JFrame {
         btnCancelar.setEnabled(false);
         //txfNombre.setEnabled(false);
         //txfCapacidad.setEnabled(false);
-        /*
+        
         if (editando) {
             if (txfNombre.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Llene todos los campos!");
@@ -426,32 +486,89 @@ public class Pedidos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPedidosDetalleActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-       
+
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     private void txfFechaRKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfFechaRKeyReleased
-       txfFechaRecepcion.setEditable(txfFechaR.getText().length() != 0);
+        // txfFechaRecepcion.setEditable(txfFechaR.getText().length() != 0);
     }//GEN-LAST:event_txfFechaRKeyReleased
 
     private void txfFechaRecepcionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfFechaRecepcionKeyReleased
-       txfTotal.setEditable(txfFechaRecepcion.getText().length() != 0);
+        // txfTotal.setEditable(txfFechaRecepcion.getText().length() != 0);
     }//GEN-LAST:event_txfFechaRecepcionKeyReleased
 
     private void txfTotalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfTotalKeyReleased
-        txfCantidad.setEditable(txfTotal.getText().length() != 0);
+        // txfCantidad.setEditable(txfTotal.getText().length() != 0);
     }//GEN-LAST:event_txfTotalKeyReleased
 
     private void txfCantidadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfCantidadKeyReleased
-        txfEstatus.setEditable(txfCantidad.getText().length() != 0);
+        //  txfEstatus.setEditable(txfCantidad.getText().length() != 0);
     }//GEN-LAST:event_txfCantidadKeyReleased
 
     private void txfEstatusKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfEstatusKeyReleased
-       btnGuardar.setEnabled(txfEstatus.getText().length() != 0);
+        // btnGuardar.setEnabled(txfEstatus.getText().length() != 0);
     }//GEN-LAST:event_txfEstatusKeyReleased
 
-    /**
-     * @param args the command line arguments
-     */
+    private void tblDetallePedidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDetallePedidoMouseClicked
+      //btnGuardar.setEnabled(true);
+      //btnEliminar.setEnabled(true);
+       /* try {
+            int fila = tblDetallePedido.getSelectedRow();
+            int id = Integer.parseInt(tblDetallePedido.getValueAt(fila, 0).toString());
+            PreparedStatement ps;
+            ResultSet rs;
+            Connection con = Conexion.getConexion();
+            
+            ps = con.prepareStatement("SELECT fechaRegistro, fechaRecepcion, totalPagar FROM Empaques WHERE idEmpaque=?");
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                txfId.setText(String.valueOf(id));
+                txfFechaR.setText(rs.getString("fe"));
+                txfCapacidad.setText(rs.getString("capacidad"));
+
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+      */
+    }//GEN-LAST:event_tblDetallePedidoMouseClicked
+
+    
+    
+     public void cargarTabla() {
+
+        DefaultTableModel modeloTabla = (DefaultTableModel) tblDetallePedido.getModel();
+        modeloTabla.setRowCount(0);
+
+        PreparedStatement ps;
+        ResultSet rs;
+        ResultSetMetaData rsmd;
+        int columnas;
+
+        try {
+            Connection con = Conexion.getConexion();
+
+            ps = con.prepareStatement("SELECT idPedidoDetalle, cantPedida, precioCompra, subTotal, cantRecibida, cantRechazada, cantAceptada, idPedido, idPresentacion FROM PedidoDetalle");
+            rs = ps.executeQuery();
+            rsmd = rs.getMetaData();
+            columnas = rsmd.getColumnCount();
+
+            while (rs.next()) {
+                Object[] fila = new Object[columnas];
+                for (int indice = 0; indice < columnas; indice++) {
+                    fila[indice] = rs.getObject(indice + 1);
+                }
+                modeloTabla.addRow(fila);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+
+    }
+    
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -493,9 +610,9 @@ public class Pedidos extends javax.swing.JFrame {
     private javax.swing.JButton btnPedidosDetalle;
     private javax.swing.JButton btnRemoverP;
     private javax.swing.JButton btnXML;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> cmbEmpleado;
+    private javax.swing.JComboBox<String> cmbProveedor;
+    private javax.swing.JComboBox<String> cmbSucursales;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -507,11 +624,12 @@ public class Pedidos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblDetallePedido;
     private javax.swing.JTextField txfCantidad;
     private javax.swing.JTextField txfEstatus;
     private javax.swing.JTextField txfFechaR;
     private javax.swing.JTextField txfFechaRecepcion;
+    private javax.swing.JTextField txfId;
     private javax.swing.JTextField txfTotal;
     // End of variables declaration//GEN-END:variables
 }
