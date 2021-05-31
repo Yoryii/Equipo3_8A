@@ -26,6 +26,8 @@ public class Pedidos extends javax.swing.JFrame {
         this.setResizable(false);
         txfId.setVisible(false);
         cargarTabla();
+        
+        
 
         //FECHA PEDIDO
         Calendar calendario = Calendar.getInstance();
@@ -38,7 +40,6 @@ public class Pedidos extends javax.swing.JFrame {
 
         //Validaciones
         btnRemoverP.setEnabled(false);
-        //btnGuardar.setEnabled(false);
         btnConfirmar.setEnabled(false);
         btnCancelar.setEnabled(false);
         btnXML.setEnabled(false);
@@ -51,8 +52,7 @@ public class Pedidos extends javax.swing.JFrame {
         txfCantidad.setEditable(false);
         txfEstatus.setEditable(false);
 
-        txfTotal.setEnabled(false);
-        txfCantidad.setEnabled(false);
+        
 
         //Valores default
         txfEstatus.setText("P");
@@ -68,6 +68,8 @@ public class Pedidos extends javax.swing.JFrame {
         cmbEmpleado.setModel(hpEmpleados.getValues());
 
     }
+    
+    int control = 0;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -375,33 +377,56 @@ public class Pedidos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        btnGuardar.setEnabled(false);
+       control = 1;
+        
+        btnGuardar.setEnabled(true);
         btnModificar.setEnabled(false);
-        // int id = Integer.parseInt(txfId.getText());
-
-        try {
-            Connection con = Conexion.getConexion();
-            PreparedStatement ps = con.prepareStatement("UPDATE Empaques SET estatus='I' WHERE idEmpaque=?");
-
-            //ps.setInt(1, id);
-            ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Registro eliminado.");
-            // limpiar();
-            //cargarTabla();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.toString());
-        }
+        btnConfirmar.setEnabled(false);
+        
+        txfFechaR.setEnabled(true);
+        txfFechaRecepcion.setEnabled(true); 
+        txfEstatus.setEnabled(true);
+        txfTotal.setEnabled(true);
+        txfCantidad.setEnabled(true);
+        
+        txfFechaR.setEditable(false);
+        txfFechaRecepcion.setEditable(false);
+        txfTotal.setEditable(false);
+        txfCantidad.setEditable(false);
+        txfEstatus.setEditable(false);
     }//GEN-LAST:event_btnModificarActionPerformed
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) { //GEN-FIRST:event_btnGuardarActionPerformed
         /*
         this.setVisible(false);
         TablaUnidadesMedida uniM = new TablaUnidadesMedida();
         uniM.setVisible(true);
         btnGuardar.setEnabled(false);
          */
+        
+        
+        
+        
+        btnModificar.setEnabled(true);
+        btnConfirmar.setEnabled(true);
+        btnGuardar.setEnabled(false);
+        
+        txfFechaR.setEnabled(false);
+        txfFechaRecepcion.setEnabled(false); 
+        txfEstatus.setEnabled(false);
+        txfTotal.setEnabled(false);
+        txfCantidad.setEnabled(false);
+
+        //Valores default
+        txfCantidad.setText("0");
+        txfTotal.setText("0");
+        txfEstatus.setText("P");
+
+        
         //GUARDAR----------------------------------------------------
+        if(control == 0){
+             
+        
         String fechaR = txfFechaR.getText();
 
         int idProveedor = 1;
@@ -489,6 +514,14 @@ public class Pedidos extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(null, e.toString());
 
+        }
+        }
+        
+        //UPDATE----------------------------------------------------
+        else{
+            control = 0;
+            
+            
         }
 
         /*
