@@ -5,8 +5,14 @@
  */
 package Ventanas;
 
+import Coexion.Conexion;
 import Coexion.HelperPedidos;
 import Coexion.HelperPresentacionesProducto;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,9 +28,9 @@ public class DetallePedido extends javax.swing.JFrame {
         
         setLocationRelativeTo(null);
         this.setResizable(false);
-        
-        txfPrecio.setEditable(false);
-        txfSubtotal.setEditable(false);
+        //btnAceptar.setEnabled(false);
+        //txfPrecio.setEditable(false);
+        //txfSubtotal.setEditable(false);
         txfRecibida.setEnabled(false);
         txfAceptada.setEnabled(false);
         txfRechazada.setEnabled(false);
@@ -202,7 +208,85 @@ public class DetallePedido extends javax.swing.JFrame {
         
         ped.setVisible(true);
         this.setVisible(false);
+        
+        
+        
+             
+        
+        int cantidad = Integer.parseInt(txfCantidad.getText());
+        Float precio = Float.parseFloat(txfPrecio.getText());
+        Float subtotal = Float.parseFloat(txfSubtotal.getText());
+        
+        
+        int idPedido = 1;
+        int idPresentacion = 1;
+        
+
+        String pedido = (String) cmbPedido.getSelectedItem();
+        String presentacion = (String) cmbPresentacion.getSelectedItem();
+        
+        //Pedido
+        try {
+
+            PreparedStatement ps;
+            ResultSet rs;
+            Connection con = Conexion.getConexion();
+            ps = con.prepareStatement("SELECT idPedido FROM Pedidos WHERE idPedido=?");
+            ps.setString(1, pedido);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                idPedido = rs.getInt("idPedido");
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+        
+        //Presentacion
+        try {
+
+            PreparedStatement ps;
+            ResultSet rs;
+            Connection con = Conexion.getConexion();
+            ps = con.prepareStatement("SELECT idPresentacion FROM PresentacionesProducto WHERE nombre=?");
+            ps.setString(1, presentacion);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                idPresentacion = rs.getInt("idPresentacion");
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+        
+         try {
+
+            Connection con = Conexion.getConexion();
+            PreparedStatement ps = con.prepareStatement("INSERT INTO PedidoDetalle (cantPedida, precioCompra, subTotal, cantRecibida, cantRechazada, cantAceptada, idPedido, idPresentacion) VALUES (?,?,?,?,?,?,?,?)");
+            ps.setInt(1, cantidad);
+            ps.setFloat(2, precio);
+            ps.setFloat(3, subtotal);
+            ps.setInt(4, 0);
+            ps.setInt(5, 0);
+            ps.setInt(6, 0);
+            ps.setInt(7, idPedido);
+            ps.setInt(8, idPresentacion);
+            
+
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Registro guardado.");
+            
+
+        } catch (SQLException e) {
+
+            JOptionPane.showMessageDialog(null, e.toString());
+
+        }
+        
+        
     }//GEN-LAST:event_btnAceptarActionPerformed
+    
+       
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
        Pedidos ped = new Pedidos();
