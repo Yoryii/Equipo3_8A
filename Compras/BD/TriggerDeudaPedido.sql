@@ -24,3 +24,5 @@ AS
 --Prueba
 Select * from Pedidos
 Select * from PedidoDetalle
+
+Update Pedidos set estatus='C' where idPedido = 4

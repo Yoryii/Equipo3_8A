@@ -12,7 +12,9 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -20,18 +22,48 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Pedidos extends javax.swing.JFrame {
 int contro = TablaPedidos.control;
+
 int noPed =  TablaPedidos.noPedido;
+int confirm = TablaPedidos.confirmado;
+float totalPag = TablaPedidos.totalPagar;
+float cantPag = TablaPedidos.cantPagada;
+String fechaReg = TablaPedidos.fechaRegist;
+String estat = TablaPedidos.estatus;
+private TableRowSorter TRSFiltro;
     public Pedidos() {
         initComponents();
-
+        cargarTabla();
+        
         setLocationRelativeTo(null);
         this.setResizable(false);
         txfId.setVisible(false);
-        cargarTabla();
+        
         txfFechaRecepcion.setText(""+contro);
         
-
-        //FECHA PEDIDO
+        
+        if (confirm == 1) {
+            btnGuardar.setEnabled(false);
+            btnModificar.setEnabled(false);
+            btnConfirmar.setEnabled(false);
+            btnPedidosDetalle.setEnabled(false);
+            tblDetallePedido.setDefaultEditor(Object.class, null);
+            txfFechaR.setText(fechaReg);
+            txfCantidad.setText(String.valueOf(cantPag));
+            txfTotal.setText(String.valueOf(totalPag));
+            txfEstatus.setText(estat);
+        }else{
+            
+        if(contro == 1){
+            txfFechaR.setText(fechaReg);
+            txfCantidad.setText(String.valueOf(cantPag));
+            txfTotal.setText(String.valueOf(totalPag));
+            txfEstatus.setText(estat);
+        }else{
+            //FECHA PEDIDO
+       
+                
+            
+            btnPedidosDetalle.setEnabled(false);
         Calendar calendario = Calendar.getInstance();
         int hora, minutos, segundos;
         int dia, mes, annio;
@@ -40,6 +72,13 @@ int noPed =  TablaPedidos.noPedido;
         annio = calendario.get(Calendar.YEAR);
         txfFechaR.setText(dia + "-" + (mes + 1) + "-" + annio + "\n");
 
+        //Valores default
+        txfEstatus.setText("P");
+        
+        }
+        }
+
+        
         //Validaciones
         btnRemoverP.setEnabled(false);
         btnConfirmar.setEnabled(false);
@@ -56,8 +95,7 @@ int noPed =  TablaPedidos.noPedido;
 
         
 
-        //Valores default
-        txfEstatus.setText("P");
+        
 
         //Combos Box
         HelperProveedores hpProveedores = new HelperProveedores();
@@ -396,6 +434,10 @@ int noPed =  TablaPedidos.noPedido;
         txfTotal.setEditable(false);
         txfCantidad.setEditable(false);
         txfEstatus.setEditable(false);
+        
+        
+               
+        
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) { //GEN-FIRST:event_btnGuardarActionPerformed
@@ -405,7 +447,7 @@ int noPed =  TablaPedidos.noPedido;
         uniM.setVisible(true);
         btnGuardar.setEnabled(false);
          */
-        
+        btnPedidosDetalle.setEnabled(true);
         
         
         
@@ -507,7 +549,7 @@ int noPed =  TablaPedidos.noPedido;
             ps.setInt(7, idProveedor);
             ps.setInt(8, idSucursal);
             ps.setInt(9, idEmpleado);
-
+            contro = 1;
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Registro guardado.");
             
@@ -519,65 +561,105 @@ int noPed =  TablaPedidos.noPedido;
         }
         }
         
-        //UPDATE----------------------------------------------------
+        
+        
+        
+        
+        
+        
+        
+        //UPDATE--------------------------------------------------------------------------------------------------------------------------------
         else{
-            control = 0;
             
+            
+
+        int idProveedor = 1;
+        int idSucursal = 1;
+        int idEmpleado = 1;
+
+        String proveedor = (String) cmbProveedor.getSelectedItem();
+        String sucursal = (String) cmbSucursales.getSelectedItem();
+        String empleado = (String) cmbEmpleado.getSelectedItem();
+
+        //Proveedor
+        try {
+
+            PreparedStatement ps;
+            ResultSet rs;
+            Connection con = Conexion.getConexion();
+            ps = con.prepareStatement("SELECT idProveedor FROM Proveedores WHERE nombre=?");
+            ps.setString(1, proveedor);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                idProveedor = rs.getInt("idProveedor");
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+        
+        //Sucursales
+        try {
+
+            PreparedStatement ps;
+            ResultSet rs;
+            Connection con = Conexion.getConexion();
+            ps = con.prepareStatement("SELECT idSucursal FROM Sucursales WHERE nombre=?");
+            ps.setString(1, sucursal);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                idSucursal = rs.getInt("idSucursal");
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+        
+        //Empleados
+        try {
+
+            PreparedStatement ps;
+            ResultSet rs;
+            Connection con = Conexion.getConexion();
+            ps = con.prepareStatement("SELECT idEmpleado FROM Empleados WHERE nombre=?");
+            ps.setString(1, empleado);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                idEmpleado = rs.getInt("idEmpleado");
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+        
+        
+        
+        //MOFICACION------------------------------------------
+        
+        try {
+
+            Connection con = Conexion.getConexion();
+            
+            PreparedStatement ps = con.prepareStatement("UPDATE Pedidos SET idProveedor=?, idSucursal=?, idEmpleado=? WHERE idPedido=?");
+            
+            ps.setInt(1, idProveedor);
+            ps.setInt(2, idSucursal);
+            ps.setInt(3, idEmpleado);
+            ps.setInt(4, noPed);
+            
+
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Registro Modificado.");
+            
+
+        } catch (SQLException e) {
+
+            JOptionPane.showMessageDialog(null, e.toString());
+
+        }
             
         }
 
-        /*
-        if (editando) {
-            if (txfNombre.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Llene todos los campos!");
-            } else {
-
-                int id = Integer.parseInt(txfId.getText());
-                String nombre = txfNombre.getText();
-                String capacidad = txfCapacidad.getText();
-
-                try {
-                    Connection con = Conexion.getConexion();
-                    PreparedStatement ps = con.prepareStatement("UPDATE Empaques SET nombre=?, capacidad=? WHERE idEmpaque=?");
-
-                    ps.setString(1, nombre);
-                    ps.setString(2, capacidad);
-                    ps.setInt(3, id);
-                    ps.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "Registro modificado.");
-                    limpiar();
-                    cargarTabla();
-                } catch (SQLException e) {
-
-                    JOptionPane.showMessageDialog(null, e.toString());
-
-                }
-
-            }
-        } else {//guardar
-            if (txfNombre.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Llene todos los campos!");
-            } else {
-                String nombre = txfNombre.getText();
-                String capacidad = txfCapacidad.getText();
-                try {
-
-                    Connection con = Conexion.getConexion();
-                    PreparedStatement ps = con.prepareStatement("INSERT INTO Empaques (nombre, capacidad, estatus, idUnidad) VALUES (?,?,'A',6)");
-                    ps.setString(1, nombre);
-                    ps.setString(2, capacidad);
-                    ps.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "Registro guardado.");
-                    limpiar();
-                    cargarTabla();
-
-                } catch (SQLException e) {
-
-                    JOptionPane.showMessageDialog(null, e.toString());
-
-                }
-            }
-        }*/
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -644,6 +726,9 @@ int noPed =  TablaPedidos.noPedido;
          */
     }//GEN-LAST:event_tblDetallePedidoMouseClicked
 
+    
+    
+   
     public void cargarTabla() {
 
         DefaultTableModel modeloTabla = (DefaultTableModel) tblDetallePedido.getModel();
@@ -657,8 +742,8 @@ int noPed =  TablaPedidos.noPedido;
         try {
             Connection con = Conexion.getConexion();
 
-            ps = con.prepareStatement("SELECT idPedidoDetalle, cantPedida, precioCompra, subTotal, cantRecibida, cantRechazada, cantAceptada, idPedido, idPresentacion FROM PedidoDetalle");
-            
+            ps = con.prepareStatement("SELECT idPedidoDetalle, cantPedida, precioCompra, subTotal, cantRecibida, cantRechazada, cantAceptada, idPedido, idPresentacion FROM PedidoDetalle WHERE idPedido=?");
+            ps.setInt(1,noPed);
             rs = ps.executeQuery();
             rsmd = rs.getMetaData();
             columnas = rsmd.getColumnCount();
@@ -670,6 +755,7 @@ int noPed =  TablaPedidos.noPedido;
                 }
                 modeloTabla.addRow(fila);
             }
+            
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.toString());
         }

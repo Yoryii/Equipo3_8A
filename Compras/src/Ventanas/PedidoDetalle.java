@@ -25,7 +25,7 @@ public class PedidoDetalle extends javax.swing.JFrame {
      */
     public PedidoDetalle() {
         initComponents();
-        
+
         setLocationRelativeTo(null);
         this.setResizable(false);
         //btnAceptar.setEnabled(false);
@@ -34,13 +34,14 @@ public class PedidoDetalle extends javax.swing.JFrame {
         txfRecibida.setEnabled(false);
         txfAceptada.setEnabled(false);
         txfRechazada.setEnabled(false);
-        
+
         HelperPresentacionesProducto hpPresent = new HelperPresentacionesProducto();
         cmbPresentacion.setModel(hpPresent.getValues());
-                
+
         HelperPedidos hpPedido = new HelperPedidos();
         cmbPedido.setModel(hpPedido.getValues());
     }
+ 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -221,34 +222,31 @@ public class PedidoDetalle extends javax.swing.JFrame {
     }//GEN-LAST:event_txfRecibidaActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-     Pedidos ped = new Pedidos();
-        
+        TablaPedidos ped = new TablaPedidos();
+
         ped.setVisible(true);
         this.setVisible(false);
+        
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-       Pedidos ped = new Pedidos();
-        
+        TablaPedidos ped = new TablaPedidos();
+
         ped.setVisible(true);
         this.setVisible(false);
-        
-        
-        
-             
-        
+
+       
+
         int cantidad = Integer.parseInt(txfCantidad.getText());
         Float precio = Float.parseFloat(txfPrecio.getText());
         Float subtotal = Float.parseFloat(txfSubtotal.getText());
-        
-        
+
         int idPedido = 1;
         int idPresentacion = 1;
-        
 
         String pedido = (String) cmbPedido.getSelectedItem();
         String presentacion = (String) cmbPresentacion.getSelectedItem();
-        
+
         //Pedido
         try {
 
@@ -265,7 +263,7 @@ public class PedidoDetalle extends javax.swing.JFrame {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.toString());
         }
-        
+
         //Presentacion
         try {
 
@@ -282,8 +280,8 @@ public class PedidoDetalle extends javax.swing.JFrame {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.toString());
         }
-        
-         try {
+
+        try {
 
             Connection con = Conexion.getConexion();
             PreparedStatement ps = con.prepareStatement("INSERT INTO PedidoDetalle (cantPedida, precioCompra, subTotal, cantRecibida, cantRechazada, cantAceptada, idPedido, idPresentacion) VALUES (?,?,?,?,?,?,?,?)");
@@ -295,11 +293,9 @@ public class PedidoDetalle extends javax.swing.JFrame {
             ps.setInt(6, 0);
             ps.setInt(7, idPedido);
             ps.setInt(8, idPresentacion);
-            
 
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Registro guardado.");
-            
 
         } catch (SQLException e) {
 
@@ -310,23 +306,23 @@ public class PedidoDetalle extends javax.swing.JFrame {
 
     private void txfPrecioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfPrecioKeyReleased
         int limite = 1;
-        
+
         if (txfPrecio.getText().length() > 0) {
-        int cantidad = Integer.parseInt(txfCantidad.getText());
-        int precio = Integer.parseInt(txfPrecio.getText());
-        float mult = cantidad*precio;
-        txfSubtotal.setText(""+mult);
-        }else{
+            int cantidad = Integer.parseInt(txfCantidad.getText());
+            int precio = Integer.parseInt(txfPrecio.getText());
+            float mult = cantidad * precio;
+            txfSubtotal.setText("" + mult);
+        } else {
             txfSubtotal.setText("");
         }
     }//GEN-LAST:event_txfPrecioKeyReleased
 
     private void txfCantidadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfCantidadKeyReleased
-     if (txfCantidad.getText().length() > 0) {
-        txfPrecio.setEnabled(true);
-     }else{
-         txfPrecio.setEnabled(false);
-     }
+        if (txfCantidad.getText().length() > 0) {
+            txfPrecio.setEnabled(true);
+        } else {
+            txfPrecio.setEnabled(false);
+        }
     }//GEN-LAST:event_txfCantidadKeyReleased
 
     /**
