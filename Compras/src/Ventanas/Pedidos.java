@@ -1,6 +1,7 @@
 package Ventanas;
 
 import Coexion.Conexion;
+import static Ventanas.TablaPedidos.control;
 import Coexion.HelperEmpleados;
 import Coexion.HelperProveedores;
 import Coexion.HelperSucursales;
@@ -18,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  * @author jmadr
  */
 public class Pedidos extends javax.swing.JFrame {
-
+int contro = TablaPedidos.control;
     public Pedidos() {
         initComponents();
 
@@ -26,7 +27,7 @@ public class Pedidos extends javax.swing.JFrame {
         this.setResizable(false);
         txfId.setVisible(false);
         cargarTabla();
-        
+        txfFechaRecepcion.setText(""+contro);
         
 
         //FECHA PEDIDO
@@ -69,7 +70,7 @@ public class Pedidos extends javax.swing.JFrame {
 
     }
     
-    int control = 0;
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

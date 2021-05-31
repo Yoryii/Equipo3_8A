@@ -415,7 +415,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPagosActionPerformed
 
     private void btnPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPedidosActionPerformed
-      Pedidos pedido = new Pedidos();
+      TablaPedidos pedido = new TablaPedidos();
         pedido.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnPedidosActionPerformed
