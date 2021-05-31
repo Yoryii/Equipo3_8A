@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Pedidos extends javax.swing.JFrame {
 int contro = TablaPedidos.control;
+int noPed =  TablaPedidos.noPedido;
     public Pedidos() {
         initComponents();
 
@@ -588,7 +589,7 @@ int contro = TablaPedidos.control;
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnPedidosDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPedidosDetalleActionPerformed
-        DetallePedido det = new DetallePedido();
+        PedidoDetalle det = new PedidoDetalle();
         det.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnPedidosDetalleActionPerformed
@@ -657,6 +658,7 @@ int contro = TablaPedidos.control;
             Connection con = Conexion.getConexion();
 
             ps = con.prepareStatement("SELECT idPedidoDetalle, cantPedida, precioCompra, subTotal, cantRecibida, cantRechazada, cantAceptada, idPedido, idPresentacion FROM PedidoDetalle");
+            
             rs = ps.executeQuery();
             rsmd = rs.getMetaData();
             columnas = rsmd.getColumnCount();
