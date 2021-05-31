@@ -58,6 +58,7 @@ private TableRowSorter TRSFiltro;
             txfCantidad.setText(String.valueOf(cantPag));
             txfTotal.setText(String.valueOf(totalPag));
             txfEstatus.setText(estat);
+            btnConfirmar.setEnabled(true);
         }else{
             //FECHA PEDIDO
        
@@ -677,7 +678,9 @@ private TableRowSorter TRSFiltro;
     }//GEN-LAST:event_btnPedidosDetalleActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-
+        Pagos pag = new Pagos();
+        pag.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     private void txfFechaRKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfFechaRKeyReleased
