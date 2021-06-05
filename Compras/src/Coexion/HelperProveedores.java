@@ -16,7 +16,7 @@ public class HelperProveedores extends DataBase {
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
         try {
             Connection cn = this.getConnection();
-            String consulta = "SELECT NOMBRE FROM PROVEEDORES";
+            String consulta = "SELECT NOMBRE FROM PROVEEDORES WHERE estatus = 'A'";
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(consulta);
             while (rs.next()) {                

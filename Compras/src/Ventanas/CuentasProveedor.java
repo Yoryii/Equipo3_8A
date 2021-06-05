@@ -1,5 +1,6 @@
 package Ventanas;
 
+import Coexion.HelperProveedores;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
@@ -8,6 +9,8 @@ public class CuentasProveedor extends javax.swing.JFrame {
     public CuentasProveedor() {
         initComponents();
         botonImagen();
+        HelperProveedores hpProveedores = new HelperProveedores();
+        cmbProveedor.setModel(hpProveedores.getValues());
     }
 
     @SuppressWarnings("unchecked")

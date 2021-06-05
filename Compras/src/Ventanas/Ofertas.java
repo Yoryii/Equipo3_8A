@@ -1,5 +1,6 @@
 package Ventanas;
 
+import Coexion.HelperPresentacionesProducto;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
@@ -8,6 +9,8 @@ public class Ofertas extends javax.swing.JFrame {
     public Ofertas() {
         initComponents();
         botonImagen();
+        HelperPresentacionesProducto hpPresentaciones = new HelperPresentacionesProducto();
+        cmbPresentacion.setModel(hpPresentaciones.getValues());
     }
 
     @SuppressWarnings("unchecked")
