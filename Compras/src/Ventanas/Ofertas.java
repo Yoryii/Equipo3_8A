@@ -40,6 +40,13 @@ public class Ofertas extends javax.swing.JFrame {
         btnSiguiente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Ofertas");
+
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos"));
 
@@ -230,6 +237,12 @@ public class Ofertas extends javax.swing.JFrame {
     private void cmbPresentacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPresentacionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbPresentacionActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        dispose();
+        Principal pr = new Principal();
+        pr.setVisible(true);
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
  
     public static void main(String args[]) {
