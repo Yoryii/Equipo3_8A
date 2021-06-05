@@ -367,7 +367,7 @@ public class Pagos extends javax.swing.JFrame {
                     PreparedStatement ps;
                     ResultSet rs;
                     Connection con = Conexion.getConexion();
-                    ps = con.prepareStatement("SELECT idPedido FROM Pedidos WHERE nombre=?");
+                    ps = con.prepareStatement("SELECT idPedido FROM Pedidos WHERE idPedido=?");
                     ps.setString(1, pedido);
                     rs = ps.executeQuery();
                     while (rs.next()) {
@@ -434,7 +434,7 @@ public class Pagos extends javax.swing.JFrame {
                     PreparedStatement ps;
                     ResultSet rs;
                     Connection con = Conexion.getConexion();
-                    ps = con.prepareStatement("SELECT idPedido FROM Pedidos WHERE nombre=?");
+                    ps = con.prepareStatement("SELECT idPedido FROM Pedidos WHERE idPedido=?");
                     ps.setString(1, pedido);
                     rs = ps.executeQuery();
                     while (rs.next()) {

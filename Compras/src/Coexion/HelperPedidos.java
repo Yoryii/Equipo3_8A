@@ -20,7 +20,7 @@ public class HelperPedidos extends DataBase {
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
         try {
             Connection cn = this.getConnection();
-            String consulta = "SELECT NOMBRE FROM PEDIDOS";
+            String consulta = "SELECT idPedido FROM PEDIDOS";
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(consulta);
             while (rs.next()) {                

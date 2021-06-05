@@ -3,11 +3,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/D:/ITESZ/Infraestructura%20de%20un%20ERP/Equipo3_8A/Compras/src/Coexion/HelperPresentacionesES.java</file>
             <file>file:/D:/ITESZ/Infraestructura%20de%20un%20ERP/Equipo3_8A/Compras/src/Coexion/HelperPresentacionesProducto.java</file>
             <file>file:/D:/ITESZ/Infraestructura%20de%20un%20ERP/Equipo3_8A/Compras/src/Ventanas/Sucursales.java</file>
             <file>file:/D:/ITESZ/Infraestructura%20de%20un%20ERP/Equipo3_8A/Compras/src/Ventanas/ExistenciasSucursal.java</file>
             <file>file:/D:/ITESZ/Infraestructura%20de%20un%20ERP/Equipo3_8A/Compras/src/Ventanas/Principal.java</file>
+=======
+            <file>file:/C:/Users/jmadr/OneDrive/Documentos/GitHub/Equipo3_8A/Compras/src/Ventanas/Principal.java</file>
+            <file>file:/C:/Users/jmadr/OneDrive/Documentos/GitHub/Equipo3_8A/Compras/src/Ventanas/TablaPedidos.java</file>
+            <file>file:/C:/Users/jmadr/OneDrive/Documentos/GitHub/Equipo3_8A/Compras/src/Ventanas/PedidoDetalle.java</file>
+            <file>file:/C:/Users/jmadr/OneDrive/Documentos/GitHub/Equipo3_8A/Compras/src/Ventanas/UnidadesDeMedida.java</file>
+            <file>file:/C:/Users/jmadr/OneDrive/Documentos/GitHub/Equipo3_8A/Compras/src/Ventanas/Pagos.java</file>
+            <file>file:/C:/Users/jmadr/OneDrive/Documentos/GitHub/Equipo3_8A/Compras/src/Ventanas/Pedidos.java</file>
+>>>>>>> 28ab89f556d2d2b64f904db3bacb7abafa6b6579
         </group>
     </open-files>
 </project-private>
