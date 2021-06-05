@@ -12,7 +12,7 @@ public class HelperProductos extends DataBase{
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
         try {
             Connection cn = this.getConnection();
-            String consulta = "SELECT NOMBRE FROM Productos";
+            String consulta = "SELECT NOMBRE FROM Productos WHERE estatus = 'A'";
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(consulta);
             while (rs.next()) {                

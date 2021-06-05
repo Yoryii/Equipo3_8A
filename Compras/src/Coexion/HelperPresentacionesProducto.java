@@ -20,7 +20,7 @@ public class HelperPresentacionesProducto extends DataBase {
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
         try {
             Connection cn = this.getConnection();
-            String consulta = "SELECT NOMBRE FROM PresentacionesProducto";
+            String consulta = "SELECT NOMBRE FROM PresentacionesProducto WHERE estatus = 'A'";
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(consulta);
             while (rs.next()) {                
