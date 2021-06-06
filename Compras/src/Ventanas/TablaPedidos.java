@@ -14,10 +14,8 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author jmadr
- */
+
+
 public class TablaPedidos extends javax.swing.JFrame {
 
    

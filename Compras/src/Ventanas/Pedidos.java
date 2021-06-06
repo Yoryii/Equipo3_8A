@@ -462,15 +462,16 @@ private TableRowSorter TRSFiltro;
         txfTotal.setEnabled(false);
         txfCantidad.setEnabled(false);
 
-        //Valores default
-        txfCantidad.setText("0");
-        txfTotal.setText("0");
-        txfEstatus.setText("P");
+      
 
         
         //GUARDAR----------------------------------------------------
         if(control == 0){
-             
+        
+          //Valores default
+        txfCantidad.setText("0");
+        txfTotal.setText("0");
+        txfEstatus.setText("P");
         
         String fechaR = txfFechaR.getText();
 
