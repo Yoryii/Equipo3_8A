@@ -95,6 +95,9 @@ public class Proveedores extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtTelefonoKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
         });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -109,6 +112,9 @@ public class Proveedores extends javax.swing.JFrame {
         txtEmail.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtEmailKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtEmailKeyTyped(evt);
             }
         });
 
@@ -139,6 +145,9 @@ public class Proveedores extends javax.swing.JFrame {
         txtCodigoPostal.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtCodigoPostalKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodigoPostalKeyTyped(evt);
             }
         });
 
@@ -663,6 +672,35 @@ public class Proveedores extends javax.swing.JFrame {
             btnSiguiente.setEnabled(true);
         }
     }//GEN-LAST:event_btnSiguienteActionPerformed
+
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+       if (txtTelefono.getText().length() == 10) {
+            evt.consume();
+        }
+        char c = evt.getKeyChar();
+        if ((c < '0' || c > '9')) {//solo acepta digitos
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtTelefonoKeyTyped
+
+    private void txtCodigoPostalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoPostalKeyTyped
+        if (txtCodigoPostal.getText().length() == 5) {
+            evt.consume();
+        }
+        char c = evt.getKeyChar();
+        if ((c < '0' || c > '9')) {//solo acepta digitos
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCodigoPostalKeyTyped
+
+    private void txtEmailKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyTyped
+
+ 
+       
+    
+ 
+
+    }//GEN-LAST:event_txtEmailKeyTyped
        
     private void Limpiar() {
         txtId.setText("");
