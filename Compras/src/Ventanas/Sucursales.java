@@ -679,7 +679,7 @@ public class Sucursales extends javax.swing.JFrame {
         cmbCiudad.setSelectedIndex(0);
         desactivarBotones();
         cargarTabla();
-
+        editando = false;
     }
 
     private void cargarTabla() {
