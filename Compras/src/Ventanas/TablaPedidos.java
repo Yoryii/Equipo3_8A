@@ -175,7 +175,7 @@ public class TablaPedidos extends javax.swing.JFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         control = 1; 
-        Pedidos pedido = new Pedidos();
+        RegistroPedidos pedido = new RegistroPedidos();
         pedido.setVisible(true);
         this.setVisible(false);
         
@@ -184,7 +184,7 @@ public class TablaPedidos extends javax.swing.JFrame {
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         control = 0;
         noPedido = 0;
-        Pedidos pedido = new Pedidos();
+        RegistroPedidos pedido = new RegistroPedidos();
         pedido.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnCrearActionPerformed
@@ -238,7 +238,7 @@ public class TablaPedidos extends javax.swing.JFrame {
 
     private void btnRevisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRevisarActionPerformed
         confirmado = 1;
-        Pedidos pedido = new Pedidos();
+        RegistroPedidos pedido = new RegistroPedidos();
         pedido.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnRevisarActionPerformed
