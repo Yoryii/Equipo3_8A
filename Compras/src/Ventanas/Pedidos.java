@@ -29,6 +29,7 @@ float totalPag = TablaPedidos.totalPagar;
 float cantPag = TablaPedidos.cantPagada;
 String fechaReg = TablaPedidos.fechaRegist;
 String estat = TablaPedidos.estatus;
+
 private TableRowSorter TRSFiltro;
     public Pedidos() {
         initComponents();
@@ -39,7 +40,7 @@ private TableRowSorter TRSFiltro;
         txfId.setVisible(false);
         
         txfFechaRecepcion.setText(""+contro);
-        
+      
         
         if (confirm == 1) {
             btnGuardar.setEnabled(false);
@@ -107,6 +108,23 @@ private TableRowSorter TRSFiltro;
 
         HelperEmpleados hpEmpleados = new HelperEmpleados();
         cmbEmpleado.setModel(hpEmpleados.getValues());
+        
+        if (txfTotal.getText().equals("")) {
+           
+         btnConfirmar.setEnabled(false);
+        }
+        else{
+           
+            
+            float deuda = Float.parseFloat(txfTotal.getText());
+        if (deuda > 0) {
+            btnConfirmar.setEnabled(true);
+        }
+        else{
+            btnConfirmar.setEnabled(false);
+        }
+        }
+        
 
     }
     
@@ -453,7 +471,7 @@ private TableRowSorter TRSFiltro;
         
         
         btnModificar.setEnabled(true);
-        btnConfirmar.setEnabled(true);
+        //btnConfirmar.setEnabled(true);
         btnGuardar.setEnabled(false);
         
         txfFechaR.setEnabled(false);
@@ -462,15 +480,16 @@ private TableRowSorter TRSFiltro;
         txfTotal.setEnabled(false);
         txfCantidad.setEnabled(false);
 
-        //Valores default
-        txfCantidad.setText("0");
-        txfTotal.setText("0");
-        txfEstatus.setText("P");
+      
 
         
         //GUARDAR----------------------------------------------------
         if(control == 0){
-             
+        
+          //Valores default
+        txfCantidad.setText("0");
+        txfTotal.setText("0");
+        txfEstatus.setText("P");
         
         String fechaR = txfFechaR.getText();
 
