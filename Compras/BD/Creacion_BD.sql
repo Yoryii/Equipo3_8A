@@ -350,10 +350,12 @@ create table ContactosProveedor (
 	nombre varchar(80) not null,
 	telefono varchar(12) not null,
 	email varchar(100) not null,
+	estatus char not null,
 	idProveedor int not null,
 	constraint PK_ContactosProveedor primary key (idContacto)
 )
 go
+
 
 create table Proveedores (
 	idProveedor int identity not null,
@@ -375,6 +377,7 @@ create table CuentasProveedor (
 	noCuenta varchar(10) not null,
 	banco varchar(30) not null,
 	referenciaBancaria varchar(20) not null,
+	estatus char not null,
 	constraint PK_CuentasProveedor primary key (idCuentaProveedor)
 )
 go
