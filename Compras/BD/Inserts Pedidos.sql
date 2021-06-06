@@ -74,3 +74,8 @@ select * from Empaques
 --Para insertar PedidosDetalle
 insert into PedidoDetalle values(20, 109, 2180, 0, 0, 0, 1, 2)
 select * from PedidoDetalle
+
+insert into FormasPago values(3, 'Contado', 'A')
+insert into FormasPago values(4, 'Crédito', 'A')
+
+Delete FormasPago where idFormaPago = 1

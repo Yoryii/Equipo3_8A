@@ -17,13 +17,11 @@ AS
 	--if(@importe < @aPagar)
 		--delete from Pagos where idPago = @idPago
 
+	UPDATE Pedidos SET totalPagar = totalPagar - @importe where idPedido = @idPedido
+	UPDATE Pedidos SET cantidadPagada = cantidadPagada + @importe where idPedido = @idPedido
 	if(@importe < @aPagar)
-		UPDATE Pedidos SET totalPagar = totalPagar - @importe where idPedido = @idPedido
-		UPDATE Pedidos SET cantidadPagada = cantidadPagada + @importe where idPedido = @idPedido
 		UPDATE Pedidos SET estatus = 'C' where idPedido = @idPedido
 	if(@importe = @aPagar)
-		UPDATE Pedidos SET totalPagar = totalPagar - @importe where idPedido = @idPedido
-		UPDATE Pedidos SET cantidadPagada = cantidadPagada + @importe where idPedido = @idPedido
 		UPDATE Pedidos SET estatus = 'S' where idPedido = @idPedido
 		
 
