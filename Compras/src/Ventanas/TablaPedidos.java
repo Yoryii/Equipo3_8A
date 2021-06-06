@@ -215,7 +215,7 @@ public class TablaPedidos extends javax.swing.JFrame {
                 totalPagar = rs.getInt("totalPagar");
                 cantPagada = rs.getInt("cantidadPagada");
                 estatus = rs.getString("estatus");
-                if (estatus.equals("C")) {
+                if (estatus.equals("C") || estatus.equals("S")) {
             btnCrear.setEnabled(true);
             btnModificar.setEnabled(false);
             btnRevisar.setEnabled(true);
