@@ -1,18 +1,31 @@
 package Ventanas;
 
+import Coexion.Conexion;
 import Coexion.HelperProveedores;
 import java.awt.Image;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class ContactosProveedor extends javax.swing.JFrame {
 
     public ContactosProveedor() {
         initComponents();
+        txtId.setVisible(false);
         botonImagen();
         HelperProveedores hpProveedores = new HelperProveedores();
         cmbProveedor.setModel(hpProveedores.getValues());
+        cargarTabla();
+        desactivarBotones();
+        btnAnterior.setEnabled(false);
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -31,6 +44,7 @@ public class ContactosProveedor extends javax.swing.JFrame {
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        txtId = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblContactosProveedor = new javax.swing.JTable();
@@ -51,11 +65,35 @@ public class ContactosProveedor extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel1.setText("Nombre");
 
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNombreKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
+
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setText("Teléfono");
 
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
+        });
+
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel3.setText("Correl electronico");
+
+        txtEmail.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtEmailKeyReleased(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setText("Proveedor");
@@ -63,10 +101,25 @@ public class ContactosProveedor extends javax.swing.JFrame {
         cmbProveedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -77,10 +130,13 @@ public class ContactosProveedor extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtNombre)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel1)
                             .addComponent(jLabel4)
                             .addComponent(cmbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -97,8 +153,11 @@ public class ContactosProveedor extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1))
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -147,11 +206,26 @@ public class ContactosProveedor extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblContactosProveedor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblContactosProveedorMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblContactosProveedor);
 
         btnAnterior.setText("Anterior");
+        btnAnterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnteriorActionPerformed(evt);
+            }
+        });
 
         btnSiguiente.setText("Siguiente");
+        btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSiguienteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -174,7 +248,7 @@ public class ContactosProveedor extends javax.swing.JFrame {
                         .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel5)
-                        .addGap(215, 215, 215))))
+                        .addGap(150, 150, 150))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,9 +280,235 @@ public class ContactosProveedor extends javax.swing.JFrame {
         pr.setVisible(true);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        if (editando) {//editar
+            if (txtNombre.getText().isEmpty() || txtTelefono.getText().isEmpty() || txtEmail.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
+            } else {
+                int id = Integer.parseInt(txtId.getText());
+                String nombre = txtNombre.getText();
+                String telefono = txtTelefono.getText();
+                String email = txtEmail.getText();
+                String estatus = "A";
+                //Sacar idProveedor inicio
+                int idProveedor = 1;
+                String proveedor = (String) cmbProveedor.getSelectedItem();
+
+                try {
+
+                    PreparedStatement ps;
+                    ResultSet rs;
+                    Connection con = Conexion.getConexion();
+                    ps = con.prepareStatement("SELECT idProveedor FROM Proveedores WHERE nombre=?");
+                    ps.setString(1, proveedor);
+                    rs = ps.executeQuery();
+                    while (rs.next()) {
+                        idProveedor = rs.getInt("idProveedor");
+                    }
+
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, e.toString());
+                }
+                //Sacar idProveedor fin
+                try {
+
+                    Connection con = Conexion.getConexion();
+                    PreparedStatement ps = con.prepareStatement("UPDATE ContactosProveedor SET nombre=?, telefono=?, email=?, estatus=?, idProveedor=? WHERE idContacto=?");
+                    ps.setString(1, nombre);
+                    ps.setString(2, telefono);
+                    ps.setString(3, email);
+                    ps.setString(4, estatus);
+                    ps.setInt(5, idProveedor);
+                    ps.setInt(6, id);
+                    ps.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Registro modificado con exito");
+                    Limpiar();
+                    cargarTabla();
+
+                } catch (SQLException e) {
+
+                    JOptionPane.showMessageDialog(null, e.toString());
+
+                }
+            }
+        } else {//guardar
+            if (txtNombre.getText().isEmpty() || txtTelefono.getText().isEmpty() || txtEmail.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
+            } else {
+                String nombre = txtNombre.getText();
+                String telefono = txtTelefono.getText();
+                String email = txtEmail.getText();
+                String estatus = "A";
+                //Sacar idProveedor inicio
+                int idProveedor = 1;
+                String proveedor = (String) cmbProveedor.getSelectedItem();
+
+                try {
+
+                    PreparedStatement ps;
+                    ResultSet rs;
+                    Connection con = Conexion.getConexion();
+                    ps = con.prepareStatement("SELECT idProveedor FROM Proveedores WHERE nombre=?");
+                    ps.setString(1, proveedor);
+                    rs = ps.executeQuery();
+                    while (rs.next()) {
+                        idProveedor = rs.getInt("idProveedor");
+                    }
+
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, e.toString());
+                }
+                //Sacar idProveedor fin
+                //inicio
+                try {
+
+                    Connection con = Conexion.getConexion();
+                    PreparedStatement ps = con.prepareStatement("INSERT INTO ContactosProveedor "
+                            + "(nombre, telefono, email, estatus, idProveedor) VALUES (?,?,?,?,?)");
+                    ps.setString(1, nombre);
+                    ps.setString(2, telefono);
+                    ps.setString(3, email);
+                    ps.setString(4, estatus);
+                    ps.setInt(5, idProveedor);
+                    ps.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Registro guardado con exito");
+                    Limpiar();
+                    cargarTabla();
+
+                } catch (SQLException e) {
+
+                    JOptionPane.showMessageDialog(null, e.toString());
+
+                }
+                //fin
+            }
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void tblContactosProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblContactosProveedorMouseClicked
+        try {
+
+            int fila = tblContactosProveedor.getSelectedRow();
+            int id = Integer.parseInt(tblContactosProveedor.getValueAt(fila, 0).toString());
+            PreparedStatement ps;
+            ResultSet rs;
+
+            Connection con = Conexion.getConexion();
+            editando = true;
+            activarBotones();
+            ps = con.prepareStatement("SELECT C.nombre, C.telefono, C.email, P.nombre AS Proveedor FROM ContactosProveedor AS C JOIN Proveedores AS P ON C.idProveedor = P.idProveedor WHERE idContacto=?");
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                txtId.setText(String.valueOf(id));
+                txtNombre.setText(rs.getString("nombre"));
+                txtTelefono.setText(rs.getString("telefono"));
+                txtEmail.setText(rs.getString("email"));
+                cmbProveedor.setSelectedItem(rs.getString("Proveedor"));
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+    }//GEN-LAST:event_tblContactosProveedorMouseClicked
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        editando = false;
+        Limpiar();
+        cargarTabla();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        int confirmacion = JOptionPane.showConfirmDialog(null, "Estás seguro de eliminar el registro?");
+        if (confirmacion != 0) {
+            Limpiar();
+        } else {
+            int id = Integer.parseInt(txtId.getText());
+            try {
+                Connection con = Conexion.getConexion();
+                PreparedStatement ps = con.prepareStatement("UPDATE ContactosProveedor SET estatus = 'I' WHERE idContacto = ?");
+                ps.setInt(1, id);
+                ps.executeUpdate();
+                Limpiar();
+                cargarTabla();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e.toString());
+            }
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
+        boolean x = validarCamposVacios();
+        btnGuardar.setEnabled(x);
+        boolean y = validarCampoNoVacio();
+        btnCancelar.setEnabled(y);
+    }//GEN-LAST:event_txtNombreKeyReleased
+
+    private void txtTelefonoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyReleased
+        boolean x = validarCamposVacios();
+        btnGuardar.setEnabled(x);
+        boolean y = validarCampoNoVacio();
+        btnCancelar.setEnabled(y);
+    }//GEN-LAST:event_txtTelefonoKeyReleased
+
+    private void txtEmailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyReleased
+        boolean x = validarCamposVacios();
+        btnGuardar.setEnabled(x);
+        boolean y = validarCampoNoVacio();
+        btnCancelar.setEnabled(y);
+    }//GEN-LAST:event_txtEmailKeyReleased
+
+    private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
+        pagina++;
+        btnAnterior.setEnabled(true);
+        rango = ((pagina - 1) * cantidad);
+        cargarTabla();
+        calcularNumeroPaginas();
+        if (pagina == 1) {
+            btnAnterior.setEnabled(false);
+        } else {
+            btnAnterior.setEnabled(true);
+        }
+        if (numeroPaginas == pagina) {
+            btnSiguiente.setEnabled(false);
+        } else {
+            btnSiguiente.setEnabled(true);
+        }
+    }//GEN-LAST:event_btnSiguienteActionPerformed
+
+    private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
+        pagina--;
+        rango = ((pagina - 1) * cantidad);
+        cargarTabla();
+        calcularNumeroPaginas();
+        if (pagina == 1) {
+            btnAnterior.setEnabled(false);
+        } else {
+            btnAnterior.setEnabled(true);
+        }
+        if (numeroPaginas == pagina) {
+            btnSiguiente.setEnabled(false);
+        } else {
+            btnSiguiente.setEnabled(true);
+        }
+    }//GEN-LAST:event_btnAnteriorActionPerformed
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        if (txtNombre.getText().length() == 80) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+        if (txtTelefono.getText().length() == 10) {
+            evt.consume();
+        }
+        char c = evt.getKeyChar();
+        if ((c < '0' || c > '9')) {//solo acepta digitos
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtTelefonoKeyTyped
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -240,7 +540,7 @@ public class ContactosProveedor extends javax.swing.JFrame {
             }
         });
     }
-    
+
     private void botonImagen() {
         ImageIcon guardar = new ImageIcon("src/Img/saveIcon.png");
         btnGuardar.setIcon(new ImageIcon(guardar.getImage().getScaledInstance(btnGuardar.getWidth(), btnGuardar.getHeight(), Image.SCALE_SMOOTH)));
@@ -255,6 +555,137 @@ public class ContactosProveedor extends javax.swing.JFrame {
         btnCancelar.setIcon(new ImageIcon(cancelar.getImage().getScaledInstance(btnCancelar.getWidth(), btnCancelar.getHeight(), Image.SCALE_SMOOTH)));
     }
 
+    private void Limpiar() {
+        txtId.setText("");
+        txtNombre.setText("");
+        txtTelefono.setText("");
+        txtEmail.setText("");
+        cmbProveedor.setSelectedIndex(0);
+        desactivarBotones();
+        cargarTabla();
+        editando = false;
+    }
+
+    private void desactivarBotones() {
+        btnGuardar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+    }
+
+    private void activarBotones() {
+        btnGuardar.setEnabled(true);
+        btnEliminar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+    }
+
+    private void sacarTotal() {
+        try {
+
+            PreparedStatement ps;
+            ResultSet rs;
+            Connection con = Conexion.getConexion();
+            ps = con.prepareStatement("SELECT COUNT(*) AS total FROM ContactosProveedor WHERE estatus='A'");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                total = rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+    }
+
+    private void calcularNumeroPaginas() {
+        sacarTotal();
+        float totalf;
+        float cantidadf;
+        totalf = (float) total;
+        cantidadf = (float) cantidad;
+        float x = (totalf / cantidadf);
+        numeroPaginas = (int) Math.ceil(x);
+    }
+
+    private void cargarTabla() {
+        DefaultTableModel modeloTabla = (DefaultTableModel) tblContactosProveedor.getModel();
+        modeloTabla.setRowCount(0);
+
+        PreparedStatement ps;
+        ResultSet rs;
+        ResultSetMetaData rsmd;
+        int columnas;
+
+        int[] ancho = {15, 90, 80, 120, 100};
+        for (int i = 0; i < tblContactosProveedor.getColumnCount(); i++) {
+            tblContactosProveedor.getColumnModel().getColumn(i).setPreferredWidth(ancho[i]);
+        }
+
+        try {
+            Connection con = Conexion.getConexion();
+            ps = con.prepareStatement("SELECT CP.idContacto, CP.nombre, CP.telefono, CP.email, P.nombre AS Proveedor FROM ContactosProveedor AS CP JOIN Proveedores AS P ON CP.idProveedor = P.idProveedor WHERE CP.estatus = 'A' ORDER BY idContacto ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
+            ps.setInt(1, rango);
+            ps.setInt(2, cantidad);
+            rs = ps.executeQuery();
+            rsmd = rs.getMetaData();
+            columnas = rsmd.getColumnCount();
+            while (rs.next()) {
+                Object[] fila = new Object[columnas];
+                for (int indice = 0; indice < columnas; indice++) {
+                    fila[indice] = rs.getObject(indice + 1);
+                }
+                modeloTabla.addRow(fila);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+        calcularNumeroPaginas();
+        if (pagina == 1) {
+            btnAnterior.setEnabled(false);
+        } else {
+            btnAnterior.setEnabled(true);
+        }
+        if (numeroPaginas == pagina) {
+            btnSiguiente.setEnabled(false);
+        } else {
+            btnSiguiente.setEnabled(true);
+        }
+    }
+
+    private boolean validarCamposVacios() {
+        boolean x;
+        n = txtNombre.getText().length() != 0;
+        t = txtTelefono.getText().length() == 10;
+        e = txtEmail.getText().length() != 0;
+        x = n && t && e && validarEmail();
+        return x;
+    }
+
+    private boolean validarCampoNoVacio() {
+        boolean y;
+        n = txtNombre.getText().length() != 0;
+        t = txtTelefono.getText().length() != 0;
+        e = txtEmail.getText().length() != 0;
+        y = n || t || e;
+        return y;
+    }
+    
+    private boolean validarEmail(){
+        String email = txtEmail.getText();
+        Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+        Matcher mather = pattern.matcher(email);
+        return mather.find();
+    }
+
+    //Validaciones de campos
+    boolean n = false;
+    boolean t = false;
+    boolean e = false;
+
+    //Variables
+    boolean editando = false;
+    int total;
+    int cantidad = 5;
+    int numeroPaginas;
+    int pagina = 1;
+    int rango = ((pagina - 1) * cantidad);
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnterior;
     private javax.swing.JButton btnCancelar;
@@ -272,6 +703,7 @@ public class ContactosProveedor extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblContactosProveedor;
     private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
