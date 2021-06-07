@@ -31,7 +31,7 @@ public class Pagos extends javax.swing.JFrame {
      */
     public Pagos() {
         initComponents();
-        txtId.setVisible(false);
+        
         botonImagen();
         HelperPedidos hpPedidos= new HelperPedidos();
         cmbPedido.setModel(hpPedidos.getValues());
@@ -62,7 +62,6 @@ public class Pagos extends javax.swing.JFrame {
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        txtId = new javax.swing.JTextField();
         jdcFecha = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPagos = new javax.swing.JTable();
@@ -151,21 +150,19 @@ public class Pagos extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(jLabel1)
                     .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cmbPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtImporte, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cmbFormaPago, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jdcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(21, 21, 21)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cmbPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtImporte, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cmbFormaPago, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(29, 29, 29)
+                            .addComponent(jdcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -176,9 +173,7 @@ public class Pagos extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1)
                     .addComponent(jdcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -353,7 +348,7 @@ public class Pagos extends javax.swing.JFrame {
             if ( txtImporte.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
             } else {
-                int id = Integer.parseInt(txtId.getText());
+              ;
                 Calendar f = jdcFecha.getCalendar();
                 String fe = f.get(Calendar.YEAR) + "-" + f.get(Calendar.MONTH) + "-" + f.get(Calendar.DATE);
                 float importe = Float.parseFloat(txtImporte.getText());
@@ -406,7 +401,7 @@ public class Pagos extends javax.swing.JFrame {
                     ps.setString(3, estatus);
                     ps.setInt(4, idPedido);
                     ps.setInt(5, idFormaPago);
-                    ps.setInt(6, id);
+               
                     ps.executeUpdate();
                     JOptionPane.showMessageDialog(null, "Registro modificado con exito");
                     Limpiar();
@@ -497,11 +492,11 @@ public class Pagos extends javax.swing.JFrame {
         if (confirmacion != 0) {
             Limpiar();
         } else {
-            int id = Integer.parseInt(txtId.getText());
+          
             try {
                 Connection con = Conexion.getConexion();
                 PreparedStatement ps = con.prepareStatement("UPDATE Pagos SET estatus = 'I' WHERE idPago = ?");
-                ps.setInt(1, id);
+              
                 ps.executeUpdate();
                 Limpiar();
                 cargarTabla();
@@ -526,7 +521,7 @@ public class Pagos extends javax.swing.JFrame {
             ps.setInt(1, id);
             rs = ps.executeQuery();
             while (rs.next()) {
-                txtId.setText(String.valueOf(id));
+         
                 Date fecha = new SimpleDateFormat("yyyy-MM-dd").parse(rs.getString("fecha"));
                 jdcFecha.setDate(fecha);
                 txtImporte.setText(rs.getString("importe"));
@@ -609,7 +604,7 @@ public class Pagos extends javax.swing.JFrame {
     
     
     private void Limpiar() {
-       txtId.setText("");
+      
        jdcFecha.setCalendar(null);
         //txtFecha.setText("");
         txtImporte.setText("");
@@ -773,7 +768,6 @@ public class Pagos extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private com.toedter.calendar.JDateChooser jdcFecha;
     private javax.swing.JTable tblPagos;
-    private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtImporte;
     // End of variables declaration//GEN-END:variables
 }
