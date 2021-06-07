@@ -478,7 +478,7 @@ public class RegistroPedidos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPedidosDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPedidosDetalleActionPerformed
-        PedidoDetalle det = new PedidoDetalle();
+        PedidoDetalle2 det = new PedidoDetalle2();
         det.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnPedidosDetalleActionPerformed

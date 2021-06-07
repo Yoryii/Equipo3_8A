@@ -23,6 +23,7 @@ public class Pagos extends javax.swing.JFrame {
     /**
      * Creates new form Pagos
      */
+    int noPed = TablaPedidos.noPedido;
     public Pagos() {
         initComponents();
         txtId.setVisible(false);
@@ -605,9 +606,10 @@ public class Pagos extends javax.swing.JFrame {
 
         try {
             Connection con = Conexion.getConexion();
-            ps = con.prepareStatement("SELECT P.idPago, P.fecha, P.importe, PE.nombre, FP.nombre FROM Pagos AS P INNER JOIN Pedidos AS PE ON P.idPedido = PE.idPedido INNER JOIN FormasPago AS FP ON P.idFormaPago = FP.idFormaPago WHERE P.estatus = 'A' ORDER BY idPago ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
+            ps = con.prepareStatement("SELECT P.idPago, P.fecha, P.importe, PE.nombre, FP.nombre FROM Pagos AS P INNER JOIN Pedidos AS PE ON P.idPedido = PE.idPedido INNER JOIN FormasPago AS FP ON P.idFormaPago = FP.idFormaPago WHERE P.estatus = 'A' and P.idPedido = ? ORDER BY idPago ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
             ps.setInt(1, rango);
             ps.setInt(2, cantidad);
+            ps.setInt(3, noPed);
             rs = ps.executeQuery();
             rsmd = rs.getMetaData();
             columnas = rsmd.getColumnCount();
