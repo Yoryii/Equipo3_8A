@@ -95,6 +95,9 @@ public class Laboratorios extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtNombreKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
         });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -454,6 +457,12 @@ public class Laboratorios extends javax.swing.JFrame {
             btnSiguiente.setEnabled(true);
         }
     }//GEN-LAST:event_btnSiguienteActionPerformed
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+       if (txtNombre.getText().length() == 80) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
 
     private void Limpiar(){
          txtId.setText("");

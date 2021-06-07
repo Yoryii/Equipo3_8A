@@ -410,10 +410,49 @@ public class ProductosProveedor extends javax.swing.JFrame {
     int numeroPaginas;
     private void tblProductosProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductosProveedorMouseClicked
        try {
-
+            int idProverdor=0;
+             int idPresentacion=0;            
             int fila = tblProductosProveedor.getSelectedRow();
-            int idPro = Integer.parseInt(tblProductosProveedor.getValueAt(fila, 0).toString());
-            int idPre = Integer.parseInt(tblProductosProveedor.getValueAt(fila, 0).toString());
+            String idPro = (tblProductosProveedor.getValueAt(fila, 0).toString());
+            String idPre = (tblProductosProveedor.getValueAt(fila, 0).toString());
+            System.out.println(idPro);
+
+                String proveedor = (String) cmbProveedor.getSelectedItem();
+                String presentacion = (String) cmbPresentacion.getSelectedItem();
+                try {
+
+                    PreparedStatement ps;
+                    ResultSet rs;
+                    Connection con = Conexion.getConexion();
+                    ps = con.prepareStatement("SELECT idProveedor FROM Proveedores WHERE nombre=?");
+                    ps.setString(1, idPro);
+                    rs = ps.executeQuery();
+                    while (rs.next()) {
+                        idProverdor = rs.getInt("idProveedor");
+                    }
+                    System.out.println(idProverdor); 
+
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, e.toString());
+                }
+
+                try {
+
+                    PreparedStatement ps;
+                    ResultSet rs;
+                    Connection con = Conexion.getConexion();
+                    ps = con.prepareStatement("SELECT idPresentacion FROM PresentacionesProducto WHERE nombre=?");
+                    ps.setString(1, idPre);
+                    rs = ps.executeQuery();
+                    while (rs.next()) {
+                        idPresentacion = rs.getInt("idPresentacion");
+                    }
+
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, e.toString());
+                }
+           // int idPro = Integer.parseInt(tblProductosProveedor.getValueAt(fila, 0).toString());
+            //int idPre = Integer.parseInt(tblProductosProveedor.getValueAt(fila, 0).toString());
             PreparedStatement ps;
             ResultSet rs;
 
@@ -421,12 +460,12 @@ public class ProductosProveedor extends javax.swing.JFrame {
             editando = true;
             activarBotones();
             ps = con.prepareStatement("SELECT Pro.nombre AS proveedor, Pre.nombre AS presentacion, PP.diasRetardo, PP.precioEstandar, PP.precioUltimaCompra, PP.cantMinPedir, PP.cantMaxPedir  FROM ProductosProveedor AS PP INNER JOIN Proveedores AS Pro ON PP.idProveedor = Pro.idProveedor INNER JOIN PresentacionesProducto AS Pre ON PP.idPresentacion = Pre.idPresentacion WHERE PP.idPro=? AND PP.idPre=? ");
-            ps.setInt(1, idPro);
-            ps.setInt(2, idPre);
+            ps.setInt(1, idProverdor);
+            ps.setInt(2, idPresentacion);
             rs = ps.executeQuery();
             while (rs.next()) {
-                txtIdPro.setText(String.valueOf(idPro));
-                txtIdPre.setText(String.valueOf(idPre));
+               txtIdPro.setText(String.valueOf(idProverdor));
+                txtIdPre.setText(String.valueOf(idPresentacion));
                 cmbProveedor.setSelectedItem(rs.getString("proveedor"));
                 cmbPresentacion.setSelectedItem(rs.getString("presentacion"));
                 txtDiasRetardo.setText(rs.getString("diasRetardo"));
@@ -474,10 +513,6 @@ public class ProductosProveedor extends javax.swing.JFrame {
         }*/
         
     }//GEN-LAST:event_tblProductosProveedorMouseClicked
-
-    private void txtIdProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdProActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtIdProActionPerformed
 
     private void txtPrecioUltimaCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioUltimaCompraActionPerformed
         // TODO add your handling code here:
@@ -796,6 +831,10 @@ public class ProductosProveedor extends javax.swing.JFrame {
     private void txtIdPreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdPreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdPreActionPerformed
+
+    private void txtIdProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdProActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdProActionPerformed
 
     private void Limpiar(){
         txtIdPro.setText("");

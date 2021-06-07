@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -80,6 +82,9 @@ public class Proveedores extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtNombreKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
         });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -95,6 +100,9 @@ public class Proveedores extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtTelefonoKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
         });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -109,6 +117,9 @@ public class Proveedores extends javax.swing.JFrame {
         txtEmail.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtEmailKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtEmailKeyTyped(evt);
             }
         });
 
@@ -139,6 +150,9 @@ public class Proveedores extends javax.swing.JFrame {
         txtCodigoPostal.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtCodigoPostalKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodigoPostalKeyTyped(evt);
             }
         });
 
@@ -557,6 +571,14 @@ public class Proveedores extends javax.swing.JFrame {
         Principal pr = new Principal();
         pr.setVisible(true);
     }//GEN-LAST:event_btnRegresarActionPerformed
+   
+    private boolean validarEmail(){
+        String email = txtEmail.getText();
+        Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+        Matcher mather = pattern.matcher(email);
+        return mather.find();
+    }
+    
     boolean n = false;
     boolean t = false;
     boolean e = false;
@@ -572,7 +594,7 @@ public class Proveedores extends javax.swing.JFrame {
         d = txtDireccion.getText().length() != 0;
         c = txtColonia.getText().length() != 0;
         cp = txtCodigoPostal.getText().length() == 5;
-        x = n && t && e && d && c && cp;
+        x = n && t && e && d && c && cp && validarEmail();
         return x;
     }
      private boolean validarCampoNoVacio(){
@@ -663,6 +685,41 @@ public class Proveedores extends javax.swing.JFrame {
             btnSiguiente.setEnabled(true);
         }
     }//GEN-LAST:event_btnSiguienteActionPerformed
+
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+       if (txtTelefono.getText().length() == 10) {
+            evt.consume();
+        }
+        char c = evt.getKeyChar();
+        if ((c < '0' || c > '9')) {//solo acepta digitos
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtTelefonoKeyTyped
+
+    private void txtCodigoPostalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoPostalKeyTyped
+        if (txtCodigoPostal.getText().length() == 5) {
+            evt.consume();
+        }
+        char c = evt.getKeyChar();
+        if ((c < '0' || c > '9')) {//solo acepta digitos
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCodigoPostalKeyTyped
+
+    private void txtEmailKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyTyped
+
+ 
+       
+    
+ 
+
+    }//GEN-LAST:event_txtEmailKeyTyped
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+       if (txtNombre.getText().length() == 80) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
        
     private void Limpiar() {
         txtId.setText("");
