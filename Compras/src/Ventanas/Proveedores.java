@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -79,6 +81,9 @@ public class Proveedores extends javax.swing.JFrame {
         txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtNombreKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
             }
         });
 
@@ -566,6 +571,14 @@ public class Proveedores extends javax.swing.JFrame {
         Principal pr = new Principal();
         pr.setVisible(true);
     }//GEN-LAST:event_btnRegresarActionPerformed
+   
+    private boolean validarEmail(){
+        String email = txtEmail.getText();
+        Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+        Matcher mather = pattern.matcher(email);
+        return mather.find();
+    }
+    
     boolean n = false;
     boolean t = false;
     boolean e = false;
@@ -581,7 +594,7 @@ public class Proveedores extends javax.swing.JFrame {
         d = txtDireccion.getText().length() != 0;
         c = txtColonia.getText().length() != 0;
         cp = txtCodigoPostal.getText().length() == 5;
-        x = n && t && e && d && c && cp;
+        x = n && t && e && d && c && cp && validarEmail();
         return x;
     }
      private boolean validarCampoNoVacio(){
@@ -701,6 +714,12 @@ public class Proveedores extends javax.swing.JFrame {
  
 
     }//GEN-LAST:event_txtEmailKeyTyped
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+       if (txtNombre.getText().length() == 80) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
        
     private void Limpiar() {
         txtId.setText("");

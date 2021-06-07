@@ -10,6 +10,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -50,7 +56,6 @@ public class Pagos extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtFecha = new javax.swing.JTextField();
         txtImporte = new javax.swing.JTextField();
         cmbPedido = new javax.swing.JComboBox<>();
         cmbFormaPago = new javax.swing.JComboBox<>();
@@ -58,6 +63,7 @@ public class Pagos extends javax.swing.JFrame {
         btnCancelar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         txtId = new javax.swing.JTextField();
+        jdcFecha = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPagos = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
@@ -80,17 +86,6 @@ public class Pagos extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText("Forma de Pago");
-
-        txtFecha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFechaActionPerformed(evt);
-            }
-        });
-        txtFecha.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtFechaKeyReleased(evt);
-            }
-        });
 
         txtImporte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -138,6 +133,12 @@ public class Pagos extends javax.swing.JFrame {
             }
         });
 
+        jdcFecha.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jdcFechaPropertyChange(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -154,26 +155,31 @@ public class Pagos extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtImporte, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbFormaPago, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cmbPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtImporte, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cmbFormaPago, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jdcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jdcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
@@ -245,20 +251,20 @@ public class Pagos extends javax.swing.JFrame {
                         .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(388, 388, 388)
+                        .addComponent(btnAnterior)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSiguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(61, 61, 61)
+                                .addGap(70, 70, 70)
                                 .addComponent(jLabel5)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnAnterior)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnSiguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE))))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -282,6 +288,7 @@ public class Pagos extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    Calendar fecha;
     boolean editando = false;
     int cantidad = 5;
     int pagina = 1;
@@ -291,10 +298,6 @@ public class Pagos extends javax.swing.JFrame {
     private void txtImporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtImporteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtImporteActionPerformed
-
-    private void txtFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFechaActionPerformed
 
     private void cmbPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPedidoActionPerformed
         // TODO add your handling code here:
@@ -347,11 +350,12 @@ public class Pagos extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
          if (editando) {//editar
-            if (txtFecha.getText().isEmpty() || txtImporte.getText().isEmpty()) {
+            if ( txtImporte.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
             } else {
                 int id = Integer.parseInt(txtId.getText());
-                String fecha = txtFecha.getText();
+                Calendar f = jdcFecha.getCalendar();
+                String fe = f.get(Calendar.YEAR) + "-" + f.get(Calendar.MONTH) + "-" + f.get(Calendar.DATE);
                 float importe = Float.parseFloat(txtImporte.getText());
                 String estatus = "A";
                 //Sacar idPedido y idFormaPago inicio
@@ -397,7 +401,7 @@ public class Pagos extends javax.swing.JFrame {
 
                     Connection con = Conexion.getConexion();
                     PreparedStatement ps = con.prepareStatement("UPDATE Pagos SET fecha=?, importe=?, estatus=?, idPedido=?, idFormaPago=? WHERE idPago=?");
-                    ps.setString(1, fecha);
+                    ps.setString(1, fe);
                     ps.setFloat(2, importe);
                     ps.setString(3, estatus);
                     ps.setInt(4, idPedido);
@@ -415,10 +419,11 @@ public class Pagos extends javax.swing.JFrame {
                 }
             }
         } else {//guardar
-            if (txtFecha.getText().isEmpty() || txtImporte.getText().isEmpty()) {
+            if (txtImporte.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
             } else {
-                String fecha = txtFecha.getText();
+                Calendar f = jdcFecha.getCalendar();
+                String fe = f.get(Calendar.YEAR) + "-" + f.get(Calendar.MONTH) + "-" + f.get(Calendar.DATE);
                 float importe = Float.parseFloat(txtImporte.getText());
                 String estatus = "A";
                 //Sacar idPedido y idFormaPago inicio
@@ -466,7 +471,7 @@ public class Pagos extends javax.swing.JFrame {
                     Connection con = Conexion.getConexion();
                     PreparedStatement ps = con.prepareStatement("INSERT INTO Pagos "
                             + "(fecha, importe, estatus, idPedido, idFormaPago) VALUES (?,?,?,?,?)");
-                    ps.setString(1, fecha);
+                    ps.setString(1, fe);
                     ps.setFloat(2, importe);
                     ps.setString(3, estatus);
                     ps.setInt(4, idPedido);
@@ -522,16 +527,17 @@ public class Pagos extends javax.swing.JFrame {
             rs = ps.executeQuery();
             while (rs.next()) {
                 txtId.setText(String.valueOf(id));
-                txtFecha.setText(rs.getString("fecha"));
+                Date fecha = new SimpleDateFormat("yyyy-MM-dd").parse(rs.getString("fecha"));
+                jdcFecha.setDate(fecha);
                 txtImporte.setText(rs.getString("importe"));
                 cmbPedido.setSelectedItem(rs.getString("Pedido"));
                 cmbFormaPago.setSelectedItem(rs.getString("FormaPago"));
             }
-
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.toString());
-        
-    }                                          
+            JOptionPane.showMessageDialog(null, e.toString()); 
+    }catch (ParseException ex) {
+            Logger.getLogger(Ofertas.class.getName()).log(Level.SEVERE, null, ex);
+        }                                          
         
         
     }                                     
@@ -541,32 +547,28 @@ public class Pagos extends javax.swing.JFrame {
         Principal pr = new Principal();
         pr.setVisible(true);
     }//GEN-LAST:event_btnRegresarActionPerformed
+    
+    
+    
     //validacion de campos
-    boolean f = false;
+    //boolean f = false;
     boolean i = false;
     
     private boolean validarCamposVacios() {
         boolean x;
-        f = txtFecha.getText().length() != 0;
+        //f = txtFecha.getText().length() != 0;
         i = txtImporte.getText().length() != 0;
-        x = f && i ;
+        x =  i ;
         return x;
     }
     private boolean validarCampoNoVacio(){
         boolean y;
-        f = txtFecha.getText().length() != 0;
+        //f = txtFecha.getText().length() != 0;
         i = txtImporte.getText().length() != 0;
-        y = f || i;
+        y =  i;
         return y;
     }
     
-    private void txtFechaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFechaKeyReleased
-        boolean x = validarCamposVacios();
-        btnGuardar.setEnabled(x);
-        boolean y = validarCampoNoVacio();
-        btnCancelar.setEnabled(y);
-    }//GEN-LAST:event_txtFechaKeyReleased
-
     private void txtImporteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtImporteKeyReleased
       boolean x = validarCamposVacios();
         btnGuardar.setEnabled(x);
@@ -595,12 +597,21 @@ public class Pagos extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_txtImporteKeyTyped
+   
+
+    private void jdcFechaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jdcFechaPropertyChange
+         boolean x = validarCamposVacios();
+        btnGuardar.setEnabled(x);
+        boolean y = validarCampoNoVacio();
+        btnCancelar.setEnabled(y);
+    }//GEN-LAST:event_jdcFechaPropertyChange
     
     
     
     private void Limpiar() {
        txtId.setText("");
-        txtFecha.setText("");
+       jdcFecha.setCalendar(null);
+        //txtFecha.setText("");
         txtImporte.setText("");
         cmbPedido.setSelectedIndex(0);
         cmbFormaPago.setSelectedIndex(0);
@@ -760,8 +771,8 @@ public class Pagos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private com.toedter.calendar.JDateChooser jdcFecha;
     private javax.swing.JTable tblPagos;
-    private javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtImporte;
     // End of variables declaration//GEN-END:variables
