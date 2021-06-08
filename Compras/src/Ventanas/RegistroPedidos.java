@@ -30,7 +30,7 @@ public class RegistroPedidos extends javax.swing.JFrame {
     public RegistroPedidos() {
         initComponents();
         cargarTabla();
-
+        
         setLocationRelativeTo(null);
         this.setResizable(false);
         txfId.setVisible(false);
@@ -40,7 +40,7 @@ public class RegistroPedidos extends javax.swing.JFrame {
         txfRechazada.setEnabled(false);
         btnRegistrar.setEnabled(false);
         txfFechaRecepcion.setText("" + contro);
-
+        
         if (confirm == 1) {
             btnGuardar.setEnabled(false);
             btnModificar.setEnabled(false);
@@ -51,15 +51,21 @@ public class RegistroPedidos extends javax.swing.JFrame {
             txfCantidad.setText(String.valueOf(cantPag));
             txfTotal.setText(String.valueOf(totalPag));
             txfEstatus.setText(estat);
+            lblPedido.setText("  PEDIDO #"+noPed);
+            
         } else {
-
+            
             if (contro == 1) {
                 txfFechaR.setText(fechaReg);
                 txfCantidad.setText(String.valueOf(cantPag));
                 txfTotal.setText(String.valueOf(totalPag));
                 txfEstatus.setText(estat);
                 btnConfirmar.setEnabled(true);
+                float totalPag = Float.parseFloat(txfTotal.getText());
+                lblPedido.setText("  PEDIDO #"+noPed);
+                
             } else {
+                lblPedido.setText("REALIZAR PEDIDO");
                 //FECHA PEDIDO
 
                 btnPedidosDetalle.setEnabled(false);
@@ -117,6 +123,7 @@ public class RegistroPedidos extends javax.swing.JFrame {
         if (txfEstatus.getText().equals("S")) {
         bandCantidades = 1;
         }
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -160,6 +167,7 @@ public class RegistroPedidos extends javax.swing.JFrame {
         txfRechazada = new javax.swing.JTextField();
         btnRegistrar = new javax.swing.JButton();
         txfId2 = new javax.swing.JTextField();
+        lblPedido = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -386,44 +394,40 @@ public class RegistroPedidos extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jScrollPane1)
-                .addContainerGap())
-            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(129, 129, 129)
-                        .addComponent(btnPedidosDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnPedidosDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnRemoverP, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
+                        .addComponent(txfId2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(74, 74, 74)
+                        .addGap(65, 65, 65)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(19, 19, 19)
                                 .addComponent(jLabel9))
-                            .addComponent(txfRecibida, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnRemoverP, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txfAceptada, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txfRecibida, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(69, 69, 69)
-                                .addComponent(txfRechazada, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(15, 15, 15)
-                                .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(130, 130, 130)
+                                .addComponent(jLabel10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txfId2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                        .addComponent(jLabel10)
-                        .addGap(113, 113, 113)
-                        .addComponent(jLabel11)
-                        .addGap(111, 111, 111))))
+                                .addComponent(jLabel11)
+                                .addGap(65, 65, 65))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txfAceptada, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(96, 96, 96)
+                                .addComponent(txfRechazada, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(46, 46, 46)))))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -440,7 +444,7 @@ public class RegistroPedidos extends javax.swing.JFrame {
                     .addComponent(txfRecibida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txfAceptada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txfRechazada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -453,6 +457,9 @@ public class RegistroPedidos extends javax.swing.JFrame {
                         .addGap(40, 40, 40))))
         );
 
+        lblPedido.setFont(new java.awt.Font("Tahoma", 3, 28)); // NOI18N
+        lblPedido.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -463,14 +470,20 @@ public class RegistroPedidos extends javax.swing.JFrame {
                 .addGap(46, 46, 46)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(417, 417, 417)
+                .addComponent(lblPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(lblPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -484,11 +497,50 @@ public class RegistroPedidos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPedidosDetalleActionPerformed
 
     private void btnRemoverPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverPActionPerformed
-        // TODO add your handling code here:
+      //int confirmacion = JOptionPane.showConfirmDialog(null, "Estás seguro de eliminar el registro?");
+       
+          int fila2 = tblDetallePedido.getSelectedRow();
+          int id2 = Integer.parseInt(tblDetallePedido.getValueAt(fila2, 0).toString());
+        
+          int fila = tblDetallePedido.getSelectedRow();
+          float subtotal = Float.parseFloat(tblDetallePedido.getValueAt(fila, 3).toString());
+          
+          float resta = totalPag-subtotal; 
+          txfTotal.setText(""+resta);
+            try {
+                
+                Connection con = Conexion.getConexion();
+                PreparedStatement ps = con.prepareStatement("UPDATE Pedidos SET totalPagar = ? WHERE idPedido = ? ");
+                ps.setFloat(1, resta);
+                ps.setInt(2, noPed);
+                
+                ps.executeUpdate();
+                //JOptionPane.showMessageDialog(null, "Registro Modificado.");
+                cargarTabla();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e.toString());
+            }
+            
+            
+            try {
+                
+                Connection con = Conexion.getConexion();
+                PreparedStatement ps = con.prepareStatement("DELETE FROM PedidoDetalle WHERE idPedidoDetalle=? ");
+                
+                ps.setInt(1, id2);
+                
+                ps.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Registro Eliminado.");
+                
+                cargarTabla();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e.toString());
+            }
+            
     }//GEN-LAST:event_btnRemoverPActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        Pagos pag = new Pagos();
+        Pagos2 pag = new Pagos2();
         pag.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnConfirmarActionPerformed
@@ -728,8 +780,12 @@ public class RegistroPedidos extends javax.swing.JFrame {
         txfRechazada.setEnabled(true);
         btnRegistrar.setEnabled(true);
         }
+        if (txfEstatus.getText().equals("P")) {
+            btnRemoverP.setEnabled(true);
+        }
         
-
+        
+        
     }//GEN-LAST:event_tblDetallePedidoMouseClicked
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
@@ -854,6 +910,7 @@ public class RegistroPedidos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblPedido;
     private javax.swing.JTable tblDetallePedido;
     private javax.swing.JTextField txfAceptada;
     private javax.swing.JTextField txfCantidad;

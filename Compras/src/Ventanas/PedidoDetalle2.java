@@ -32,6 +32,7 @@ public class PedidoDetalle2 extends javax.swing.JFrame {
         HelperProductos hpProductos = new HelperProductos();
         cmbProducto.setModel(hpProductos.getValues());
         
+        cmbPedido.setEnabled(false);
         
     }
 
@@ -247,7 +248,7 @@ public class PedidoDetalle2 extends javax.swing.JFrame {
             ps.setInt(4, 0);
             ps.setInt(5, 0);
             ps.setInt(6, 0);
-            ps.setInt(7, idPedido);
+            ps.setInt(7, noPed);
             ps.setInt(8, idPresentacion);
 
             ps.executeUpdate();
