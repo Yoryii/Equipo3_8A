@@ -47,7 +47,7 @@ AS
 
 
 
-insert into FormasPago values (1, 'Efectivo', 'A')
-insert into FormasPago values (2, 'Tarjeta', 'A')
+insert into FormasPago values (1, 'Contado', 'A')
+insert into FormasPago values (2, 'Crédito', 'A')
 
 --TRIGGER BORRAR PRODUCTO DETALLE---------------------------------------

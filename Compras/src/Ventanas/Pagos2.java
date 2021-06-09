@@ -28,7 +28,7 @@ public class Pagos2 extends javax.swing.JFrame {
     
     int noPed = TablaPedidos.noPedido;
     float totalPag = TablaPedidos.totalPagar;
-
+    int tipoPago=0;
     public Pagos2() {
         initComponents();
         
@@ -314,12 +314,19 @@ public class Pagos2 extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "La cantidad que ingreso debe ser menor o igual a lo que se debe!");
         }*/
         
+       
+        
+        if (Integer.parseInt(txtImporte.getText()) < totalPag) {
+            tipoPago = 2;
+        }else{
+            tipoPago = 1;
+        }
         
         if (editando) {//editar
             if (txtImporte.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
             } else {
-                ;
+                
                 Calendar f = jdcFecha.getCalendar();
                 String fe = f.get(Calendar.YEAR) + "-" + f.get(Calendar.MONTH) + "-" + f.get(Calendar.DATE);
                 float importe = Float.parseFloat(txtImporte.getText());
@@ -441,7 +448,7 @@ public class Pagos2 extends javax.swing.JFrame {
                     ps.setFloat(2, importe);
                     ps.setString(3, estatus);
                     ps.setInt(4, noPed);
-                    ps.setInt(5, idFormaPago);
+                    ps.setInt(5, tipoPago);  //ps.setInt(5, idFormaPago);
                     ps.executeUpdate();
                     JOptionPane.showMessageDialog(null, "Registro guardado con exito");
                     Limpiar();
@@ -455,6 +462,7 @@ public class Pagos2 extends javax.swing.JFrame {
                 //fin
             }
         }
+        
         
 
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -560,6 +568,9 @@ public class Pagos2 extends javax.swing.JFrame {
         btnGuardar.setEnabled(x);
         boolean y = validarCampoNoVacio();
         btnCancelar.setEnabled(y);
+        
+        int limite = 1;
+       
     }//GEN-LAST:event_txtImporteKeyReleased
 
     private void txtImporteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtImporteKeyTyped
