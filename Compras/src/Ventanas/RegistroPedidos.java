@@ -26,11 +26,12 @@ public class RegistroPedidos extends javax.swing.JFrame {
     float cantPag = TablaPedidos.cantPagada;
     String fechaReg = TablaPedidos.fechaRegist;
     String estat = TablaPedidos.estatus;
-    int bandCantidades=0;
+    int bandCantidades = 0;
+
     public RegistroPedidos() {
         initComponents();
         cargarTabla();
-        
+
         setLocationRelativeTo(null);
         this.setResizable(false);
         txfId.setVisible(false);
@@ -40,7 +41,7 @@ public class RegistroPedidos extends javax.swing.JFrame {
         txfRechazada.setEnabled(false);
         btnRegistrar.setEnabled(false);
         txfFechaRecepcion.setText("" + contro);
-        
+
         if (confirm == 1) {
             btnGuardar.setEnabled(false);
             btnModificar.setEnabled(false);
@@ -51,10 +52,10 @@ public class RegistroPedidos extends javax.swing.JFrame {
             txfCantidad.setText(String.valueOf(cantPag));
             txfTotal.setText(String.valueOf(totalPag));
             txfEstatus.setText(estat);
-            lblPedido.setText("  PEDIDO #"+noPed);
-            
+            lblPedido.setText("  PEDIDO #" + noPed);
+
         } else {
-            
+
             if (contro == 1) {
                 txfFechaR.setText(fechaReg);
                 txfCantidad.setText(String.valueOf(cantPag));
@@ -62,8 +63,8 @@ public class RegistroPedidos extends javax.swing.JFrame {
                 txfEstatus.setText(estat);
                 btnConfirmar.setEnabled(true);
                 float totalPag = Float.parseFloat(txfTotal.getText());
-                lblPedido.setText("  PEDIDO #"+noPed);
-                
+                lblPedido.setText("  PEDIDO #" + noPed);
+
             } else {
                 lblPedido.setText("REALIZAR PEDIDO");
                 //FECHA PEDIDO
@@ -119,11 +120,11 @@ public class RegistroPedidos extends javax.swing.JFrame {
                 btnConfirmar.setEnabled(false);
             }
         }
-        
+
         if (txfEstatus.getText().equals("S")) {
-        bandCantidades = 1;
+            bandCantidades = 1;
         }
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -196,7 +197,7 @@ public class RegistroPedidos extends javax.swing.JFrame {
             }
         });
 
-        btnConfirmar.setText("Confirmar");
+        btnConfirmar.setText("Pagar");
         btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConfirmarActionPerformed(evt);
@@ -497,52 +498,64 @@ public class RegistroPedidos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPedidosDetalleActionPerformed
 
     private void btnRemoverPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverPActionPerformed
-      //int confirmacion = JOptionPane.showConfirmDialog(null, "Estás seguro de eliminar el registro?");
-       
-          int fila2 = tblDetallePedido.getSelectedRow();
-          int id2 = Integer.parseInt(tblDetallePedido.getValueAt(fila2, 0).toString());
-        
-          int fila = tblDetallePedido.getSelectedRow();
-          float subtotal = Float.parseFloat(tblDetallePedido.getValueAt(fila, 3).toString());
-          
-          float resta = totalPag-subtotal; 
-          txfTotal.setText(""+resta);
-            try {
-                
-                Connection con = Conexion.getConexion();
-                PreparedStatement ps = con.prepareStatement("UPDATE Pedidos SET totalPagar = ? WHERE idPedido = ? ");
-                ps.setFloat(1, resta);
-                ps.setInt(2, noPed);
-                
-                ps.executeUpdate();
-                //JOptionPane.showMessageDialog(null, "Registro Modificado.");
-                cargarTabla();
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, e.toString());
-            }
-            
-            
-            try {
-                
-                Connection con = Conexion.getConexion();
-                PreparedStatement ps = con.prepareStatement("DELETE FROM PedidoDetalle WHERE idPedidoDetalle=? ");
-                
-                ps.setInt(1, id2);
-                
-                ps.executeUpdate();
-                JOptionPane.showMessageDialog(null, "Registro Eliminado.");
-                
-                cargarTabla();
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, e.toString());
-            }
-            
+        //int confirmacion = JOptionPane.showConfirmDialog(null, "Estás seguro de eliminar el registro?");
+
+        int fila2 = tblDetallePedido.getSelectedRow();
+        int id2 = Integer.parseInt(tblDetallePedido.getValueAt(fila2, 0).toString());
+
+        int fila = tblDetallePedido.getSelectedRow();
+        float subtotal = Float.parseFloat(tblDetallePedido.getValueAt(fila, 3).toString());
+
+        float resta = totalPag - subtotal;
+        txfTotal.setText("" + resta);
+        try {
+
+            Connection con = Conexion.getConexion();
+            PreparedStatement ps = con.prepareStatement("UPDATE Pedidos SET totalPagar = ? WHERE idPedido = ? ");
+            ps.setFloat(1, resta);
+            ps.setInt(2, noPed);
+
+            ps.executeUpdate();
+            //JOptionPane.showMessageDialog(null, "Registro Modificado.");
+            cargarTabla();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+
+        try {
+
+            Connection con = Conexion.getConexion();
+            PreparedStatement ps = con.prepareStatement("DELETE FROM PedidoDetalle WHERE idPedidoDetalle=? ");
+
+            ps.setInt(1, id2);
+
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Registro Eliminado.");
+
+            cargarTabla();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+
     }//GEN-LAST:event_btnRemoverPActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        Pagos2 pag = new Pagos2();
-        pag.setVisible(true);
-        this.setVisible(false);
+
+        if (txfEstatus.getText().equals("C")) {
+            Pagos2 pag = new Pagos2();
+            pag.setVisible(true);
+            this.setVisible(false);
+        } else {
+
+            int confirmacion = JOptionPane.showConfirmDialog(null, "Su pedido será confirmado, ¿Desea continuar?");
+            if (confirmacion != 0) {
+
+            } else {
+                Pagos2 pag = new Pagos2();
+                pag.setVisible(true);
+                this.setVisible(false);
+            }
+        }
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -678,13 +691,17 @@ public class RegistroPedidos extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, e.toString());
 
             }
+            
+            TablaPedidos ped = new TablaPedidos();
+            ped.setVisible(true);
+            this.setVisible(false);
         } //UPDATE--------------------------------------------------------------------------------------------------------------------------------
         else {
 
             int idProveedor = 1;
             int idSucursal = 1;
             int idEmpleado = 1;
-
+            btnConfirmar.setEnabled(true);
             String proveedor = (String) cmbProveedor.getSelectedItem();
             String sucursal = (String) cmbSucursales.getSelectedItem();
             String empleado = (String) cmbEmpleado.getSelectedItem();
@@ -774,26 +791,24 @@ public class RegistroPedidos extends javax.swing.JFrame {
 
     private void tblDetallePedidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDetallePedidoMouseClicked
         if (bandCantidades == 1) {
-        fila = tblDetallePedido.getSelectedRow();
-        txfAceptada.setEnabled(true);
-        txfRecibida.setEnabled(true);
-        txfRechazada.setEnabled(true);
-        btnRegistrar.setEnabled(true);
+            fila = tblDetallePedido.getSelectedRow();
+            txfAceptada.setEnabled(true);
+            txfRecibida.setEnabled(true);
+            txfRechazada.setEnabled(true);
+            btnRegistrar.setEnabled(true);
         }
         if (txfEstatus.getText().equals("P")) {
             btnRemoverP.setEnabled(true);
         }
-        
-        
-        
+
+
     }//GEN-LAST:event_tblDetallePedidoMouseClicked
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-       bandCantidades = 0;
+        bandCantidades = 0;
         int aceptada = Integer.parseInt(txfAceptada.getText());
         int recibida = Integer.parseInt(txfRecibida.getText());
         int rechazada = Integer.parseInt(txfRechazada.getText());
-        
 
         try {
             int fila = tblDetallePedido.getSelectedRow();
@@ -802,7 +817,6 @@ public class RegistroPedidos extends javax.swing.JFrame {
 
             PreparedStatement ps = con.prepareStatement("UPDATE PedidoDetalle SET cantRecibida=?, cantAceptada=?, cantRechazada=? WHERE idPedidoDetalle=?");
 
-            
             ps.setInt(1, recibida);
             ps.setInt(2, aceptada);
             ps.setInt(3, rechazada);
