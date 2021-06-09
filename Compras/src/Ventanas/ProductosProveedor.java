@@ -22,6 +22,7 @@ public class ProductosProveedor extends javax.swing.JFrame {
 
     
     public ProductosProveedor() {
+        
         initComponents();
         setDefaultCloseOperation(0);
         setLocationRelativeTo(null);
@@ -451,8 +452,7 @@ public class ProductosProveedor extends javax.swing.JFrame {
                 } catch (SQLException e) {
                     JOptionPane.showMessageDialog(null, e.toString());
                 }
-           // int idPro = Integer.parseInt(tblProductosProveedor.getValueAt(fila, 0).toString());
-            //int idPre = Integer.parseInt(tblProductosProveedor.getValueAt(fila, 0).toString());
+          
             PreparedStatement ps;
             ResultSet rs;
 

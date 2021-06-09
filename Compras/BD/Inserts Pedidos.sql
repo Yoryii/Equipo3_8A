@@ -41,11 +41,15 @@ select * from Pedidos
 --Para insertar Presentación--------------------------------------
 --1
 insert into PresentacionesProducto values ('Polvo', 109, 129, 10, 1, 2, 'A')
+insert into PresentacionesProducto values ('Sólido', 109, 129, 10, 2, 2, 'A')
+insert into PresentacionesProducto values ('Líquido', 109, 129, 10, 3, 2, 'A')
 select * from PresentacionesProducto
 
 --Producto
 --1
 insert into Productos values ('Salvo', 'Jabón para trastes', 'Cloro', 'Cloro', 'Polvo', 'Uso en polvo', 'A', 1, 1)
+insert into Productos values ('Zote', 'Jabón para ropa', 'Cloro', 'Cloro', '´Sólido', 'Uso en ropa', 'A', 1, 1)
+insert into Productos values ('Fabuloso', 'Detergente para pisos', 'Cloro', 'Cloro', 'Líquido', 'Uso líquido', 'A', 1, 1)
 select * from Productos 
 
 	--Laboratorio

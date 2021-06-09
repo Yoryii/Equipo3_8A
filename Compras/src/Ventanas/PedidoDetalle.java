@@ -40,6 +40,7 @@ public class PedidoDetalle extends javax.swing.JFrame {
 
         HelperPedidos hpPedido = new HelperPedidos();
         cmbPedido.setModel(hpPedido.getValues());
+        
     }
  
 
