@@ -642,6 +642,7 @@ public class Productos extends javax.swing.JFrame {
         cmbLaboratorio.setSelectedIndex(0);
         desactivarBotones();
         cargarTabla();
+        editando = false;
     }
 
     private void cargarTabla() {
@@ -700,16 +701,20 @@ public class Productos extends javax.swing.JFrame {
     }
 
     private void botonImagen() {
-        ImageIcon guardar = new ImageIcon("src/Img/saveIcon.png");
+        //ImageIcon guardar = new ImageIcon("src/Img/saveIcon.png");
+        ImageIcon guardar = new ImageIcon(getClass().getResource("/Img/saveIcon.png"));
         btnGuardar.setIcon(new ImageIcon(guardar.getImage().getScaledInstance(btnGuardar.getWidth(), btnGuardar.getHeight(), Image.SCALE_SMOOTH)));
-
-        ImageIcon eliminar = new ImageIcon("src/Img/Delete.png");
+        
+        //ImageIcon eliminar = new ImageIcon("src/Img/Delete.png");
+        ImageIcon eliminar = new ImageIcon(getClass().getResource("/Img/Delete.png"));
         btnEliminar.setIcon(new ImageIcon(eliminar.getImage().getScaledInstance(btnEliminar.getWidth(), btnEliminar.getHeight(), Image.SCALE_SMOOTH)));
-
-        ImageIcon regresar = new ImageIcon("src/Img/arrow.png");
+        
+        //ImageIcon regresar = new ImageIcon("src/Img/arrow.png");
+        ImageIcon regresar = new ImageIcon(getClass().getResource("/Img/arrow.png"));
         btnRegresar.setIcon(new ImageIcon(regresar.getImage().getScaledInstance(btnRegresar.getWidth(), btnRegresar.getHeight(), Image.SCALE_SMOOTH)));
-
-        ImageIcon cancelar = new ImageIcon("src/Img/deleteIcon.png");
+        
+        //ImageIcon cancelar = new ImageIcon("src/Img/deleteIcon.png");
+        ImageIcon cancelar = new ImageIcon(getClass().getResource("/Img/deleteIcon.png"));
         btnCancelar.setIcon(new ImageIcon(cancelar.getImage().getScaledInstance(btnCancelar.getWidth(), btnCancelar.getHeight(), Image.SCALE_SMOOTH)));
     }
 

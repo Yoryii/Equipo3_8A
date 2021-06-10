@@ -26,12 +26,12 @@ public class Principal extends javax.swing.JFrame {
         hora = calendario.get(Calendar.HOUR_OF_DAY);
         minutos = calendario.get(Calendar.MINUTE);
         segundos = calendario.get(Calendar.SECOND);
-        lblFecha.setText(hora + ":" + minutos + ":" + segundos + " hrs" + "\n");
+        lblFecha.setText(hora + ":" + minutos + " hrs" + "\n");
 
         
         int dia, mes, annio;
         dia = calendario.get(Calendar.DATE);
-        mes = calendario.get(Calendar.MONTH);
+        mes = calendario.get(Calendar.MONTH) + 1;
         annio = calendario.get(Calendar.YEAR);
         lblFecha2.setText(dia + "/" + mes + "/" + annio  + "\n");
         
@@ -241,42 +241,43 @@ public class Principal extends javax.swing.JFrame {
                     .addGroup(pnlBotonesLayout.createSequentialGroup()
                         .addGap(59, 59, 59)
                         .addComponent(jLabel7)))
-                .addGap(62, 62, 62)
                 .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlBotonesLayout.createSequentialGroup()
-                        .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(pnlBotonesLayout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(pnlBotonesLayout.createSequentialGroup()
-                                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jLabel9))
-                                        .addGroup(pnlBotonesLayout.createSequentialGroup()
-                                            .addComponent(btnUnidades, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(33, 33, 33)
-                                            .addComponent(btnImagenes, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(pnlBotonesLayout.createSequentialGroup()
-                                            .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(btnEmpaques, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(btnPresentacionesProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGap(43, 43, 43)
-                                            .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(btnSucursales, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(btnPagos, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
-                                                .addComponent(btnPedidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBotonesLayout.createSequentialGroup()
-                                    .addGap(38, 38, 38)
-                                    .addComponent(jLabel4)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel10)
-                                    .addGap(35, 35, 35)))
+                        .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(pnlBotonesLayout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel12)))
-                        .addGap(25, 25, 25)
+                                .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pnlBotonesLayout.createSequentialGroup()
+                                        .addGap(66, 66, 66)
+                                        .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(pnlBotonesLayout.createSequentialGroup()
+                                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jLabel9))
+                                            .addGroup(pnlBotonesLayout.createSequentialGroup()
+                                                .addComponent(btnUnidades, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(33, 33, 33)
+                                                .addComponent(btnImagenes, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(pnlBotonesLayout.createSequentialGroup()
+                                                .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(btnEmpaques, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(btnPresentacionesProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(43, 43, 43)
+                                                .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(btnSucursales, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(btnPagos, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+                                                    .addComponent(btnPedidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                    .addGroup(pnlBotonesLayout.createSequentialGroup()
+                                        .addGap(36, 36, 36)
+                                        .addComponent(jLabel6)
+                                        .addGap(58, 58, 58)
+                                        .addComponent(jLabel12)))
+                                .addGap(25, 25, 25))
+                            .addGroup(pnlBotonesLayout.createSequentialGroup()
+                                .addGap(100, 100, 100)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel10)
+                                .addGap(68, 68, 68)))
                         .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -295,7 +296,7 @@ public class Principal extends javax.swing.JFrame {
                                 .addComponent(jLabel15)))
                         .addGap(0, 11, Short.MAX_VALUE))
                     .addGroup(pnlBotonesLayout.createSequentialGroup()
-                        .addGap(3, 3, 3)
+                        .addGap(65, 65, 65)
                         .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnProductosProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8))
@@ -326,9 +327,10 @@ public class Principal extends javax.swing.JFrame {
                             .addComponent(btnEmpaques, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnCategorias, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
+                        .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel4))
                             .addComponent(jLabel10))
                         .addGap(18, 18, 18)
                         .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -337,10 +339,11 @@ public class Principal extends javax.swing.JFrame {
                                 .addComponent(btnPresentacionesProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(btnPagos, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel12)))
+                        .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel5)
+                                .addComponent(jLabel12))
+                            .addComponent(jLabel6)))
                     .addGroup(pnlBotonesLayout.createSequentialGroup()
                         .addComponent(btnCuentasProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -543,47 +546,65 @@ public class Principal extends javax.swing.JFrame {
     }
 
     private void botonImagen() {
-        ImageIcon categoria = new ImageIcon("src/Img/catIcon.png");
+        //ImageIcon categoria = new ImageIcon("src/Img/catIcon.png");
+        ImageIcon categoria = new ImageIcon(getClass().getResource("/Img/catIcon.png"));
         btnCategorias.setIcon(new ImageIcon(categoria.getImage().getScaledInstance(btnCategorias.getWidth(), btnCategorias.getHeight(), Image.SCALE_SMOOTH)));
 
-        ImageIcon laboratorio = new ImageIcon("src/Img/labIcon.png");
+        //ImageIcon laboratorio = new ImageIcon("src/Img/labIcon.png");
+        ImageIcon laboratorio = new ImageIcon(getClass().getResource("/Img/labIcon.png"));
         btnLab.setIcon(new ImageIcon(laboratorio.getImage().getScaledInstance(btnLab.getWidth(), btnLab.getHeight(), Image.SCALE_SMOOTH)));
 
-        ImageIcon unidades = new ImageIcon("src/Img/uniIcon.png");
+        //ImageIcon unidades = new ImageIcon("src/Img/uniIcon.png");
+        ImageIcon unidades = new ImageIcon(getClass().getResource("/Img/uniIcon.png"));
         btnUnidades.setIcon(new ImageIcon(unidades.getImage().getScaledInstance(btnUnidades.getWidth(), btnUnidades.getHeight(), Image.SCALE_SMOOTH)));
 
-        ImageIcon empaques = new ImageIcon("src/Img/empIcon.png");
+        //ImageIcon empaques = new ImageIcon("src/Img/empIcon.png");
+        ImageIcon empaques = new ImageIcon(getClass().getResource("/Img/empIcon.png"));
         btnEmpaques.setIcon(new ImageIcon(empaques.getImage().getScaledInstance(btnEmpaques.getWidth(), btnEmpaques.getHeight(), Image.SCALE_SMOOTH)));
         
-        ImageIcon productos = new ImageIcon("src/Img/Productos.png");
+        //ImageIcon productos = new ImageIcon("src/Img/Productos.png");
+        ImageIcon productos = new ImageIcon(getClass().getResource("/Img/Productos.png"));
         btnProductos.setIcon(new ImageIcon(productos.getImage().getScaledInstance(btnProductos .getWidth(), btnProductos.getHeight(), Image.SCALE_SMOOTH)));
         
-        ImageIcon presentacionesProducto = new ImageIcon("src/Img/PresentacionesProducto.jpg");
+        //ImageIcon presentacionesProducto = new ImageIcon("src/Img/PresentacionesProducto.jpg");
+        ImageIcon presentacionesProducto = new ImageIcon(getClass().getResource("/Img/PresentacionesProducto.jpg"));
         btnPresentacionesProducto.setIcon(new ImageIcon(presentacionesProducto.getImage().getScaledInstance(btnPresentacionesProducto.getWidth(), btnPresentacionesProducto.getHeight(), Image.SCALE_SMOOTH)));
         
-        ImageIcon proveedores = new ImageIcon("src/Img/Proveedores.png");
-        btnProveedores.setIcon(new ImageIcon(empaques.getImage().getScaledInstance(btnProveedores .getWidth(), btnProveedores.getHeight(), Image.SCALE_SMOOTH)));
-        
-        ImageIcon productosProveedor = new ImageIcon("src/Img/ProductosProveedor.jpg");
-        btnProductosProveedor.setIcon(new ImageIcon(empaques.getImage().getScaledInstance(btnProductosProveedor.getWidth(), btnProductosProveedor.getHeight(), Image.SCALE_SMOOTH)));
-    
-         ImageIcon imagenesProductos = new ImageIcon("src/Img/empIcon.png");
-        btnImagenes.setIcon(new ImageIcon(imagenesProductos.getImage().getScaledInstance(btnImagenes.getWidth(), btnImagenes.getHeight(), Image.SCALE_SMOOTH)));
-        
-        ImageIcon Sucursales = new ImageIcon("src/Img/Sucursales.png");
+        //ImageIcon Sucursales = new ImageIcon("src/Img/Sucursales.png");
+        ImageIcon Sucursales = new ImageIcon(getClass().getResource("/Img/Sucursales.png"));
         btnSucursales.setIcon(new ImageIcon(Sucursales.getImage().getScaledInstance(btnSucursales.getWidth(), btnSucursales.getHeight(), Image.SCALE_SMOOTH)));
-        
-        ImageIcon Pagos = new ImageIcon("src/Img/Pagos.png");
-        btnPagos.setIcon(new ImageIcon(Pagos.getImage().getScaledInstance(btnPagos.getWidth(), btnPagos.getHeight(), Image.SCALE_SMOOTH)));
     
-        ImageIcon oferta = new ImageIcon("src/Img/Ofertas.jpg");
+        //ImageIcon oferta = new ImageIcon("src/Img/Ofertas.jpg");
+        ImageIcon oferta = new ImageIcon(getClass().getResource("/Img/Ofertas.jpg"));
         btnOfertas.setIcon(new ImageIcon(oferta.getImage().getScaledInstance(btnOfertas.getWidth(), btnOfertas.getHeight(), Image.SCALE_SMOOTH)));
         
-        ImageIcon cuenta = new ImageIcon("src/Img/Cuentas.png");
+        //ImageIcon cuenta = new ImageIcon("src/Img/Cuentas.png");
+        ImageIcon cuenta = new ImageIcon(getClass().getResource("/Img/Cuentas.png"));
         btnCuentasProveedor.setIcon(new ImageIcon(cuenta.getImage().getScaledInstance(btnCuentasProveedor.getWidth(), btnCuentasProveedor.getHeight(), Image.SCALE_SMOOTH)));
         
-        ImageIcon contacto = new ImageIcon("src/Img/Contactos.png");
+        
+        //ImageIcon contacto = new ImageIcon("src/Img/Contactos.png");
+        ImageIcon contacto = new ImageIcon(getClass().getResource("/Img/Contactos.png"));
         btnContactosProveedor.setIcon(new ImageIcon(contacto.getImage().getScaledInstance(btnContactosProveedor.getWidth(), btnContactosProveedor.getHeight(), Image.SCALE_SMOOTH)));
+        /*
+        ImageIcon pedidos = new ImageIcon(getClass().getResource("/Img/pedidos.png"));
+        btnPedidos.setIcon(new ImageIcon(pedidos.getImage().getScaledInstance(btnPedidos.getWidth(), btnPedidos.getHeight(), Image.SCALE_SMOOTH)));
+        /*
+        ImageIcon proveedores = new ImageIcon("src/Img/proveedor.png");
+        //ImageIcon proveedores = new ImageIcon(getClass().getResource("/Img/proveedor.png"));
+        btnProveedores.setIcon(new ImageIcon(proveedores.getImage().getScaledInstance(btnProveedores .getWidth(), btnProveedores.getHeight(), Image.SCALE_SMOOTH)));
+                
+        ImageIcon Pagos = new ImageIcon("src/Img/Pagos.png");
+        //ImageIcon Pagos = new ImageIcon(getClass().getResource("/Img/Pagos.png"));
+        btnPagos.setIcon(new ImageIcon(Pagos.getImage().getScaledInstance(btnPagos.getWidth(), btnPagos.getHeight(), Image.SCALE_SMOOTH)));
+                
+        ImageIcon productosProveedor = new ImageIcon("src/Img/ProductosProveedor.jpg");
+        //ImageIcon productosProveedor = new ImageIcon(getClass().getResource("/Img/ProductosProveedor.jpg"));
+        btnProductosProveedor.setIcon(new ImageIcon(empaques.getImage().getScaledInstance(btnProductosProveedor.getWidth(), btnProductosProveedor.getHeight(), Image.SCALE_SMOOTH)));
+            
+        //ImageIcon imagenesProductos = new ImageIcon("src/Img/imagen.png");
+        ImageIcon imagenesProductos = new ImageIcon(getClass().getResource("/Img/imagen.png"));
+        btnImagenes.setIcon(new ImageIcon(imagenesProductos.getImage().getScaledInstance(btnImagenes.getWidth(), btnImagenes.getHeight(), Image.SCALE_SMOOTH)));*/
         
     }
 

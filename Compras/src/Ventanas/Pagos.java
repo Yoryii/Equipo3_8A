@@ -617,6 +617,7 @@ public class Pagos extends javax.swing.JFrame {
         cmbFormaPago.setSelectedIndex(0);
         desactivarBotones();
         cargarTabla();
+        editando = false;
     }
     
     private void cargarTabla() {

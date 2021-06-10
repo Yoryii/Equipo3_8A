@@ -9,7 +9,6 @@ import Coexion.Conexion;
 import static Ventanas.Empaques.txfCapacidad;
 import static Ventanas.Empaques.txfId;
 import static Ventanas.Empaques.editando;
-import static Ventanas.Empaques.txfNombre;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,6 +16,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import static Ventanas.Empaques.txfNombre;
 
 /**
  *
