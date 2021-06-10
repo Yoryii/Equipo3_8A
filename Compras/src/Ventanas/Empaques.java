@@ -136,7 +136,6 @@ public class Empaques extends javax.swing.JFrame {
         });
 
         btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -480,7 +479,6 @@ public class Empaques extends javax.swing.JFrame {
         txfId.setText("");
         txfNombre.setText("");
         txfCapacidad.setText("");
-      
 
     }
 
@@ -529,9 +527,11 @@ public class Empaques extends javax.swing.JFrame {
     }
 
     private void botonImagen() {
-        ImageIcon guardar = new ImageIcon("src/Img/saveIcon.png");
+        //ImageIcon guardar = new ImageIcon("src/Img/saveIcon.png");
+        ImageIcon guardar = new ImageIcon(getClass().getResource("/Img/saveIcon.png"));
         btnGuardar.setIcon(new ImageIcon(guardar.getImage().getScaledInstance(btnGuardar.getWidth(), btnGuardar.getHeight(), Image.SCALE_SMOOTH)));
         
+
         ImageIcon eliminar = new ImageIcon("src/Img/Delete.png");
         btnEliminar.setIcon(new ImageIcon(eliminar.getImage().getScaledInstance(btnEliminar.getWidth(), btnEliminar.getHeight(), Image.SCALE_SMOOTH)));
         

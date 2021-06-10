@@ -130,7 +130,6 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
         });
 
         btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -458,7 +457,11 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
         txfNombre.setText("");
         txfSiglas.setText("");
         txfEstatus.setText("");
+
        
+
+        editando = false;
+
     }
 
     private void cargarTabla() {
@@ -538,6 +541,7 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
     }
 
     private void botonImagen() {
+
        ImageIcon guardar = new ImageIcon("src/Img/saveIcon.png");
         btnGuardar.setIcon(new ImageIcon(guardar.getImage().getScaledInstance(btnGuardar.getWidth(), btnGuardar.getHeight(), Image.SCALE_SMOOTH)));
         
@@ -549,6 +553,7 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
         
         ImageIcon cancelar = new ImageIcon("src/Img/deleteIcon.png");
         btnCancelar.setIcon(new ImageIcon(cancelar.getImage().getScaledInstance(btnCancelar.getWidth(), btnCancelar.getHeight(), Image.SCALE_SMOOTH)));
+       
 
     }
      
