@@ -29,6 +29,7 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
 
         cargarTabla();
         botonImagen();
+        desactivarBotones();
         
 
         //Notas en botones
@@ -303,7 +304,7 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
                 }
 
             }
-        } else {//guardar
+        } else {//guardarr
             if (txfNombre.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Llene todos los campos!");
             } else {
@@ -330,7 +331,8 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_btnGuardarActionPerformed
-
+    
+    
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         btnEliminar.setEnabled(false);
         btnGuardar.setEnabled(false);
@@ -349,7 +351,7 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
             ResultSet rs;
 
             editando = true;
-           
+            activarBotones();
             Connection con = Conexion.getConexion();
             ps = con.prepareStatement("SELECT nombre, siglas FROM UnidadesMedida WHERE idUnidad=?");
             ps.setInt(1, id);
@@ -395,16 +397,41 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
     
     
+    boolean n = false;
+    boolean s = false;
     
+     private boolean validarCamposVacios() {
+        boolean x;
+        n = txfNombre.getText().length() != 0;
+        s = txfSiglas.getText().length() != 0;
+        x = n && s;
+        return x;
+    }
+    
+    private boolean validarCampoNoVacio(){
+        boolean y;
+        n = txfNombre.getText().length() != 0;
+        s = txfSiglas.getText().length() != 0;
+        y = n || s;
+        return y;
+    }
     
     private void txfNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfNombreKeyReleased
 
         txfSiglas.setEditable(txfNombre.getText().length() != 0);
+        boolean x = validarCamposVacios();
+        btnGuardar.setEnabled(x);
+        boolean y = validarCampoNoVacio();
+        btnCancelar.setEnabled(y);
 
     }//GEN-LAST:event_txfNombreKeyReleased
 
     private void txfSiglasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfSiglasKeyReleased
         btnGuardar.setEnabled(txfSiglas.getText().length() != 0);
+        boolean x = validarCamposVacios();
+        btnGuardar.setEnabled(x);
+        boolean y = validarCampoNoVacio();
+        btnCancelar.setEnabled(y);
     }//GEN-LAST:event_txfSiglasKeyReleased
 
     private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
@@ -457,7 +484,8 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
         txfNombre.setText("");
         txfSiglas.setText("");
         txfEstatus.setText("");
-
+        desactivarBotones();
+        editando = false;
        
 
         editando = false;
@@ -556,7 +584,18 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
        
 
     }
-     
+     private void desactivarBotones(){
+        btnGuardar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+    }
+    
+
+    private void activarBotones(){
+        btnGuardar.setEnabled(true);
+        btnEliminar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+    }
      private void sacarTotal() {
         try {
 
