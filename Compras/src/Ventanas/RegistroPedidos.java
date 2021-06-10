@@ -954,6 +954,10 @@ public class RegistroPedidos extends javax.swing.JFrame {
         } catch (Exception e) {
 
         }
+        
+        TablaPedidos ped = new TablaPedidos();
+            ped.setVisible(true);
+            this.setVisible(false);
     }//GEN-LAST:event_btnImprimirActionPerformed
 
     public void cargarTabla() {
