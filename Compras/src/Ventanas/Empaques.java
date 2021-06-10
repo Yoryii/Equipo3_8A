@@ -403,7 +403,6 @@ public class Empaques extends javax.swing.JFrame {
         txfId.setText("");
         txfNombre.setText("");
         txfCapacidad.setText("");
-
     }
 
     public void cargarTabla() {

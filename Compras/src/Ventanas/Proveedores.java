@@ -731,6 +731,7 @@ public class Proveedores extends javax.swing.JFrame {
         txtCodigoPostal.setText("");
         cmbCiudad.setSelectedIndex(0);
         desactivarBotones();
+        editando = false;
     }
     
     private void cargarTabla() {

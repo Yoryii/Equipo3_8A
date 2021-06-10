@@ -385,6 +385,7 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
         txfNombre.setText("");
         txfSiglas.setText("");
         txfEstatus.setText("");
+        editando = false;
     }
 
     private void cargarTabla() {

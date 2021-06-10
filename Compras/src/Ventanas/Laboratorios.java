@@ -470,6 +470,7 @@ public class Laboratorios extends javax.swing.JFrame {
         txtOrigen.setText("");
         txtEstatus.setText("");
         desactivarBotones();
+        editando = false;
      
     }
     

@@ -411,6 +411,7 @@ boolean editando = false;
         txtNombre.setText("");
         txtEstatus.setText("");
         desactivarBotones();
+        editando = false;
     }
     
     private void cargarTabla(){

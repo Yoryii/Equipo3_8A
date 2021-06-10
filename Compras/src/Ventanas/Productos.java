@@ -642,6 +642,7 @@ public class Productos extends javax.swing.JFrame {
         cmbLaboratorio.setSelectedIndex(0);
         desactivarBotones();
         cargarTabla();
+        editando = false;
     }
 
     private void cargarTabla() {

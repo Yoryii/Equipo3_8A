@@ -952,6 +952,7 @@ public class ProductosProveedor extends javax.swing.JFrame {
         txtCantMaxPedir.setText("");
         desactivarBotones();
         cargarTabla();
+        editando=false;
     }
     private void cargarTabla() {
        DefaultTableModel modeloTabla = (DefaultTableModel) tblProductosProveedor.getModel();

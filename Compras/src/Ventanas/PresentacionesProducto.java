@@ -850,7 +850,7 @@ public class PresentacionesProducto extends javax.swing.JFrame {
          */
         desactivarBotones();
         cargarTabla();
-
+        editando = false;
     }
 
     private void cargarTabla() {
