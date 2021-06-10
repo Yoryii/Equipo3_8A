@@ -304,7 +304,7 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
                 }
 
             }
-        } else {//guardar
+        } else {//guardarr
             if (txfNombre.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Llene todos los campos!");
             } else {
@@ -331,7 +331,8 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_btnGuardarActionPerformed
-
+    
+    
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         btnEliminar.setEnabled(false);
         btnGuardar.setEnabled(false);
