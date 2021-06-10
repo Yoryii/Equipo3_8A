@@ -259,7 +259,9 @@ public class Login extends javax.swing.JFrame {
     }
 
     private void lblImagen() {
-        ImageIcon login = new ImageIcon("src/Img/login.jpg");
+        //ImageIcon login = new ImageIcon("src/Img/login.jpg");
+        ImageIcon login = new ImageIcon(getClass().getResource("/Img/login.jpg"));
+
         lblIcono.setIcon(new ImageIcon(login.getImage().getScaledInstance(lblIcono.getWidth(), lblIcono.getHeight(), Image.SCALE_SMOOTH)));        
     }
 
