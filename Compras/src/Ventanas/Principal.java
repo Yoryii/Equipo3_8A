@@ -438,7 +438,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLabActionPerformed
 
     private void btnEmpaquesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpaquesActionPerformed
-        Empaques emp = new Empaques();
+        Empaques2 emp = new Empaques2();
         emp.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnEmpaquesActionPerformed
