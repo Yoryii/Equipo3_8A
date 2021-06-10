@@ -3,10 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/D:/ITESZ/Infraestructura%20de%20un%20ERP/Equipo3_8A/Compras/src/Ventanas/Login.java</file>
             <file>file:/D:/ITESZ/Infraestructura%20de%20un%20ERP/Equipo3_8A/Compras/src/Ventanas/PresentacionesProducto.java</file>
             <file>file:/D:/ITESZ/Infraestructura%20de%20un%20ERP/Equipo3_8A/Compras/src/Ventanas/ProductosProveedor.java</file>
             <file>file:/D:/ITESZ/Infraestructura%20de%20un%20ERP/Equipo3_8A/Compras/src/Ventanas/Principal.java</file>
+=======
+            <file>file:/C:/Users/jmadr/OneDrive/Documentos/GitHub/Equipo3_8A/Compras/src/Ventanas/PedidoDetalle2.java</file>
+            <file>file:/C:/Users/jmadr/OneDrive/Documentos/GitHub/Equipo3_8A/Compras/src/Ventanas/Principal.java</file>
+            <file>file:/C:/Users/jmadr/OneDrive/Documentos/GitHub/Equipo3_8A/Compras/src/Ventanas/Pagos2.java</file>
+            <file>file:/C:/Users/jmadr/OneDrive/Documentos/GitHub/Equipo3_8A/Compras/src/Ventanas/TablaPedidos.java</file>
+            <file>file:/C:/Users/jmadr/OneDrive/Documentos/GitHub/Equipo3_8A/Compras/src/Ventanas/RegistroPedidos.java</file>
+>>>>>>> 8e8dbba1ed3adbe7f318cd8b5751a4203ad1fab1
         </group>
     </open-files>
 </project-private>
