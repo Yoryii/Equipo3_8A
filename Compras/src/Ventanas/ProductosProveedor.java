@@ -22,6 +22,7 @@ public class ProductosProveedor extends javax.swing.JFrame {
 
     
     public ProductosProveedor() {
+        
         initComponents();
         setDefaultCloseOperation(0);
         setLocationRelativeTo(null);
@@ -114,6 +115,9 @@ public class ProductosProveedor extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtDiasRetardoKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDiasRetardoKeyTyped(evt);
+            }
         });
 
         txtPrecioEstandar.addActionListener(new java.awt.event.ActionListener() {
@@ -124,6 +128,9 @@ public class ProductosProveedor extends javax.swing.JFrame {
         txtPrecioEstandar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtPrecioEstandarKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioEstandarKeyTyped(evt);
             }
         });
 
@@ -136,6 +143,9 @@ public class ProductosProveedor extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtPrecioUltimaCompraKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioUltimaCompraKeyTyped(evt);
+            }
         });
 
         txtCantMinPedir.addActionListener(new java.awt.event.ActionListener() {
@@ -147,6 +157,9 @@ public class ProductosProveedor extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtCantMinPedirKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCantMinPedirKeyTyped(evt);
+            }
         });
 
         txtCantMaxPedir.addActionListener(new java.awt.event.ActionListener() {
@@ -157,6 +170,9 @@ public class ProductosProveedor extends javax.swing.JFrame {
         txtCantMaxPedir.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtCantMaxPedirKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCantMaxPedirKeyTyped(evt);
             }
         });
 
@@ -414,7 +430,7 @@ public class ProductosProveedor extends javax.swing.JFrame {
              int idPresentacion=0;            
             int fila = tblProductosProveedor.getSelectedRow();
             String idPro = (tblProductosProveedor.getValueAt(fila, 0).toString());
-            String idPre = (tblProductosProveedor.getValueAt(fila, 0).toString());
+            String idPre = (tblProductosProveedor.getValueAt(fila, 1).toString());
             System.out.println(idPro);
 
                 String proveedor = (String) cmbProveedor.getSelectedItem();
@@ -451,15 +467,14 @@ public class ProductosProveedor extends javax.swing.JFrame {
                 } catch (SQLException e) {
                     JOptionPane.showMessageDialog(null, e.toString());
                 }
-           // int idPro = Integer.parseInt(tblProductosProveedor.getValueAt(fila, 0).toString());
-            //int idPre = Integer.parseInt(tblProductosProveedor.getValueAt(fila, 0).toString());
+          
             PreparedStatement ps;
             ResultSet rs;
 
             Connection con = Conexion.getConexion();
             editando = true;
             activarBotones();
-            ps = con.prepareStatement("SELECT Pro.nombre AS proveedor, Pre.nombre AS presentacion, PP.diasRetardo, PP.precioEstandar, PP.precioUltimaCompra, PP.cantMinPedir, PP.cantMaxPedir  FROM ProductosProveedor AS PP INNER JOIN Proveedores AS Pro ON PP.idProveedor = Pro.idProveedor INNER JOIN PresentacionesProducto AS Pre ON PP.idPresentacion = Pre.idPresentacion WHERE PP.idPro=? AND PP.idPre=? ");
+            ps = con.prepareStatement("SELECT Pro.nombre AS proveedor, Pre.nombre AS presentacion, PP.diasRetardo, PP.precioEstandar, PP.precioUltimaCompra, PP.cantMinPedir, PP.cantMaxPedir  FROM ProductosProveedor AS PP INNER JOIN Proveedores AS Pro ON PP.idProveedor = Pro.idProveedor INNER JOIN PresentacionesProducto AS Pre ON PP.idPresentacion = Pre.idPresentacion WHERE PP.idProveedor=? AND PP.idPresentacion=? ");
             ps.setInt(1, idProverdor);
             ps.setInt(2, idPresentacion);
             rs = ps.executeQuery();
@@ -531,7 +546,7 @@ public class ProductosProveedor extends javax.swing.JFrame {
             int idPre = Integer.parseInt(txtIdPre.getText());
             try {
                 Connection con = Conexion.getConexion();
-                PreparedStatement ps = con.prepareStatement("UPDATE ProductosProveedor SET estatus = 'I' WHERE idPro = ? AND idPre=? ");
+                PreparedStatement ps = con.prepareStatement("UPDATE ProductosProveedor SET estatus = 'I' WHERE idProveedor = ? AND idPresentacion=? ");
                 ps.setInt(1, idPro);
                 ps.setInt(2, idPre);
                 ps.executeUpdate();
@@ -553,7 +568,9 @@ public class ProductosProveedor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
     
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-       if (editando) {//editar
+     int cantmin=Integer.parseInt(txtCantMinPedir.getText()),cantmax=Integer.parseInt(txtCantMaxPedir.getText());
+        if (cantmin<=cantmax) {
+             if (editando) {//editar
             if (txtDiasRetardo.getText().isEmpty() || txtPrecioEstandar.getText().isEmpty() || txtPrecioEstandar.getText().isEmpty() || txtPrecioUltimaCompra.getText().isEmpty() || txtCantMinPedir.getText().isEmpty()
                     || txtCantMaxPedir.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
@@ -609,7 +626,7 @@ public class ProductosProveedor extends javax.swing.JFrame {
 
                     Connection con = Conexion.getConexion();
                     PreparedStatement ps = con.prepareStatement("UPDATE ProductosProveedor SET idProveedor=?, idPresentacion=?, diasRetardo=?, precioEstandar=?, precioUltimaCompra=?, cantMinPedir=?, cantMaxPedir=?,"
-                    + "estatus=? WHERE idPro= ? AND idPre = ? ");
+                    + "estatus=? WHERE idProveedor= ? AND idPresentacion = ? ");
                     ps.setInt(1, idProveedor);
                     ps.setInt(2, idPresentacion);
                     ps.setInt(3, diasRetardo);
@@ -636,6 +653,7 @@ public class ProductosProveedor extends javax.swing.JFrame {
                     || txtCantMaxPedir.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
             } else {
+                
                 int diasRetardo = Integer.parseInt(txtDiasRetardo.getText());
                 float precioEstandar = Float.parseFloat(txtPrecioEstandar.getText());
                 float precioUltimaCompra = Float.parseFloat(txtPrecioUltimaCompra.getText());
@@ -679,9 +697,24 @@ public class ProductosProveedor extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, e.toString());
                 }
 
-                //Sacar id Proveedor e id Presentacion fin
-                //inicio
-                try {
+                
+                int bandera = 0;
+            try {
+                PreparedStatement ps;
+                ResultSet rs;
+                Connection con = Conexion.getConexion();
+                ps = con.prepareStatement("SELECT COUNT(*) AS num FROM ProductosProveedor WHERE idProveedor=? AND idPresentacion=?");
+                ps.setInt(1, idProveedor);
+                ps.setInt(2, idPresentacion);
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    bandera = rs.getInt("num");
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e.toString());
+            }
+            if (bandera == 0) {
+             try {
 
                     Connection con = Conexion.getConexion();
                     PreparedStatement ps = con.prepareStatement("INSERT INTO ProductosProveedor (idProveedor, idPresentacion, diasRetardo, precioEstandar, precioUltimaCompra, cantMinPedir, cantMaxPedir, estatus) VALUES (?,?,?,?,?,?,?,?)");
@@ -704,10 +737,15 @@ public class ProductosProveedor extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, e.toString());
 
                 }
+            } else {//Si hay 
+            JOptionPane.showMessageDialog(null, "Ya hay un registro con el mismo proveedor y presentacion");
+            }
                 //fin
             }
         }
-
+        }else{
+             JOptionPane.showMessageDialog(null, "Verifica que la cantidad minima sea menor que la maxima");
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void txtCantMaxPedirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantMaxPedirActionPerformed
@@ -836,6 +874,71 @@ public class ProductosProveedor extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdProActionPerformed
 
+    private void txtDiasRetardoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDiasRetardoKeyTyped
+        char c = evt.getKeyChar();
+        if ((c < '0' || c > '9')) {//solo acepta digitos
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtDiasRetardoKeyTyped
+
+    private void txtPrecioEstandarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioEstandarKeyTyped
+        char c = evt.getKeyChar();
+
+        boolean hayPunto = false;
+        String cadena = txtPrecioEstandar.getText();
+        for (int i = 0; i < cadena.length(); i++) {
+            if (".".charAt(0) == cadena.charAt(i)) {
+                hayPunto = true;
+            }
+        }
+
+        if (hayPunto) {
+            if ((c < '0' || c > '9')) {//solo acepta digitos
+                evt.consume();
+            }
+        } else {
+            if ((c < '0' || c > '9') && c != '.') {//acepta digitos y puntos
+                evt.consume();
+            }
+        }
+    }//GEN-LAST:event_txtPrecioEstandarKeyTyped
+
+    private void txtPrecioUltimaCompraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioUltimaCompraKeyTyped
+        char c = evt.getKeyChar();
+
+        boolean hayPunto = false;
+        String cadena = txtPrecioUltimaCompra.getText();
+        for (int i = 0; i < cadena.length(); i++) {
+            if (".".charAt(0) == cadena.charAt(i)) {
+                hayPunto = true;
+            }
+        }
+
+        if (hayPunto) {
+            if ((c < '0' || c > '9')) {//solo acepta digitos
+                evt.consume();
+            }
+        } else {
+            if ((c < '0' || c > '9') && c != '.') {//acepta digitos y puntos
+                evt.consume();
+            }
+        }
+    }//GEN-LAST:event_txtPrecioUltimaCompraKeyTyped
+
+    private void txtCantMinPedirKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantMinPedirKeyTyped
+        char c = evt.getKeyChar();
+        if ((c < '0' || c > '9')) {//solo acepta digitos
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCantMinPedirKeyTyped
+
+    private void txtCantMaxPedirKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantMaxPedirKeyTyped
+        char c = evt.getKeyChar();
+        if ((c < '0' || c > '9')) {//solo acepta digitos
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCantMaxPedirKeyTyped
+
     private void Limpiar(){
         txtIdPro.setText("");
         txtIdPre.setText("");
@@ -865,7 +968,7 @@ public class ProductosProveedor extends javax.swing.JFrame {
 
         try {
             Connection con = Conexion.getConexion();
-            ps = con.prepareStatement("SELECT  Pro.nombre, Pre.nombre, PP.diasRetardo, PP.precioEstandar, PP.precioUltimaCompra, PP.cantMinPedir, PP.cantMaxPedir FROM ProductosProveedor AS PP INNER JOIN Proveedores AS Pro on PP.idProveedor = Pro.idProveedor INNER JOIN PresentacionesProducto AS Pre on PP.idPresentacion = Pre.idPresentacion WHERE PP.estatus = 'A' ORDER BY diasRetardo ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY ");
+            ps = con.prepareStatement("SELECT  Pro.nombre, Pre.nombre, PP.diasRetardo, PP.precioEstandar, PP.precioUltimaCompra, PP.cantMinPedir, PP.cantMaxPedir FROM ProductosProveedor AS PP INNER JOIN Proveedores AS Pro on PP.idProveedor = Pro.idProveedor INNER JOIN PresentacionesProducto AS Pre on PP.idPresentacion = Pre.idPresentacion WHERE PP.estatus = 'A' ORDER BY PP.idProveedor ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY ");
             //ORDER BY diasRetardo ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY  PP.idProveedor=? AND PP.idPresentacion=?,
             ps.setInt(1, rango);
             ps.setInt(2, cantidad);

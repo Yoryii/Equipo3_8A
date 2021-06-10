@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package Coexion;
-
+import Coexion.Conexion;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -19,7 +19,7 @@ public class HelperPresentacionesProducto extends DataBase {
     public DefaultComboBoxModel getValues(){
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
         try {
-            Connection cn = this.getConnection();
+            Connection cn = Conexion.getConexion();
             String consulta = "SELECT NOMBRE FROM PresentacionesProducto WHERE estatus = 'A'";
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(consulta);
