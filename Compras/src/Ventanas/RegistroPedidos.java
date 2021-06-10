@@ -871,7 +871,8 @@ public class RegistroPedidos extends javax.swing.JFrame {
         Document documento = new Document();
         try {
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/OneDrive/Escritorio/OrdenCompra.pdf"));
+            //PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/OneDrive/Escritorio/OrdenCompra.pdf"));
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Desktop/OrdenCompra.pdf"));
             documento.open();
 
             //Tabla Pedido
