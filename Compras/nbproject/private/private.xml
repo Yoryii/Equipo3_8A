@@ -2,30 +2,9 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< HEAD
-        <group/>
-=======
         <group>
-<<<<<<< Updated upstream
-            <file>file:/C:/Users/jmadr/OneDrive/Documentos/GitHub/Equipo3_8A/Compras/src/Ventanas/PedidoDetalle2.java</file>
-            <file>file:/C:/Users/jmadr/OneDrive/Documentos/GitHub/Equipo3_8A/Compras/src/Coexion/HelperProductos.java</file>
-            <file>file:/C:/Users/jmadr/OneDrive/Documentos/GitHub/Equipo3_8A/Compras/src/Ventanas/Pagos2.java</file>
-            <file>file:/C:/Users/jmadr/OneDrive/Documentos/GitHub/Equipo3_8A/Compras/src/Ventanas/TablaPedidos.java</file>
-            <file>file:/C:/Users/jmadr/OneDrive/Documentos/GitHub/Equipo3_8A/Compras/src/Ventanas/RegistroPedidos.java</file>
-            <file>file:/C:/Users/jmadr/OneDrive/Documentos/GitHub/Equipo3_8A/Compras/src/Ventanas/ImagenesProducto.java</file>
-=======
-            <file>file:/C:/Users/luisa/OneDrive/Documents/GitHub/Equipo3_8A/Compras/src/Ventanas/Laboratorios.java</file>
-            <file>file:/C:/Users/luisa/OneDrive/Documents/GitHub/Equipo3_8A/Compras/BD/TriggerDeudaPedido.sql</file>
-            <file>file:/C:/Users/luisa/OneDrive/Documents/GitHub/Equipo3_8A/Compras/src/Ventanas/Pagos.java</file>
-            <file>file:/C:/Users/luisa/OneDrive/Documents/GitHub/Equipo3_8A/Compras/src/Ventanas/Principal.java</file>
-            <file>file:/C:/Users/luisa/OneDrive/Documents/GitHub/Equipo3_8A/Compras/src/Ventanas/Productos.java</file>
-            <file>file:/C:/Users/luisa/OneDrive/Documents/GitHub/Equipo3_8A/Compras/src/Ventanas/ProductosProveedor.java</file>
-            <file>file:/C:/Users/luisa/OneDrive/Documents/GitHub/Equipo3_8A/Compras/BD/TriggerPagos.sql</file>
-            <file>file:/C:/Users/luisa/OneDrive/Documents/GitHub/Equipo3_8A/Compras/src/Ventanas/Proveedores.java</file>
-            <file>file:/C:/Users/luisa/OneDrive/Documents/GitHub/Equipo3_8A/Compras/src/Ventanas/Sucursales.java</file>
-            <file>file:/C:/Users/luisa/OneDrive/Documents/GitHub/Equipo3_8A/Compras/src/Ventanas/PedidoDetalle.java</file>
->>>>>>> Stashed changes
+            <file>file:/D:/ITESZ/Infraestructura%20de%20un%20ERP/Equipo3_8A/Compras/src/Ventanas/Login.java</file>
+            <file>file:/D:/ITESZ/Infraestructura%20de%20un%20ERP/Equipo3_8A/Compras/src/Ventanas/Principal.java</file>
         </group>
->>>>>>> a8813a2411cc559df5300b03f777a65a56c548a0
     </open-files>
 </project-private>

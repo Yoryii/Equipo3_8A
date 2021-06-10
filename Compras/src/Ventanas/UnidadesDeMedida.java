@@ -127,7 +127,6 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
         });
 
         btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -189,10 +188,9 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
         );
 
@@ -453,14 +451,21 @@ public class UnidadesDeMedida extends javax.swing.JFrame {
     }
 
     private void botonImagen() {
-        ImageIcon guardar = new ImageIcon("src/Img/saveIcon.png");
+        //ImageIcon guardar = new ImageIcon("src/Img/saveIcon.png");
+        ImageIcon guardar = new ImageIcon(getClass().getResource("/Img/saveIcon.png"));
         btnGuardar.setIcon(new ImageIcon(guardar.getImage().getScaledInstance(btnGuardar.getWidth(), btnGuardar.getHeight(), Image.SCALE_SMOOTH)));
-
-        ImageIcon eliminar = new ImageIcon("src/Img/deleteIcon.png");
+        
+        //ImageIcon eliminar = new ImageIcon("src/Img/Delete.png");
+        ImageIcon eliminar = new ImageIcon(getClass().getResource("/Img/Delete.png"));
         btnEliminar.setIcon(new ImageIcon(eliminar.getImage().getScaledInstance(btnEliminar.getWidth(), btnEliminar.getHeight(), Image.SCALE_SMOOTH)));
-
-        ImageIcon regresar = new ImageIcon("src/Img/arrow.png");
+        
+        //ImageIcon regresar = new ImageIcon("src/Img/arrow.png");
+        ImageIcon regresar = new ImageIcon(getClass().getResource("/Img/arrow.png"));
         btnRegresar.setIcon(new ImageIcon(regresar.getImage().getScaledInstance(btnRegresar.getWidth(), btnRegresar.getHeight(), Image.SCALE_SMOOTH)));
+        
+        //ImageIcon cancelar = new ImageIcon("src/Img/deleteIcon.png");
+        ImageIcon cancelar = new ImageIcon(getClass().getResource("/Img/deleteIcon.png"));
+        btnCancelar.setIcon(new ImageIcon(cancelar.getImage().getScaledInstance(btnCancelar.getWidth(), btnCancelar.getHeight(), Image.SCALE_SMOOTH)));
 
     }
 
