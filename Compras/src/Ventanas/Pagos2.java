@@ -29,7 +29,9 @@ public class Pagos2 extends javax.swing.JFrame {
     
     public Pagos2() {
         initComponents();
-        
+        setLocationRelativeTo(null);
+        this.setResizable(false);
+        setDefaultCloseOperation(0);
         botonImagen();
         HelperPedidos hpPedidos = new HelperPedidos();
         cmbPedido.setModel(hpPedidos.getValues());
@@ -315,6 +317,7 @@ public class Pagos2 extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "La cantidad que ingreso debe ser menor o igual a lo que se debe!");
         }*/
         
+        
        
         
         if (Integer.parseInt(txtImporte.getText()) < totalPag) {
@@ -463,6 +466,11 @@ public class Pagos2 extends javax.swing.JFrame {
                 //fin
             }
         }
+        
+        
+        dispose();
+        TablaPedidos ped = new TablaPedidos();
+        ped.setVisible(true);
         
         
 
