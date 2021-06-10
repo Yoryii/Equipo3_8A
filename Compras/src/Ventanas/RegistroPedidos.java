@@ -15,6 +15,13 @@ import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.FileOutputStream;
+import java.sql.DriverManager;
+
 
 public class RegistroPedidos extends javax.swing.JFrame {
 
@@ -123,6 +130,7 @@ public class RegistroPedidos extends javax.swing.JFrame {
 
         if (txfEstatus.getText().equals("S")) {
             bandCantidades = 1;
+            btnImprimir.setEnabled(true);
         }
 
     }
@@ -169,6 +177,7 @@ public class RegistroPedidos extends javax.swing.JFrame {
         btnRegistrar = new javax.swing.JButton();
         txfId2 = new javax.swing.JTextField();
         lblPedido = new javax.swing.JLabel();
+        btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -212,6 +221,11 @@ public class RegistroPedidos extends javax.swing.JFrame {
         });
 
         btnImprimir.setText("Imprimir");
+        btnImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirActionPerformed(evt);
+            }
+        });
 
         btnXML.setText("XML");
 
@@ -461,27 +475,42 @@ public class RegistroPedidos extends javax.swing.JFrame {
         lblPedido.setFont(new java.awt.Font("Tahoma", 3, 28)); // NOI18N
         lblPedido.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnRegresar)
+                        .addGap(319, 319, 319)
+                        .addComponent(lblPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(417, 417, 417)
-                .addComponent(lblPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnRegresar)
+                        .addGap(17, 17, 17)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -691,7 +720,7 @@ public class RegistroPedidos extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, e.toString());
 
             }
-            
+
             TablaPedidos ped = new TablaPedidos();
             ped.setVisible(true);
             this.setVisible(false);
@@ -832,6 +861,105 @@ public class RegistroPedidos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        dispose();
+        TablaPedidos tbl = new TablaPedidos();
+        tbl.setVisible(true);
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
+        Document documento = new Document();
+        try {
+            String ruta = System.getProperty("user.home");
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/OneDrive/Escritorio/OrdenCompra.pdf"));
+            documento.open();
+
+            //Tabla Pedido
+            
+            PdfPTable tabla = new PdfPTable(10);
+            tabla.addCell("Pedido");
+            tabla.addCell("Nombre");
+            tabla.addCell("Fecha de Registro");
+            tabla.addCell("Fecha de Recepcion");
+            tabla.addCell("Total a pagar");
+            tabla.addCell("Cantidad pagada");
+            tabla.addCell("Estatus");
+            tabla.addCell("idProveedor");
+            tabla.addCell("idSucursal");
+            tabla.addCell("idEmpleado");
+
+            try {
+                PreparedStatement ps;
+                ResultSet rs;
+                Connection con = Conexion.getConexion();
+                ps = con.prepareStatement("SELECT * FROM Pedidos where idPedido=?");
+                ps.setInt(1, noPed);
+                rs = ps.executeQuery();
+                documento.addHeader("Reporte del Pedido", "Aquí se muestran los detalles del  pedido, así como los pagos que se realizaron.");
+                if (rs.next()) {
+                    do {
+                        tabla.addCell(rs.getString(1));
+                        tabla.addCell(rs.getString(2));
+                        tabla.addCell(rs.getString(3));
+                        tabla.addCell(rs.getString(4));
+                        tabla.addCell(rs.getString(5));
+                        tabla.addCell(rs.getString(6));
+                        tabla.addCell(rs.getString(7));
+                        tabla.addCell(rs.getString(8));
+                        tabla.addCell(rs.getString(9));
+                        tabla.addCell(rs.getString(10));
+                    } while (rs.next());
+                   
+                    documento.add(tabla);
+                }
+
+            } catch (Exception e) {
+            }
+
+            //Tabla Pagos
+            PdfPTable tabla2 = new PdfPTable(6);
+            tabla2.addCell("NumPago");
+            tabla2.addCell("Fecha");
+            tabla2.addCell("Importe");
+            tabla2.addCell("Estatus");
+            tabla2.addCell("Pedido");
+            tabla2.addCell("Forma de Pago");
+
+            try {
+                PreparedStatement ps;
+                ResultSet rs;
+                Connection con = Conexion.getConexion();
+                ps = con.prepareStatement("SELECT * FROM Pagos where idPedido=?");
+                ps.setInt(1, noPed);
+                rs = ps.executeQuery();
+                if (rs.next()) {
+                    do {
+                        tabla2.addCell(rs.getString(1));
+                        tabla2.addCell(rs.getString(2));
+                        tabla2.addCell(rs.getString(3));
+                        tabla2.addCell(rs.getString(4));
+                        tabla2.addCell(rs.getString(5));
+                        tabla2.addCell(rs.getString(6));
+                        
+                    } while (rs.next());
+                    
+                    documento.add(tabla2);
+
+                }
+
+            } catch (Exception e) {
+            }
+            documento.close();
+            JOptionPane.showMessageDialog(null, "Reporte creado");
+        } catch (Exception e) {
+
+        }
+        
+        TablaPedidos ped = new TablaPedidos();
+            ped.setVisible(true);
+            this.setVisible(false);
+    }//GEN-LAST:event_btnImprimirActionPerformed
+
     public void cargarTabla() {
 
         DefaultTableModel modeloTabla = (DefaultTableModel) tblDetallePedido.getModel();
@@ -905,6 +1033,7 @@ public class RegistroPedidos extends javax.swing.JFrame {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnPedidosDetalle;
     private javax.swing.JButton btnRegistrar;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnRemoverP;
     private javax.swing.JButton btnXML;
     private javax.swing.JComboBox<String> cmbEmpleado;
