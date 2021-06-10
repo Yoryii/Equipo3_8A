@@ -313,7 +313,7 @@ public class PedidoDetalle2 extends javax.swing.JFrame {
 
     private void cmbProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbProductoActionPerformed
         
-        int numProducto = (cmbProducto.getSelectedIndex()+1);
+        int numProducto = (cmbProducto.getSelectedIndex());
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
         try {
             PreparedStatement ps;
