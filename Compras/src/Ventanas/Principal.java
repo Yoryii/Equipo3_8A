@@ -20,7 +20,7 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         this.setResizable(false);
-        botonImagen();
+        //botonImagen();
         Calendar calendario = Calendar.getInstance();
         int hora, minutos, segundos;
         hora = calendario.get(Calendar.HOUR_OF_DAY);
